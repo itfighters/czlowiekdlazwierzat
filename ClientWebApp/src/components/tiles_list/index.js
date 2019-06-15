@@ -13,9 +13,10 @@ class TilesList extends Component {
   }
   componentDidMount(){
     fetchTiles().then(response => {
+      let tiles = response.values;
       this.setState({
-        tiles: response,
-        error: true,
+        tiles: tiles,
+        error: false,
       });
     }).catch(() => {
       this.setState({
