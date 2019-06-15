@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Repositories.Abstract;
+using DAL.Repositories.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -10,6 +12,12 @@ namespace WebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        //private readonly IUserRepository userRepository;
+
+        //public ValuesController(IUserRepository userRepository)
+        //{
+        //    this.userRepository = userRepository;
+        //}
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
