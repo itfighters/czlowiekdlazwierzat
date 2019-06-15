@@ -43,8 +43,8 @@ namespace WebApi
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
             }));
 
         }
@@ -61,10 +61,7 @@ namespace WebApi
                 app.UseHsts();
             }
 
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("https://localhost:3000");
-            });
+           
 
             app.UseCors("MyPolicy");
 

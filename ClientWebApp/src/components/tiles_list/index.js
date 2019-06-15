@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CollectionTile from '../collectionTile';
 import { fetchTiles } from '../../services/tilesService';
 import TilesListFetchError from '../tiles_list_error';
+import Loader from '../loader';
 
 class TilesList extends Component {
   constructor(props){
@@ -9,24 +10,32 @@ class TilesList extends Component {
     this.state = {
       tiles: [],
       error: false,
+      isLoading: true,
     };
   }
   componentDidMount(){
     fetchTiles().then(response => {
+      let tiles = response.values;
       this.setState({
-        tiles: response,
-        error: true,
+        tiles: tiles,
+        error: false,
+        isLoading: false,
       });
     }).catch(() => {
       this.setState({
         tiles: [],
-        error: true
+        error: true,
+        isLoading: false,
       });
     })
   }
 
   render() {
-    const { tiles, error } = this.state;
+    const { tiles, error, isLoading } = this.state;
+    if(isLoading){
+      return <Loader />
+    };
+
     if(error){
       return <TilesListFetchError />;
     }

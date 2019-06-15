@@ -13,11 +13,23 @@ namespace DTO.Mapper
         {
             return new Auction
             {
+                Id = from.Id ?? 0,
                 Title = from.Title,
                 Description = from.Description,
-                Categories = from.Categories.Select(x=> new AuctionCategory(){CategoryId = x}).ToList(),
-                Account = from.Account
-            };
+                Categories = from.Categories?.Select(x=> new AuctionCategory(){CategoryId = x}).ToList(),
+                Account = from.Account,
+                IsDeleted = false,
+                SiepomagaLink = from.SiepomagaLink,
+                PaypalLink = from.PaypalLink,
+                Featured = from.Featured,
+                DateTo = from.DateTo ?? DateTime.Now.AddYears(100), //TODO: wyjasnic kiedys
+                AddressTo = from.AddressTo,
+                DateFrom = from.DateFrom ?? DateTime.Now,
+                ContactNumber = from.ContactNumber,
+                AddressFrom = from.AddressFrom,
+                Image = from.Image,
+                DotpayLink = from.DotpayLink,
+               };
         }
 
         public static ListAuctionResponse ToListAuctionResponse(IEnumerable<Auction> auctions) =>
