@@ -5,6 +5,6 @@ namespace NotificationJobsLibrary
 {
     public interface IMailSender
     {
-        Task<EmailResult> SendMessageAsync(MailMessage mail);
+        EmailResult SendMessage(MailMessage mailMessage);
     }
 }

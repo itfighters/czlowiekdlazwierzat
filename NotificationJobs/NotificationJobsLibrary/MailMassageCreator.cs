@@ -7,13 +7,6 @@ namespace NotificationJobsLibrary
 {
     public class MailMassageCreator
     {
-        private string _emailSender;    
-        private string _emailSenderPassword;
-        private string _emailSenderHost;
-        private string _emailSenderPort;
-        Boolean emailIsSSL = true;
-
-
         public MailMessage GenerateMessage()
         {
             var mailMessage = new MailMessage()
@@ -21,7 +14,7 @@ namespace NotificationJobsLibrary
                 BodyEncoding = Encoding.UTF8,
                 Priority = MailPriority.Normal,
                 IsBodyHtml = true,
-                From = new MailAddress ("czlowiekdlazwierzathackton@gmail.com"),
+                From = new MailAddress (ConfigService.GetEmailConfig.From),
                 Subject = "testSub1",
             };
 
