@@ -15,8 +15,11 @@ class HomeTilesList extends Component {
   }
   
   componentDidMount(){
+    debugger;
     fetchTiles().then(response => {
-      let tiles = response.values;
+      let tiles = response.values.sort(function(a,b){
+        return new Date(a.dateTo) - new Date(b.dateTo);
+      }).slice(0, 6);
       this.setState({
         tiles: tiles,
         error: false,
