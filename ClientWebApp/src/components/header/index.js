@@ -4,13 +4,15 @@ import { NavLink } from 'react-router-dom';
 export default class Header extends Component {
   render(){
     return (
-        <header>
-          <nav>
-            <li><NavLink to="/"><img src="/assets/logo.png"></img></NavLink></li>
-            <li><NavLink to="/">Back to Home</NavLink></li>
-            <li><NavLink to="/"><img src="/assets/home.png"></img></NavLink></li>
-            <li><NavLink to="/">Lista zbiórek</NavLink></li>
-            <li><NavLink to="/">Zapisz się na powiadomienia</NavLink></li>
+        <header className="main-header">
+            <NavLink className="logo-nav" to="/"><img src="/assets/logo-fundacja.svg"></img></NavLink>
+          <nav className="main-nav">
+            <ul>
+              <li><NavLink to="/"><img className="icon-back" src="/assets/arrow-back.svg"/></NavLink></li>
+              <li><NavLink to="/"><img className="icon-home" src="/assets/home.png"/></NavLink></li>
+              <li><NavLink to="/">Lista zbiórek</NavLink></li>
+              <li className="btn-primary"><NavLink to="/">Zapisz się na powiadomienia</NavLink></li>
+            </ul>
           </nav>
         </header>
     )
