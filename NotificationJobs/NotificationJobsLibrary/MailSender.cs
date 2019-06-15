@@ -10,7 +10,7 @@ namespace NotificationJobsLibrary
         private readonly bool _useDefaultCredentials = false;
         private readonly ICredentialsByHost _credentials = new NetworkCredential(ConfigService.GetEmailConfig.UserName, ConfigService.GetEmailConfig.Password);
 
-        public EmailResult SendMessage(MailMessage mail)
+        private bool SendMessage(MailMessage mail)
         {
             try
             {
@@ -25,14 +25,20 @@ namespace NotificationJobsLibrary
                 {
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtpClient.Send(mail);
-                    return EmailResult.Ok;
+                    return true;
                 }
             }
             catch (Exception exp)
             {
-                return EmailResult.Fail;
+                return false;
             }
 
+        }
+
+        public bool SendMessage(string email, string subject, string body)
+        {
+            var message = MailMessageCreator.GenerateMessage(email, subject, body);
+            return SendMessage(message);
         }
     }
 }

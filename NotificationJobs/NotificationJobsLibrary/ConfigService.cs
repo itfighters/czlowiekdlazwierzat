@@ -15,7 +15,10 @@ namespace NotificationJobsLibrary
 
         public static SmsConfig GetSmsConfig => new SmsConfig()
         {
-
+            ApiUrl = "https://api.playsms.pl/send",
+            ApiKey = "8ad16723-2b9f-4b41-97cb-3aae72417bed",
+            ApiPassword = "Hackathon2019",
+            From = "TEST"
         };
     }
 }

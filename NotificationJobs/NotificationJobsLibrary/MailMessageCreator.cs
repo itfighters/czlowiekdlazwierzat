@@ -3,9 +3,9 @@ using System.Text;
 
 namespace NotificationJobsLibrary
 {
-    public class MailMassageCreator
+    public static class MailMessageCreator
     {
-        public MailMessage GenerateMessage()
+        public static MailMessage GenerateMessage(string to, string subject, string body)
         {
             var mailMessage = new MailMessage()
             {
@@ -13,10 +13,11 @@ namespace NotificationJobsLibrary
                 Priority = MailPriority.Normal,
                 IsBodyHtml = true,
                 From = new MailAddress(ConfigService.GetEmailConfig.From),
-                Subject = "testSub1",
+                Subject = subject,
+                Body = body,
             };
 
-            mailMessage.To.Add("nocon.robert@gmail.com");
+            mailMessage.To.Add(to);
 
             return mailMessage;
         }

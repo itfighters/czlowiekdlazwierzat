@@ -2,7 +2,7 @@
 
 namespace NotificationJobsLibrary
 {
-    public interface ISMSSender
+    public interface ISmsSender
     {
         bool Send(string text, IEnumerable<string> numbers);
     }

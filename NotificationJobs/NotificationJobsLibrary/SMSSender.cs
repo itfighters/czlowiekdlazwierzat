@@ -2,11 +2,11 @@
 
 namespace NotificationJobsLibrary
 {
-    public class SMSSender : ISMSSender
+    public class SmsSender : ISmsSender
     {
         public bool Send(string text, IEnumerable<string> numbers)
         {
-            IPlaySMSHelper helper = new PlaySMSHelper();
+            IPlaySmsHelper helper = new PlaySmsHelper();
             return helper.SendAsync(text, numbers).Result;
         }
     }

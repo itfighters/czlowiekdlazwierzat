@@ -4,6 +4,6 @@ namespace NotificationJobsLibrary
 {
     public interface IMailSender
     {
-        EmailResult SendMessage(MailMessage mailMessage);
+        bool SendMessage(string email, string subject, string body);
     }
 }

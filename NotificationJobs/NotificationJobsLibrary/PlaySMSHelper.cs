@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotificationJobsLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -7,24 +8,20 @@ using System.Web;
 
 namespace NotificationJobsLibrary
 {
-    public class PlaySMSHelper : IPlaySMSHelper
+    public class PlaySmsHelper : IPlaySmsHelper
     {
-        private const string ClientUrl = "https://api.playsms.pl/send";
-        private const string Key = "8ad16723-2b9f-4b41-97cb-3aae72417bed";
-        private const string Password = "Hackathon2019";
-        private const string From = "TEST";
-
         private HttpClient Client { get; }
         private UriBuilder UriBuilder { get; }
 
-        public PlaySMSHelper()
+        public PlaySmsHelper()
         {
+            var config = new SmsConfig();
             Client = new HttpClient();
-            UriBuilder = new UriBuilder(ClientUrl);
+            UriBuilder = new UriBuilder(config.ApiUrl);
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["key"] = Key;
-            query["password"] = Password;
-            query["from"] = From;
+            query["key"] = config.ApiKey;
+            query["password"] = config.ApiPassword;
+            query["from"] = config.From;
             UriBuilder.Query = query.ToString();
         }
 
