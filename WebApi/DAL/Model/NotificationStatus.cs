@@ -20,6 +20,6 @@ namespace DAL.Model
         public Notification Notification { get; set; }
 
         [Required]
-        public int NotificationId { get; set; }
+        public Guid NotificationId { get; set; }
     }
 }
