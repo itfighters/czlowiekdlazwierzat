@@ -26,9 +26,9 @@ namespace DAL.Repositories.Concrete
         {
             try
             {
+                auction.CreatedAt = DateTime.Now;
                 dbContext.Auctions.Add(auction);
                 dbContext.SaveChanges();
-
             }
             catch (DbUpdateException /* ex */)
             {
@@ -41,7 +41,6 @@ namespace DAL.Repositories.Concrete
             var auction = dbContext.Auctions.Find(id);
             auction.IsDeleted = true;
             UpdateAuction(auction);
-
         }
 
         public async void UpdateAuction(Auction auction)
