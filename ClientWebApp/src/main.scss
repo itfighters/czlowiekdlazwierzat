@@ -1,7 +1,11 @@
-@import url('styles/reset.scss');
-@import url('styles/variables.scss');
-@import url('styles/typography.scss');
-@import url('styles/mixins.scss');
+
+
+@import 'styles/reset.scss';
+@import 'styles/variables.scss';
+@import 'styles/typography.scss';
+@import 'styles/mixins.scss';
+@import 'styles/comps/buttons.scss';
+@import 'styles/comps/header.scss';
 
 
 
@@ -18,4 +22,13 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.icon {
+  &-back {
+    width: 22px;
+  }
+  &-home {
+    width: 30px;
+  }
 }
