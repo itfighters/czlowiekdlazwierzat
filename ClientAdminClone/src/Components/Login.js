@@ -36,10 +36,10 @@ class Login extends React.Component {
 
     handleSubmit(event) {
         loginService.sendLogUser(this.state.login_re, this.state.password_re).then(response => {
-            if (response.success) {
+            if (response.ok) {
                 localStorage.setItem("token", response)
                 this.props.history.push('/List');
-
+                this.setState({ credentials_invalid: false });
             }
             else {
                 this.setState({ credentials_invalid: true });
@@ -75,11 +75,10 @@ class Login extends React.Component {
                             <Button onClick={this.handleSubmit} color='black' fluid size='large'>
                                 Zaloguj
                              </Button>
-                             {this.state.credentials_invalid && <Label fluid icon = "warning circle" basic color='red' pointing>
-                             Nieprawidłowe dane logowania!</Label>}
-                        </Segment>  
+                            {this.state.credentials_invalid && <Label basic color='red' pointing>Nieprawidłowe dane logowania!</Label>}
+                        </Segment>
                     </Form>
-                  
+
                     <Message>
                         Pomyłka? <Link to={`/`}>Wróć na stronę główną</Link>
                     </Message>
