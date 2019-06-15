@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CollectionTile from '../collectionTile';
+import TilesListDetails from '../tilesListDetails';
 import { fetchTiles } from '../../services/tilesService';
 import TilesListFetchError from '../tiles_list_error';
 import Loader from '../loader';
@@ -13,6 +13,7 @@ class TilesList extends Component {
       isLoading: true,
     };
   }
+
   componentDidMount(){
     fetchTiles().then(response => {
       let tiles = response.values;
@@ -27,11 +28,13 @@ class TilesList extends Component {
         error: true,
         isLoading: false,
       });
-    })
+    });
   }
 
   render() {
+    const { selectedCategoryId } = this.props;
     const { tiles, error, isLoading } = this.state;
+
     if(isLoading){
       return <Loader />
     };
@@ -39,13 +42,24 @@ class TilesList extends Component {
     if(error){
       return <TilesListFetchError />;
     }
+
     if(!tiles || tiles.length === 0){
       return <div>Brak zbiórek</div>;
     }
+    let tilesList;
 
-    let tilesList = tiles.map(tile => {
-      return <CollectionTile tile={tile} />
-    });
+    if(selectedCategoryId){
+      tilesList = tiles.filter(x=> {
+        return x.categories.indexOf(selectedCategoryId) !== -1;
+      }).map(tile => {
+        return <TilesListDetails tile={tile} key={tile.id} />
+      });
+    }
+    else{
+      tilesList = tiles.map(tile => {
+        return <TilesListDetails tile={tile} key={tile.id} />
+      });
+    }
 
     return (
       <div className="collections-list">

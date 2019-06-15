@@ -21,5 +21,6 @@ namespace DAL
         public DbSet<Notification> Notifications { get; set; }
 
         public DbSet<NotificationStatus> NotificationStatuses { get; set; }
+
     }
 }
