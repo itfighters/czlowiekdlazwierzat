@@ -22,12 +22,12 @@ namespace DAL.Repositories.Concrete
             return dbContext.Auctions.Include(x=> x.Categories).FirstOrDefault(x=> x.Id == id);
         }
 
-        public async void AddAuction(Auction auction)
+        public void AddAuction(Auction auction)
         {
             try
             {
                 dbContext.Auctions.Add(auction);
-                await dbContext.SaveChangesAsync();
+                dbContext.SaveChanges();
 
             }
             catch (DbUpdateException /* ex */)
