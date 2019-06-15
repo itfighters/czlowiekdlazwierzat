@@ -1,44 +1,28 @@
 import React, { Component } from 'react';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
 
-export default class Partners extends Component {
-    render() {
-        const settings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 3,
-            slidesToScroll: 3
-        };
 
-        return (
-            <section>
-                <div>
-                    <h1>PARTNERZY</h1>
-                </div>
-                <Slider {...settings}>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                    <div>
-                        <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
-                    </div>
-                </Slider>
-            </section>
-        )
+export default function Partners() {
+    var Testresponsive = {
+        0: { items: 2 },
+        1024: { items: 6 },
     }
+
+
+    return (
+        <section>
+        <h1>
+            PARTNERZY
+        </h1>
+        <AliceCarousel mouseDragEnabled buttonsDisabled={true} dotsDisabled={true} autoPlayInterval={5000} infinite responsive={Testresponsive}  >
+            <a href="/" ><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+            <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+            <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+            <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+            <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+            <a href="/"><img alt="partner" src="https://itfighters.pl/wp-content/uploads/2018/08/home6-logo.png"></img></a>
+        </AliceCarousel>
+        </section>
+    )
 }
