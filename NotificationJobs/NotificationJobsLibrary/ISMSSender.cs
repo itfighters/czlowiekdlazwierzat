@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace NotificationJobsLibrary
 {
-    public interface ISMSSender 
+    public interface ISMSSender
     {
-
-        public void Send(string text, string number);
-
-
+        bool Send(string text, IEnumerable<string> numbers);
     }
 }

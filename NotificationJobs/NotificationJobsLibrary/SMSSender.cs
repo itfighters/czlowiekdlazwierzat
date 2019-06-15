@@ -1,18 +1,13 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace NotificationJobsLibrary
 {
     public class SMSSender : ISMSSender
     {
-        public SMSSender()
-        {
-
-        }
-
-        public void Send(string text, string number)
+        public bool Send(string text, IEnumerable<string> numbers)
         {
             IPlaySMSHelper helper = new PlaySMSHelper();
-            helper.SendAsync(text, number);
-
+            return helper.SendAsync(text, numbers).Result;
         }
     }
 }

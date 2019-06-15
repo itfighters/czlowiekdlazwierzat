@@ -1,11 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NotificationJobsLibrary
 {
     public interface IPlaySMSHelper
     {
-        void SendAsync(string text, string number);
-
+        Task<bool> SendAsync(string text, IEnumerable<string> numbers);
     }
 }
