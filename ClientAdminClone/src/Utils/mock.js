@@ -1,3 +1,5 @@
+
+
 export const list = [
     {
         title: "test Title",
@@ -8,11 +10,11 @@ export const list = [
         categories: [
             {
                 image: 'https://react.semantic-ui.com/images/avatar/small/tom.jpg',
-                name: 'Categp1'
+                name: 'Categ1'
             },
             {
                 image: 'https://react.semantic-ui.com/images/avatar/small/tom.jpg',
-                name: 'Cate22e1'
+                name: 'Categ2'
             }
         ]
 
