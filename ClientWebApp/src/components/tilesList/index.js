@@ -32,7 +32,7 @@ class TilesList extends Component {
   }
 
   render() {
-    const { selectedCategory } = this.props;
+    const { selectedCategoryId } = this.props;
     const { tiles, error, isLoading } = this.state;
 
     if(isLoading){
@@ -48,9 +48,9 @@ class TilesList extends Component {
     }
     let tilesList;
 
-    if(selectedCategory){
+    if(selectedCategoryId){
       tilesList = tiles.filter(x=> {
-        return x.categories.indexOf(selectedCategory.id) !== -1;
+        return x.categories.indexOf(selectedCategoryId) !== -1;
       }).map(tile => {
         return <TilesListDetails tile={tile} key={tile.id} />
       });

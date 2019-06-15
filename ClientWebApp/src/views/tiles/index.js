@@ -6,22 +6,22 @@ export default class Tiles extends Component {
   constructor(props){
     super(props);
     this.state = {
-      selectedCategory: undefined
+      selectedCategoryId: undefined
     };
   }
   setCategory = (category) =>{
     this.setState({
-      selectedCategory: category
+      selectedCategoryId: category.id
     });
   }
 
   render(){
-    const {selectedCategory} = this.state;
+    const {selectedCategoryId} = this.state;
     return(
       <div>
         Zbiórki
-        <TilesCategories setCategory={this.setCategory}/>
-        <TilesList selectedCategory={selectedCategory}/>
+        <TilesCategories setCategory={this.setCategory} selectedCategoryId={selectedCategoryId}/>
+        <TilesList selectedCategoryId={selectedCategoryId}/>
       </div>
     );
   }
