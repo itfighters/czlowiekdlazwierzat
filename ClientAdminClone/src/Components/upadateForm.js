@@ -6,17 +6,37 @@ import EmailBox from './EmailBox';
 import SmsBox from './SmsBox';
 import PushBox from './PushBox';
 
+const prepareForm = ({
+  account,
+  contactNumber,
+  dateFrom,
+  dateTo,
+  addressFrom,
+  addressTo,
+  ...remaining
+}) => ({
+  checkboxKonto: account,
+  phone: contactNumber,
+  dateStart: dateFrom,
+  dateEnd: dateTo,
+  addressStart: addressFrom,
+  addressEnd: addressTo,
+  ...remaining,
+});
+
 class updateForm extends Component {
   state = { loaded: false, form: null };
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    postService.getForm(id).then(form => this.setState({ form, loaded: true }));
+    postService
+      .getForm(id)
+      .then(form => this.setState({ form: prepareForm(form), loaded: true }));
   }
 
   onSubmit = form => {
     const { id } = this.props.match.params;
-    postService.updateForm(id, form);
+    return postService.updateForm(id, form);
   };
 
   render() {
