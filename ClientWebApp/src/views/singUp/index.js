@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { sendEmailAdressToServer, sendPhoneNumberToServer } from '../../services/substriction.services'
 
 var categories = [
     { id: 2, value: "srodkiNaNaprawy", display: 'ŚRODKI NA NAPRAWY' },
@@ -13,11 +14,27 @@ var categories = [
 export default class SingUp extends Component {
     constructor(props) {
         super(props)
-        this.state = { checked: [], acceptedMail: false, acceptedSms: false };
+        this.state = { checked: [], acceptedMail: false, acceptedSms: false, email: '', tel: '' };
     }
 
     showInConsole = () => {
         console.log(this.state);
+    }
+
+    addMail = () => {
+        sendEmailAdressToServer(this.state.email).then(resp => {
+            alert('zapisales sie')
+        }).catch(err => {
+            alert('cos sie wywalilo')
+        })
+    }
+
+    addTel = () => {
+        sendPhoneNumberToServer(this.state.tel).then(resp => {
+            alert('zapisales sie')
+        }).catch(err => {
+            alert('cos sie wywalilo')
+        })
     }
 
     acceptedChangeMail = () => {
@@ -38,6 +55,13 @@ export default class SingUp extends Component {
         }
 
         this.setState({ checked: checkedArray })
+    }
+
+    updateMail = (e) => {
+        this.setState({ email: e.target.value });
+    }
+    updateTel = (e) => {
+        this.setState({ tel: e.target.value });
     }
 
     render() {
@@ -70,16 +94,16 @@ export default class SingUp extends Component {
                     </section>
                     <form>
                         <h6>Podaj nam swój adres email, aby otrzymywać powiadomienia mailowe </h6>
-                        <input type="email" placeholder="mail" required />
+                        <input type="email" placeholder="mail" onChange={this.updateMail} value={this.state.email} required />
                         <label>
                             <input type="checkbox" defaultChecked={this.state.acceptedMail} onChange={this.acceptedChangeMail} required />Akceptuj regulamin</label><br />
-                        <button onClick={this.showInConsole}>Wyślij</button>
+                        <button onClick={this.addMail}>Wyślij</button>
                     </form>
                     <form>
                         <h6>Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms </h6>
-                        <input type="number" placeholder="telefon" required />
+                        <input type="number" placeholder="telefon"  onChange={this.updateTel} value={this.state.tel}  required />
                         <label><input type="checkbox" defaultChecked={this.state.acceptedSms} onChange={this.acceptedChangeSms} required />Akceptuj regulamin</label><br />
-                        <button onClick={this.showInConsole}>Wyślij</button>
+                        <button onClick={this.addTel}>Wyślij</button>
                     </form>
                     <section>
                         <h6>Zapisz się na push notification</h6>
