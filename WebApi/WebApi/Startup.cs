@@ -39,6 +39,14 @@ namespace WebApi
             services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -52,6 +60,13 @@ namespace WebApi
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("https://localhost:3000");
+            });
+
+            app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
             app.UseMvc();
