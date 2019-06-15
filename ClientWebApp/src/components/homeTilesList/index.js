@@ -13,6 +13,7 @@ class HomeTilesList extends Component {
       isLoading: true,
     };
   }
+  
   componentDidMount(){
     fetchTiles().then(response => {
       let tiles = response.values;
