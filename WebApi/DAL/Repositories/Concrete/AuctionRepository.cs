@@ -43,11 +43,11 @@ namespace DAL.Repositories.Concrete
             UpdateAuction(auction);
         }
 
-        public async void UpdateAuction(Auction auction)
+        public void UpdateAuction(Auction auction)
         {
-            var auctionToUpdate = await dbContext.Auctions.FirstOrDefaultAsync(a => a.Id == auction.Id);
+            var auctionToUpdate = dbContext.Auctions.FirstOrDefault(a => a.Id == auction.Id);
             dbContext.Entry(auctionToUpdate).CurrentValues.SetValues(auction);
-            await dbContext.SaveChangesAsync();
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<Auction> GetAuctions()
