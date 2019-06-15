@@ -26,8 +26,12 @@ namespace DTO.Mapper
                 Values = auctions.Select(ToAuctionResponse).ToList()
             };
 
-        public static AuctionResponse ToAuctionResponse(Auction auction) =>
-            new AuctionResponse
+        public static AuctionResponse ToAuctionResponse(Auction auction)
+        {
+            if (auction == null)
+                return null;
+
+            return new AuctionResponse
             {
                 Id = auction.Id,
                 Title = auction.Title,
@@ -35,13 +39,16 @@ namespace DTO.Mapper
                 Account = auction.Account,
                 AddressFrom = auction.AddressFrom,
                 AddressTo = auction.AddressTo,
-                Categories = auction.Categories.Select(x=> x.Id).ToList(),
+                Categories = auction.Categories.Select(x => x.Id).ToList(),
                 ContactNumber = auction.ContactNumber,
-                DateFrom =  auction.DateFrom,
+                DateFrom = auction.DateFrom,
                 DateTo = auction.DateTo,
                 DotpayLink = auction.DotpayLink,
                 SiepomagaLink = auction.SiepomagaLink,
-                Image = auction.Image
+                Image = auction.Image,
+                Featured = auction.Featured,
+                PaypalLink = auction.PaypalLink
             };
+        }
     }
 }
