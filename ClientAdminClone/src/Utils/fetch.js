@@ -7,7 +7,7 @@ export const get = path => {
   let data = '';
 
   switch (path) {
-    case 'https://czlowiekdlazwierzat.azurewebsite.net/server/api/user':
+    case 'https://czlowiekdlazwierzat.azurewebsites.net/server/api/user':
       data = list;
       break;
   }
@@ -30,7 +30,7 @@ export const post = (path, data) => {
   //   }
   // }
 
-  if(path === 'https://czlowiekdlazwierzat.azurewebsite.net/server/api/user')
+  if(path === 'https://czlowiekdlazwierzat.azurewebsites.net/server/api/user')
     return postImpl(path, data);
 
   console.group("post-mock");
