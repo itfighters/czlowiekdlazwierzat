@@ -25,11 +25,18 @@ const prepareForm = ({
 
 export default {
   getForm(id) {
-    return get(`/api/post/${id}`);
+    return get(
+      `https://czlowiekdlazwierzat.azurewebsites.net/server/api/auction/${id}`
+    );
   },
   loadCategories() {
     return get(
       'https://czlowiekdlazwierzat.azurewebsites.net/server/api/category'
+    );
+  },
+  getPosts() {
+    return get(
+      'https://czlowiekdlazwierzat.azurewebsites.net/server/api/auction'
     );
   },
   addForm(form) {
