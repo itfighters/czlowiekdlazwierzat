@@ -2,6 +2,6 @@ import React from 'react';
 
 export default function TilesListFetchError(){
   return(
-    <div>Nie udało się pobrać danych</div>
+    <div>Nie udało się pobrać listy zbiórek</div>
   );
 }

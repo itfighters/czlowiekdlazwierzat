@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CollectionTile from '../collectionTile';
-import { fetchHomeTiles } from '../../services/tilesService';
+import { fetchTiles } from '../../services/tilesService';
 import TilesListFetchError from '../tiles_list_error';
 
 class TilesList extends Component {
@@ -12,12 +12,12 @@ class TilesList extends Component {
     };
   }
   componentDidMount(){
-    fetchHomeTiles().then(response => {
+    fetchTiles().then(response => {
       this.setState({
         tiles: response,
         error: true,
       });
-    }).catch(err => {
+    }).catch(() => {
       this.setState({
         tiles: [],
         error: true
@@ -31,7 +31,7 @@ class TilesList extends Component {
       return <TilesListFetchError />;
     }
     if(!tiles || tiles.length === 0){
-      return <div/>;
+      return <div>Brak zbiórek</div>;
     }
 
     let tilesList = tiles.map(tile => {
