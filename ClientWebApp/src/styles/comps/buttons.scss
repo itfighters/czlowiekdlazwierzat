@@ -1,7 +1,15 @@
-btn {
+.btn {
     
     &-primary {
-
+        height: 60px;
+        background: $primary-color;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        color: white;
+        a {
+            color: white;
+        }
     }
     &-secondary {
 
