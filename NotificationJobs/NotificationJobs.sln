@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationJobs", "NotificationJobs\NotificationJobs.csproj", "{14123029-5DE9-417C-B2A3-AA6246F59635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationJobs", "NotificationJobs\NotificationJobs.csproj", "{14123029-5DE9-417C-B2A3-AA6246F59635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\WebApi\DAL\DAL.csproj", "{2F8B045A-19E0-4074-B47F-B4B150B49FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationJobsLibrary", "NotificationJobsLibrary\NotificationJobsLibrary.csproj", "{1F5D7B00-E4D1-431F-AE1D-08975F376629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{14123029-5DE9-417C-B2A3-AA6246F59635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14123029-5DE9-417C-B2A3-AA6246F59635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14123029-5DE9-417C-B2A3-AA6246F59635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F8B045A-19E0-4074-B47F-B4B150B49FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F8B045A-19E0-4074-B47F-B4B150B49FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F8B045A-19E0-4074-B47F-B4B150B49FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F8B045A-19E0-4074-B47F-B4B150B49FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F5D7B00-E4D1-431F-AE1D-08975F376629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F5D7B00-E4D1-431F-AE1D-08975F376629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F5D7B00-E4D1-431F-AE1D-08975F376629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F5D7B00-E4D1-431F-AE1D-08975F376629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
