@@ -15,21 +15,16 @@ namespace DAL.Repositories.Concrete
         {
             this.databaseContext = databaseContext;
         }
-        public string Validate(string login, string password)
+        public bool Validate(string login, string password)
         {
             User user = databaseContext.Users.FirstOrDefault(x=>x.Login == login);
             if (user == null)
-                return null;
+                return false;
 
             if (user.Password == password)
-                return GenerateToken();
+                return true;
             else
-                return null;
-        }
-
-        private string GenerateToken()
-        {
-            return "tokasdajsdkasodaksod";
+                return false;
         }
     }
 }
