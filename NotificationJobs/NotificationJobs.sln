@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationJobs", "NotificationJobs\NotificationJobs.csproj", "{14123029-5DE9-417C-B2A3-AA6246F59635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationJobsLibrary", "NotificationJobsLibrary\NotificationJobsLibrary.csproj", "{304823FE-DE98-4582-AE96-E1CE821E5608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationJobsLibrary", "NotificationJobsLibrary\NotificationJobsLibrary.csproj", "{304823FE-DE98-4582-AE96-E1CE821E5608}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{A6ABD7A6-29CE-4A22-AD37-81FF4C12D700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{304823FE-DE98-4582-AE96-E1CE821E5608}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{304823FE-DE98-4582-AE96-E1CE821E5608}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{304823FE-DE98-4582-AE96-E1CE821E5608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6ABD7A6-29CE-4A22-AD37-81FF4C12D700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6ABD7A6-29CE-4A22-AD37-81FF4C12D700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6ABD7A6-29CE-4A22-AD37-81FF4C12D700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6ABD7A6-29CE-4A22-AD37-81FF4C12D700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
