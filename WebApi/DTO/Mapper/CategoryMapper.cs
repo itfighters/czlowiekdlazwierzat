@@ -9,17 +9,24 @@ namespace DTO.Mapper
 {
     public class CategoryMapper
     {
-        public static CategoryResponse ToCategoryResponse(Category category) =>
-            new CategoryResponse
-            {
-                Id = category.Id,
-                Name = category.Name
-            };
+        public static CategoryResponse ToCategoryResponse(Category category)
+        {
+            if (category == null)
+                return null;
 
-        public static ListCategoryResponse ToListCategoryResponse(IEnumerable<Category> categories) =>
-            new ListCategoryResponse
+            var response = new CategoryResponse {Id = category.Id, Name = category.Name};
+            return response;
+        }
+
+        public static ListCategoryResponse ToListCategoryResponse(IEnumerable<Category> categories)
+        {
+            if (categories == null)
+                return null;
+
+            return new ListCategoryResponse
             {
                 Values = categories.Select(ToCategoryResponse).ToList()
             };
+        }
     }
 }
