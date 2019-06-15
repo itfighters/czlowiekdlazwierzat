@@ -28,8 +28,13 @@ namespace DAL.Model
         [MaxLength(500)]
         public string SiepomagaLink { get; set; }
 
+        [MaxLength(500)]
+        public string PaypalLink { get; set; }
+
 
         public bool Account { get; set; }
+
+        public bool Featured { get; set; }
 
         public  DateTime DateFrom { get; set; }
 

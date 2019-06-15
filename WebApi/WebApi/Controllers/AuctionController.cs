@@ -28,7 +28,7 @@ namespace WebApi.Controllers
             return AuctionMappers.ToListAuctionResponse(auctionRepository.GetAuctions());
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public AuctionResponse Get(int id)
         {
             return AuctionMappers.ToAuctionResponse(auctionRepository.GetAuction(id));
