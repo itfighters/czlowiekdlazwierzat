@@ -1,15 +1,14 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DTO.ResponseViewModel
+namespace DTO.RequestViewModel
 {
-    public class AuctionResponse
+    public class SaveOrUpdateAuctionRequest
     {
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
         public byte[] Image { get; set; }
         public List<int> Categories { get; set; }
         public string DotpayLink { get; set; }
@@ -20,5 +19,14 @@ namespace DTO.ResponseViewModel
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
         public string ContactNumber { get; set; }
+    }
+
+    public class AddAuctionRequestValidator : AbstractValidator<SaveOrUpdateAuctionRequest>
+    {
+        public AddAuctionRequestValidator()
+        {
+            RuleFor(x => x.Title).NotEmpty().Length(1, 250).WithMessage("Podaj tytuł");
+            RuleFor(x => x.Description).NotEmpty().Length(1,500).WithMessage("Podaj opis");
+        }
     }
 }
