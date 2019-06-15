@@ -1,0 +1,13 @@
+@import url(/variables.scss);
+
+@mixin ellipsis ($max-width) {
+    display: inline-block;
+    max-width: $max-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin underline-active ($color: $primary-color, $size: 6px ) {
+    border: $size solid $primary-color;
+}
