@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetDetails } from "../../services/auctionService";
+import Loader from '../../components/loader';
 export default class Details extends React.Component {
 
     constructor(props) {
@@ -8,7 +9,8 @@ export default class Details extends React.Component {
     }
 
     componentDidMount() {
-        GetDetails(6).then(details => {
+        var id = this.props.match.params.id;
+        GetDetails(id).then(details => {
             this.setState({ auction: details, loading: false })
             console.log(details);
         }).catch(err => {
@@ -21,7 +23,7 @@ export default class Details extends React.Component {
 
     render() {
 
-        if (this.state.loading) { return '...'; }
+        if (this.state.loading) { return <Loader/>; }
         if (this.state.error) {
             return <div>Niestety nie udało się wyświetlić strony. Spróbuj ponownie później.</div>
         }
@@ -58,9 +60,9 @@ export default class Details extends React.Component {
                     </div>
                     <div className="donate">
                         <div className="donate-buttons">
-                            {this.state.auction.siepomagaLink && <a href={this.state.auction.siepomagaLink}><img src="/" alt="siepomaga" target="_blank" /></a>}
-                            {this.state.auction.dotpayLink && <a href={this.state.auction.dotpayLink}><img src="/" alt="dotpay" target="_blank" /></a>}
-                            {this.state.auction.paypalLink && <a href={this.state.auction.paypalLink}><img src="/" alt="paypal" target="_blank" /></a>}
+                            {this.state.auction.siepomagaLink && <a href={this.state.auction.siepomagaLink} className="btn btn-rounded siepomaga" target="_blank"></a>}
+                            {this.state.auction.dotpayLink && <a href={this.state.auction.dotpayLink} className="btn btn-rounded dotpay" target="_blank"></a>}
+                            {this.state.auction.paypalLink && <a href={this.state.auction.paypalLink} className="btn btn-rounded paypal" target="_blank"></a>}
                         </div>
                         <div className="donate-info">
                             <p>
