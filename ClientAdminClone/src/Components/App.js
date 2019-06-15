@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Admin } from './Admin';
 import { Login } from './Login';
-import Form from './Form';
+import AddForm from './AddForm';
+import updateForm from './upadateForm';
 import { ProtectedRoutes } from './ProtectedRoutes'; 
 import '../Styles/App.css';
 
@@ -12,7 +13,8 @@ function App() {
       <div>
         <Route path="/login" component={Login} />
         <ProtectedRoutes path="/admin" component={Admin}></ProtectedRoutes>
-        <Route path='/form' component={Form} />
+        <Route path='/addform' component={AddForm} />
+        <Route path='/updateform' component={updateForm} />
       </div>
     </Router>
   );
