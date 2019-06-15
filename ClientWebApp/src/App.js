@@ -16,7 +16,6 @@ function App() {
                 <Route path="/notifications" component={Notifications} />
                 <Route path='/tiles' component={Tiles} />
             </Router>
-            <Loader visible={true} />
         </div>
     );
 }
