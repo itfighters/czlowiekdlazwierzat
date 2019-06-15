@@ -8,4 +8,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\DatabaseContext.cs" />
+    <Compile Remove="Model\Auction.cs" />
+    <Compile Remove="Models\NotificationContext.cs" />
+    <Compile Remove="SMSService.cs" />
+  </ItemGroup>
 </Project>
