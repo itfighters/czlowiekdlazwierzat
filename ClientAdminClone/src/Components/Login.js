@@ -3,13 +3,14 @@ import { Button, Form, Grid, Message, Header, Segment } from 'semantic-ui-react'
 import {
     Link
 } from 'react-router-dom';
+import loginService from '../service/loginService';
 
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            password: '1234',
+            login_re:'',
             password_re: '',
             password_has_error: false
         };
@@ -17,51 +18,26 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    checkPassword() {
-        if (!this.state.password || this.state.password != this.state.password_re) {
-            this.setState({ password_has_error: true });
-        }
-        else {
-            this.setState({ password_has_error: false });
-        }
-    }
-
+   
     handleChange = (event) => {
         const { value } = event.target
 
         this.setState({
             password_re: value
-        }, () =>
-                this.checkPassword()
-
-        );
+        });
     }
 
     handleSubmit(event) {
+        loginService.sendLogUser(this.state.login_re, this.state.password_re).then(response=>
+            {if(response.success){
+                localStorage.setItem("token", response)
+            }
+            else{
+                this.setState({password_has_error: true})
+                alert('Hasło nieprawidłowe!')
+            }})
         event.preventDefault();
-        if (this.state.password_has_error === true) {
-            alert('wrong password!')
-        }
-        else {
-            alert('good pass!')
-        }
     }
-
-    //    handleClick (event) {
-
-    //         const { password, userPassword } = this.state;
-    //         if (password !== userPassword) {
-    //             alert("Passwords don't match");
-    //         } else {
-    //             alert("Password matches!");
-    //         }
-    //         event.preventDefault();
-
-    //     }
-    //     handleChange(event) {
-    //         this.setState({userPassword: event.target.userPassword});
-    //       }
-
     render() {
         return (
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -71,16 +47,24 @@ class Login extends React.Component {
                     </Header>
                     <Form size='large'>
                         <Segment stacked>
+                        <Form.Input
+                                fluid icon="user"
+                                iconPosition='left'
+                                placeholder='Wprowadź login'
+                                type='text'
+                                value={this.state.userPassword}
+                                onChange={this.handleChange}
+                            />
                             <Form.Input
                                 fluid icon="lock"
                                 iconPosition='left'
-                                placeholder='Wprowadź kod token...'
+                                placeholder='Wprowadź hasło'
                                 type='password'
                                 value={this.state.userPassword}
                                 onChange={this.handleChange}
                             />
                             <Button onClick={this.handleSubmit} color='black' fluid size='large'>
-                                Zaloguj
+                                Zaloguj 
                              </Button>
                         </Segment>
                     </Form>
