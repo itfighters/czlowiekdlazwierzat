@@ -15,5 +15,12 @@ namespace DAL
         public DbSet<AuctionCategory> AuctionCategories { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Subscription> Subscriptions { get; set; }
+
+        public DbSet<Notification> Notifications { get; set; }
+
+        public DbSet<NotificationStatus> NotificationStatuses { get; set; }
+
     }
 }
