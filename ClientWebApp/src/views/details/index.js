@@ -40,20 +40,20 @@ export default class Details extends React.Component {
                         </div>
                     </div>
                 </section>
-                <section className="donate">
-                    <div>
+                <section>
+                    <div className="donate-title">
                         <h1>POMÓŻ</h1>
                     </div>
-                    <div>
-                        <div>
-                            <a href="/"><img src="/" alt="siepomaga" target="_blank" /></a>
-                            <a href="/"><img src="/" alt="paypal" target="_blank" /></a>
-                            <a href="/"><img src="/" alt="dotpay" target="_blank" /></a>
+                    <div className="donate">
+                        <div className="donate-buttons">
+                            <a className="btn btn-rounded siepomaga" href="/"></a>
+                            <a className="btn btn-rounded dotpay" href="/"></a>
+                            <a className="btn btn-rounded paypal" href="/"></a>
                         </div>
-                        <div>
+                        <div className="donate-info">
                             <p>
-                                Fundacja Człowiek dla Zwierząt Bank Spółdzielczy w Słomnikach 78 86140001 0010 0147 5971 0001
-                        </p>
+                                Fundacja Człowiek dla Zwierząt Bank Spółdzielczy w Słomnikach <div>78 86140001 0010 0147 5971 0001</div> 
+                            </p>
                         </div>
                     </div>
                 </section>
