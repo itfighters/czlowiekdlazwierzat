@@ -13,11 +13,11 @@ export default class About extends Component {
                             <p>32-107 Radziemice</p>
                         </div>
                         <div>
-                            <p>12378164811</p>
-                            <p>12378164811</p>
+                            <p><a href="tel:+48783553197">+48783553197</a></p>
+                            <p><a href="tel:+48534884174">+48534884174</a></p>
                         </div>
                         <div>
-                            <p>adres mailowy</p>
+                            <p><a href="mailto:adres e-mail">czlowiekdlazwierzat@gmail.com</a></p>
                         </div>
                         <div>
                             <p>NIP</p>
