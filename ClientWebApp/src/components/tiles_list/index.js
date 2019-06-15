@@ -39,7 +39,7 @@ class TilesList extends Component {
     });
 
     return (
-      <div>
+      <div className="collections-list">
         {tilesList}
       </div>
     );
