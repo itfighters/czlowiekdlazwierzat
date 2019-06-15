@@ -35,6 +35,7 @@
         justify-content: space-between;
         width: 100%;
         align-items: flex-end;
+        flex-wrap: wrap;
         div {
             line-height: 24px;
         }
@@ -43,30 +44,48 @@
         }
         .facebook-icon {
             position: relative;
+            width: 50px;
             img {
                 width: 50px;
                 height: 50px;
                 position: absolute;
                 bottom: -5px;
-                left: -40px;
+                left: -55px;
             }
+        }
+        a {
+            color: white;
         }
     }
 }
 
 
 @media screen and (max-width: 1023px) {
-    body {
-      .top-footer {
-          h2 {
-              display: none;
-          }
-          .partners {
-              padding: 0;
-          }
-      }
+    .top-footer {
+        h2 {
+            display: none;
+        }
+        .partners {
+            padding: 0;
+        }
+    }
 
+    .bottom-footer {
+        height: auto;
+        padding: 30px $side-padding 70px $side-padding;
+        border-bottom-right-radius: 170px;
+        .contact-container {
+            flex-direction: column;
+            height: auto;
+            align-items: flex-start;
+            div {
+                padding: 0 0 24px 0;
+            }
+            .facebook-icon {
+                align-self: flex-end;
+            }
+        }
+    }
 
       
-    }
-  }
+}
