@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DAL;
 using DAL.Repositories.Abstract;
 using DAL.Repositories.Concrete;
+using DAL.Services.Abstract;
+using DAL.Services.Concrete;
 using DTO.RequestViewModel;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +35,7 @@ namespace WebApi
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
         }
