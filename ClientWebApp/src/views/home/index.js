@@ -1,11 +1,11 @@
 import React from 'react';
-import CollectionTile from '../../components/collectionTile';
-
+import TilesList from '../../components/tiles_list';
 
 export default function Home() {
     return (
-        <div>
-            <h1>Home</h1>
+        <div className="home-page">
+            <h1>Zbiórki</h1>
+            <TilesList />
         </div>
     )
 }

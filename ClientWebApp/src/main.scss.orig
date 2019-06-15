@@ -6,9 +6,12 @@
 @import 'styles/mixins.scss';
 @import 'styles/comps/buttons.scss';
 @import 'styles/comps/header.scss';
+<<<<<<< HEAD
 @import 'styles/comps/details.scss';
+=======
 @import 'styles/comps/collection.scss';
 @import 'styles/comps/loader.scss';
+>>>>>>> origin/test
 
 
 

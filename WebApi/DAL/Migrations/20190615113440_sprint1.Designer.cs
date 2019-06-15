@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190615113440_sprint1")]
+    partial class sprint1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,14 +49,9 @@ namespace DAL.Migrations
                     b.Property<string>("DotpayLink")
                         .HasMaxLength(500);
 
-                    b.Property<bool>("Featured");
-
                     b.Property<byte[]>("Image");
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("PaypalLink")
-                        .HasMaxLength(500);
 
                     b.Property<string>("SiepomagaLink")
                         .HasMaxLength(500);

@@ -10,7 +10,7 @@ export default class Header extends Component {
             <ul>
               <li><NavLink to="/"><img className="icon-back" src="/assets/arrow-back.svg"/></NavLink></li>
               <li><NavLink to="/"><img className="icon-home" src="/assets/home.png"/></NavLink></li>
-              <li><NavLink to="/">Lista zbiórek</NavLink></li>
+              <li><NavLink to="/tiles">Lista zbiórek</NavLink></li>
               <li className="btn-primary"><NavLink to="/singup">Zapisz się na powiadomienia</NavLink></li>
             </ul>
           </nav>
