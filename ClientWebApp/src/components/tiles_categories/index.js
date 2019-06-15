@@ -33,6 +33,7 @@ class TilesCategories extends Component{
 
   render(){
     const { categoryData, error, isLoading } = this.state;
+    const { setCategory } = this.props;
 
     if(isLoading){
       return <Loader />
@@ -47,7 +48,7 @@ class TilesCategories extends Component{
     }
     
     let categories = categoryData.map(category => {
-      return <TileCategory category={category} key={category.id} />;
+      return <TileCategory category={category} key={category.id} setCategory={setCategory} />;
     });
     
     return(

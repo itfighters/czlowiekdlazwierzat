@@ -32,7 +32,9 @@ class TilesList extends Component {
   }
 
   render() {
+    const { selectedCategory } = this.props;
     const { tiles, error, isLoading } = this.state;
+
     if(isLoading){
       return <Loader />
     };
@@ -44,10 +46,20 @@ class TilesList extends Component {
     if(!tiles || tiles.length === 0){
       return <div>Brak zbiórek</div>;
     }
+    let tilesList;
 
-    let tilesList = tiles.map(tile => {
-      return <TilesListDetails tile={tile} key={tile.id} />
-    });
+    if(selectedCategory){
+      tilesList = tiles.filter(x=> {
+        return x.categories.indexOf(selectedCategory.id) !== -1;
+      }).map(tile => {
+        return <TilesListDetails tile={tile} key={tile.id} />
+      });
+    }
+    else{
+      tilesList = tiles.map(tile => {
+        return <TilesListDetails tile={tile} key={tile.id} />
+      });
+    }
 
     return (
       <div className="collections-list">
