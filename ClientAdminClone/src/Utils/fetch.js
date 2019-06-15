@@ -6,20 +6,22 @@ export const delay = (t, v) =>
 export const get = path => {
   let data = '';
 
-  switch (path) {
-    case 'https://czlowiekdlazwierzat.azurewebsite.net/server/api/user':
-      data = list;
-      break;
-  }
+  // if (path.startsWith('/api/post')) data = postExample;
 
-  if(path.startsWith('/api/post'))
-   data = postExample;
+  return fetch(path, { method: 'GET' }).then(data => data.json());
 
-  return delay(1000).then(() => data);
+  // return delay(1000).then(() => data);
 };
 
-const postImpl = (path, object) => fetch(path, 
-  {method: 'post', body: JSON.stringify(object)})
+const postImpl = (path, object) =>
+  fetch(path, {
+    method: 'post',
+    body: JSON.stringify(object),
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
 
 export const post = (path, data) => {
   let returnData = '';
@@ -33,14 +35,14 @@ export const post = (path, data) => {
   //   }
   // }
 
-  if(path === 'https://czlowiekdlazwierzat.azurewebsite.net/server/api/user')
-    return postImpl(path, data);
-
-  console.group("post-mock");
+  console.group('post-mock');
   console.log(path);
   console.log(data);
   console.log(returnData);
+  console.log(JSON.stringify(data));
   console.groupEnd();
 
+  if (returnData === '') return postImpl(path, data);
+
   return delay(1000).then(() => returnData);
-}
+};
