@@ -14,7 +14,7 @@ function App() {
                 <Header></Header>
                 <Route exact path="/" component={Home} />
                 <Route path="/notifications" component={Notifications} />
-                <Route path="/details" component={Details} />
+                <Route path="/details/:id" component={Details} />
                 <Route path='/tiles' component={Tiles} />
             </Router>
         </div>
