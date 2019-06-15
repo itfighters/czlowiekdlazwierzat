@@ -97,19 +97,6 @@ namespace DAL.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("DAL.Model.AuctionCategory", b =>
-                {
-                    b.HasOne("DAL.Model.Auction", "Auction")
-                        .WithMany("Categories")
-                        .HasForeignKey("AuctionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("DAL.Model.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DAL.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -127,6 +114,19 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("DAL.Model.AuctionCategory", b =>
+                {
+                    b.HasOne("DAL.Model.Auction", "Auction")
+                        .WithMany("Categories")
+                        .HasForeignKey("AuctionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DAL.Model.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

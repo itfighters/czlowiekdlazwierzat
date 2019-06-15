@@ -1,0 +1,25 @@
+@import '../variables.scss';
+
+.main-header {
+    padding: 0 $side-padding;
+    height: 185px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo-nav {
+        height: 130px;
+    }
+    nav {
+        display: flex;
+        align-items: center;
+        ul {
+            display: flex;
+            flex-direction: row;
+            font-size: $fs-paragraph;
+            align-items: center;
+            li {
+                margin-left: 36px;
+            }
+        }
+    }
+}
