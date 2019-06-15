@@ -28,34 +28,43 @@ namespace WebApi.Controllers
             return AuctionMappers.ToListAuctionResponse(auctionRepository.GetAuctions());
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public AuctionResponse Get(int id)
         {
-            //todo pobranie szczegółów aukcji
-            return "value";
+            return AuctionMappers.ToAuctionResponse(auctionRepository.GetAuction(id));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] AddAuctionRequest value)
+        public IActionResult Post([FromBody] SaveOrUpdateAuctionRequest value)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            //auctionRepository.AddAuction(AuctionMappers.FromAddAuctionRequest(value));
+            auctionRepository.AddAuction(AuctionMappers.FromAddAuctionRequest(value));
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] SaveOrUpdateAuctionRequest value)
         {
-            //todo aktualizacja aukcji
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            auctionRepository.UpdateAuction(AuctionMappers.FromAddAuctionRequest(value));
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            //todo ukrywanie aukcji
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            auctionRepository.DeleteAuction(id);
+            return Ok();
         }
     }
 }
