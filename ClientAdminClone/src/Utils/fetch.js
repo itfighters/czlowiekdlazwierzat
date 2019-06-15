@@ -13,6 +13,16 @@ export const get = path => {
   // return delay(1000).then(() => data);
 };
 
+export const put = (path, data) =>
+  fetch(path, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+
 const postImpl = (path, object) =>
   fetch(path, {
     method: 'post',

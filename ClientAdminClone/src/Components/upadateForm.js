@@ -40,6 +40,8 @@ class updateForm extends Component {
   };
 
   render() {
+    const { id } = this.props.match.params;
+
     if (this.state.loaded)
       return (
         <Grid
@@ -52,10 +54,14 @@ class updateForm extends Component {
             <Header as="h2" color="black" textAlign="center">
               Edytuj formularz
             </Header>
-            <PostForm form={this.state.form} isUpdate />
-            <EmailBox />
-            <SmsBox />
-            <PushBox />
+            <PostForm
+              form={this.state.form}
+              isUpdate
+              onSubmit={this.onSubmit}
+            />
+            <EmailBox id={id} />
+            <SmsBox id={id} />
+            <PushBox id={id} />
           </Grid.Column>
         </Grid>
       );
