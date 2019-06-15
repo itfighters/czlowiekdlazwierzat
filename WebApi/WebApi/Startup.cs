@@ -34,10 +34,19 @@ namespace WebApi
         {
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuctionRepository, AuctionRepository>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -51,6 +60,10 @@ namespace WebApi
             {
                 app.UseHsts();
             }
+
+           
+
+            app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
             app.UseMvc();

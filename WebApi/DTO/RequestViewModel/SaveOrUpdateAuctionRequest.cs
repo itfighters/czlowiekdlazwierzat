@@ -6,7 +6,7 @@ namespace DTO.RequestViewModel
 {
     public class SaveOrUpdateAuctionRequest
     {
-        public Guid? Id { get; set; }
+        public int? Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
@@ -14,11 +14,13 @@ namespace DTO.RequestViewModel
         public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }
-        public DateTime DateFrom { get; set; }
-        public DateTime DateTo { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
         public string ContactNumber { get; set; }
+        public string PaypalLink { get; set; }
+        public bool Featured { get; set; }
     }
 
     public class AddAuctionRequestValidator : AbstractValidator<SaveOrUpdateAuctionRequest>

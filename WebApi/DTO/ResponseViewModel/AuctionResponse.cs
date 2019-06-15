@@ -13,6 +13,9 @@ namespace DTO.ResponseViewModel
         public byte[] Image { get; set; }
         public List<int> Categories { get; set; }
         public string DotpayLink { get; set; }
+        public string PaypalLink { get; set; }
+
+        public bool Featured { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }
         public DateTime DateFrom { get; set; }
