@@ -6,6 +6,6 @@ namespace DAL.Repositories.Abstract
 {
     public interface IUserRepository
     {
-        string Validate(string login, string password);
+        bool Validate(string login, string password);
     }
 }
