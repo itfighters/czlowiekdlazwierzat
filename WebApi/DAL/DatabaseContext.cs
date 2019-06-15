@@ -10,6 +10,10 @@ namespace DAL
         { }
 
         public DbSet<Auction> Auctions { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<AuctionCategory> AuctionCategories { get; set; }
+
         public DbSet<User> Users { get; set; }
     }
 }

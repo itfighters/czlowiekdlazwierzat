@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,5 +18,30 @@ namespace DAL.Model
         [Required]
         [MaxLength(500)]
         public string Description { get; set; }
+
+        public byte[] Image { get; set; }
+
+        public  IList<AuctionCategory> Categories { get; set; }
+
+        [MaxLength(500)]
+        public string DotpayLink { get; set; }
+        [MaxLength(500)]
+        public string SiepomagaLink { get; set; }
+
+
+        public bool Account { get; set; }
+
+        public  DateTime DateFrom { get; set; }
+
+        public DateTime DateTo { get; set; }
+        [MaxLength(500)]
+        public string AddressFrom { get; set; }
+        [MaxLength(500)]
+        public  string AddressTo { get; set; }
+        [Required]
+        public  string ContactNumber { get; set; }
+
+        public  bool IsDeleted { get; set; }
+
     }
 }
