@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetDetails } from "../../services/auctionService";
+import Loader from '../../components/loader';
 export default class Details extends React.Component {
 
     constructor(props) {
@@ -22,7 +23,7 @@ export default class Details extends React.Component {
 
     render() {
 
-        if (this.state.loading) { return '...'; }
+        if (this.state.loading) { return <Loader/>; }
         if (this.state.error) {
             return <div>Niestety nie udało się wyświetlić strony. Spróbuj ponownie później.</div>
         }
