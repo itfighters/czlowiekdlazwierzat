@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CollectionTile from '../collectionTile';
+import CollectionTile from '../homeCollectionTile';
 import { fetchTiles } from '../../services/tilesService';
 import TilesListFetchError from '../tiles_list_error';
 import Loader from '../loader';
@@ -44,7 +44,7 @@ class TilesList extends Component {
     }
 
     let tilesList = tiles.map(tile => {
-      return <CollectionTile tile={tile} />
+      return <CollectionTile tile={tile} key={tile.id} />
     });
 
     return (

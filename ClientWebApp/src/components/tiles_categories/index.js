@@ -47,7 +47,7 @@ class TilesCategories extends Component{
     }
     
     let categories = categoryData.map(category => {
-      return <TileCategory category={category} />;
+      return <TileCategory category={category} key={category.id} />;
     });
     
     return(
