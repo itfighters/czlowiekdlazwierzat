@@ -1,7 +1,11 @@
 import React from 'react';
+import FoundationDescription from '../../components/foundationDescription';
 
 export default function Home() {
     return (
-        <h1>Home</h1>
+        <div>
+            <h1>Home</h1>
+            <FoundationDescription />
+        </div>
     )
 }
