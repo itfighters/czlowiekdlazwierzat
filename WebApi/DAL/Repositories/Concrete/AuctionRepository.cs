@@ -26,9 +26,9 @@ namespace DAL.Repositories.Concrete
         {
             try
             {
+                auction.CreatedAt = DateTime.Now;
                 dbContext.Auctions.Add(auction);
                 dbContext.SaveChanges();
-
             }
             catch (DbUpdateException /* ex */)
             {
@@ -41,14 +41,13 @@ namespace DAL.Repositories.Concrete
             var auction = dbContext.Auctions.Find(id);
             auction.IsDeleted = true;
             UpdateAuction(auction);
-
         }
 
-        public async void UpdateAuction(Auction auction)
+        public void UpdateAuction(Auction auction)
         {
-            var auctionToUpdate = await dbContext.Auctions.FirstOrDefaultAsync(a => a.Id == auction.Id);
+            var auctionToUpdate = dbContext.Auctions.FirstOrDefault(a => a.Id == auction.Id);
             dbContext.Entry(auctionToUpdate).CurrentValues.SetValues(auction);
-            await dbContext.SaveChangesAsync();
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<Auction> GetAuctions()
