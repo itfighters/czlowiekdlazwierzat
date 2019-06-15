@@ -14,5 +14,6 @@ namespace DAL
 
         public DbSet<AuctionCategory> AuctionCategories { get; set; }
 
+        public DbSet<User> Users { get; set; }
     }
 }
