@@ -48,12 +48,12 @@ export default class SingUp extends Component {
         });
 
         return (
-            <article>
-                <section>
+            <article className="signup-page">
+                <section className="sign-to">
                     <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </section>
-                <section>
+                <section className="step-one">
                     <section>
                         <h1>KROK 1 </h1>
                         <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
@@ -63,7 +63,7 @@ export default class SingUp extends Component {
                         {categoriesList}
                     </form>
                 </section>
-                <section>
+                <section className="step-two">
                     <section>
                         <h1>KROK 2</h1>
                         <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
