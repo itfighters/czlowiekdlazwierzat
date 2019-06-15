@@ -41,7 +41,9 @@ namespace DTO.Mapper
                 DateTo = auction.DateTo,
                 DotpayLink = auction.DotpayLink,
                 SiepomagaLink = auction.SiepomagaLink,
-                Image = auction.Image
+                Image = auction.Image,
+                Featured = auction.Featured,
+                PaypalLink = auction.PaypalLink
             };
     }
 }
