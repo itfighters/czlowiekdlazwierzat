@@ -1,7 +1,14 @@
 import React from 'react';
-export function List()
-{
+import { list } from '../Utils/mock'
+import Card from './list/card';
+// import {ButtonContainer} from './list/ButtonContainer';
+// import{CategoryContainer} from './list/CategoryContainer';
+
+export function List() {
     return (
-        <h1>Lista zbiorek</h1>
+        <div>
+            <h1>Lista zbiorek</h1>
+            {list.map(item => <Card {...item} />)}
+        </div>
     )
 }
