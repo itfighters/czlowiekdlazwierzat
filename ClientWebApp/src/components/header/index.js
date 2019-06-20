@@ -44,7 +44,7 @@ const Header = ({ history }) => {
             <NavLink to="/tiles">Lista zbiórek</NavLink>
           </li>
           <li>
-            <NavLink className="btn btn-primary" to="/singup">
+              <NavLink className="btn btn-primary" to="/signup">
               Zapisz się na powiadomienia
             </NavLink>
           </li>
