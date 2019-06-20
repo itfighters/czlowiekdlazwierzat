@@ -1,4 +1,4 @@
-import { get, post } from '../Utils/fetch';
+import { get, post, put } from '../Utils/fetch';
 
 const prepareForm = ({
   multichoiceCategories,
@@ -45,5 +45,10 @@ export default {
       prepareForm(form)
     );
   },
-  updateForm(id, form) {},
+  updateForm(id, form) {
+    return put(
+      `https://czlowiekdlazwierzat.azurewebsites.net/server/api/auction/${id}`,
+      prepareForm(form)
+    );
+  },
 };

@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export default function Notifications() {
-    return (
-        <h1>Notyfikacje</h1>
-    )
+  return <h1>Notyfikacje</h1>;
 }
