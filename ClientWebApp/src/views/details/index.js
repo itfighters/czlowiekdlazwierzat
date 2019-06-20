@@ -12,7 +12,6 @@ export default class Details extends React.Component {
     GetDetails(id)
       .then(details => {
         this.setState({ auction: details, loading: false });
-        console.log(details);
       })
       .catch(err => {
         this.setState({
@@ -35,11 +34,11 @@ export default class Details extends React.Component {
     }
     var auctionCategories = this.state.auction.categories.map(item => {
       return (
-        <div className="button-tile-item">
+        <div key={"category-" + item} className="button-tile-item">
           <img src="/assets/leczenie.svg" alt="leczenie" />
-          <p className="txt">
+          <span className="txt">
             <div>{item}</div>
-          </p>
+          </span>
         </div>
       );
     });
@@ -57,7 +56,7 @@ export default class Details extends React.Component {
             </div>
             <div className="description">
               <h2>{this.state.auction.title}</h2>
-              <p>{this.state.auction.description}</p>
+              <span>{this.state.auction.description}</span>
             </div>
           </div>
           <div className="buttons-tile">{auctionCategories}</div>
@@ -74,7 +73,7 @@ export default class Details extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="btn btn-rounded siepomaga"></i>
+                  <i className="btn btn-rounded siepomaga" />
                 </a>
               )}
               {this.state.auction.dotpayLink && (
@@ -83,7 +82,7 @@ export default class Details extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="btn btn-rounded dotpay"></i>
+                  <i className="btn btn-rounded dotpay" />
                 </a>
               )}
               {this.state.auction.paypalLink && (
@@ -92,15 +91,15 @@ export default class Details extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="btn btn-rounded paypal"></i>
+                  <i className="btn btn-rounded paypal" />
                 </a>
               )}
             </div>
             <div className="donate-info">
-              <p>
+              <span>
                 Fundacja Człowiek dla Zwierząt Bank Spółdzielczy w Słomnikach{" "}
                 <div>78 86140001 0010 0147 5971 0001</div>
-              </p>
+              </span>
             </div>
           </div>
         </section>
