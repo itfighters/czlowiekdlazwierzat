@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import SingUp from "./views/singUp";
+import SignUp from "./views/signUp";
 
 import Home from "./views/home";
 import Notifications from "./views/notifications";
@@ -17,7 +17,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/details/:id" component={Details} />
-        <Route path="/singUp" component={SingUp} />
+        <Route path="/signUp" component={SignUp} />
         <Route path="/tiles" component={Tiles} />
       </Router>
       <Footer />

@@ -1,4 +1,4 @@
-const URL = ""; //add if it will be ready
+const URL = ""; //add when it will be ready
 
 export function sendEmailAdressToServer(emailAdress) {
   return fetch(URL, {
