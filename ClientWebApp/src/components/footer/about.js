@@ -30,6 +30,7 @@ export default class About extends Component {
             <a
               href="https://www.facebook.com/fundacjaczlowiekdlazwierzat"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <img src="./assets/facebook-box.svg" alt="Logo-facebook" />
             </a>

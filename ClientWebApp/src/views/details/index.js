@@ -71,23 +71,29 @@ export default class Details extends React.Component {
               {this.state.auction.siepomagaLink && (
                 <a
                   href={this.state.auction.siepomagaLink}
-                  className="btn btn-rounded siepomaga"
                   target="_blank"
-                ></a>
+                  rel="noopener noreferrer"
+                >
+                  <i className="btn btn-rounded siepomaga"></i>
+                </a>
               )}
               {this.state.auction.dotpayLink && (
                 <a
                   href={this.state.auction.dotpayLink}
-                  className="btn btn-rounded dotpay"
                   target="_blank"
-                ></a>
+                  rel="noopener noreferrer"
+                >
+                  <i className="btn btn-rounded dotpay"></i>
+                </a>
               )}
               {this.state.auction.paypalLink && (
                 <a
                   href={this.state.auction.paypalLink}
-                  className="btn btn-rounded paypal"
                   target="_blank"
-                ></a>
+                  rel="noopener noreferrer"
+                >
+                  <i className="btn btn-rounded paypal"></i>
+                </a>
               )}
             </div>
             <div className="donate-info">

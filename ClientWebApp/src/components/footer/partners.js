@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AliceCarousel from "react-alice-carousel";
+// import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 
 export default class Partners extends Component {
@@ -29,22 +29,22 @@ export default class Partners extends Component {
         <div className="partners">
           {/* <AliceCarousel {...settings} ref={(el) => (this.Carousel = el)}> */}
           <a href="/">
-            <img alt="partner" src="./assets/it_fighters.png"></img>
+            <img alt="partner" src="/assets/it_fighters.png"></img>
           </a>
           <a href="/">
-            <img alt="partner" src="./assets/avande.png"></img>
+            <img alt="partner" src="/assets/avande.png"></img>
           </a>
           <a href="/">
-            <img alt="partner" src="./assets/play_sms.png"></img>
+            <img alt="partner" src="/assets/play_sms.png"></img>
           </a>
           <a href="/">
-            <img alt="partner" src="./assets/pan_mi_kupi.png"></img>
+            <img alt="partner" src="/assets/pan_mi_kupi.png"></img>
           </a>
           <a href="/">
-            <img alt="partner" src="./assets/kancelaria.png"></img>
+            <img alt="partner" src="/assets/kancelaria.png"></img>
           </a>
           <a href="/">
-            <img alt="partner" src="./assets/milomi.png"></img>
+            <img alt="partner" src="/assets/milomi.png"></img>
           </a>
           {/* </AliceCarousel> */}
           {/* <button onClick={() => this.Carousel._slidePrev()}>Prev button</button>

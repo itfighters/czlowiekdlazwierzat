@@ -12,7 +12,7 @@ export default class TilesListDetails extends Component {
     return (
       <div className="collect-tile">
         <div>
-          <img src={imageSrc} />
+          <img src={imageSrc} alt="zdjecie-potrzeby" />
           <h2 className="title">{tile.title}</h2>
           <h4 className="description">{tile.description}</h4>
           <Link to={link}>Więcej</Link>

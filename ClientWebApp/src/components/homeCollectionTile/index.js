@@ -13,7 +13,7 @@ export default class CollectionTile extends Component {
       <div className="collect-tile">
         <Link to={link}>
           <div>
-            <img src={imageSrc} />
+            <img src={imageSrc} alt="obrazek zbiórki" />
             <h2 className="title">{tile.title}</h2>
             <h4 className="description">{tile.description}</h4>
           </div>
