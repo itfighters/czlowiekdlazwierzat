@@ -6,18 +6,26 @@ export default class Header extends Component {
     return (
       <header className="main-header">
         <NavLink className="logo-nav" to="/">
-          <img src="/assets/logo-fundacja.svg"></img>
+          <img alt="ikona nagłówka" src="/assets/logo-fundacja.svg"></img>
         </NavLink>
         <nav className="main-nav">
           <ul>
             <li>
               <NavLink to="/">
-                <img className="icon-back" src="/assets/arrow-back.svg" />
+                <img
+                  alt="ikona nagłówka"
+                  className="icon-back"
+                  src="/assets/arrow-back.svg"
+                />
               </NavLink>
             </li>
             <li>
               <NavLink to="/">
-                <img className="icon-home" src="/assets/home.png" />
+                <img
+                  alt="ikona nagłówka"
+                  className="icon-home"
+                  src="/assets/home.png"
+                />
               </NavLink>
             </li>
             <li>

@@ -15,7 +15,6 @@ class HomeTilesList extends Component {
   }
 
   componentDidMount() {
-    debugger;
     fetchTiles()
       .then(response => {
         let tiles = response.values

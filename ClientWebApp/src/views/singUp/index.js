@@ -66,7 +66,7 @@ export default class SingUp extends Component {
     var categoryId = event.target.value;
     var checkedArray = this.state.checked;
     if (checkedArray.includes(categoryId)) {
-      checkedArray = checkedArray.filter(id => id != categoryId);
+      checkedArray = checkedArray.filter(id => id !== categoryId);
     } else {
       checkedArray.push(categoryId);
     }
