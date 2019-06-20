@@ -1,71 +1,70 @@
-import React, {Component} from 'react';
-import TilesListDetails from '../tilesListDetails';
-import { fetchTiles } from '../../services/tilesService';
-import TilesListFetchError from '../tiles_list_error';
-import Loader from '../loader';
+import React, { Component } from "react";
+import TilesListDetails from "../tilesListDetails";
+import { fetchTiles } from "../../services/tilesService";
+import TilesListFetchError from "../tiles_list_error";
+import Loader from "../loader";
 
 class TilesList extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       tiles: [],
       error: false,
-      isLoading: true,
+      isLoading: true
     };
   }
 
-  componentDidMount(){
-    fetchTiles().then(response => {
-      let tiles = response.values;
-      this.setState({
-        tiles: tiles,
-        error: false,
-        isLoading: false,
+  componentDidMount() {
+    fetchTiles()
+      .then(response => {
+        let tiles = response.values;
+        this.setState({
+          tiles: tiles,
+          error: false,
+          isLoading: false
+        });
+      })
+      .catch(() => {
+        this.setState({
+          tiles: [],
+          error: true,
+          isLoading: false
+        });
       });
-    }).catch(() => {
-      this.setState({
-        tiles: [],
-        error: true,
-        isLoading: false,
-      });
-    });
   }
 
   render() {
     const { selectedCategoryId } = this.props;
     const { tiles, error, isLoading } = this.state;
 
-    if(isLoading){
-      return <Loader />
-    };
+    if (isLoading) {
+      return <Loader />;
+    }
 
-    if(error){
+    if (error) {
       return <TilesListFetchError />;
     }
 
-    if(!tiles || tiles.length === 0){
+    if (!tiles || tiles.length === 0) {
       return <div>Brak zbiórek</div>;
     }
     let tilesList;
 
-    if(selectedCategoryId){
-      tilesList = tiles.filter(x=> {
-        return x.categories.indexOf(selectedCategoryId) !== -1;
-      }).map(tile => {
-        return <TilesListDetails tile={tile} key={tile.id} />
-      });
-    }
-    else{
+    if (selectedCategoryId) {
+      tilesList = tiles
+        .filter(x => {
+          return x.categories.indexOf(selectedCategoryId) !== -1;
+        })
+        .map(tile => {
+          return <TilesListDetails tile={tile} key={tile.id} />;
+        });
+    } else {
       tilesList = tiles.map(tile => {
-        return <TilesListDetails tile={tile} key={tile.id} />
+        return <TilesListDetails tile={tile} key={tile.id} />;
       });
     }
 
-    return (
-      <div className="collections-list">
-        {tilesList}
-      </div>
-    );
+    return <div className="collections-list">{tilesList}</div>;
   }
 }
 
