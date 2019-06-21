@@ -18,7 +18,7 @@ var categories = [
   }
 ];
 
-export default class SingUp extends Component {
+export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,8 +30,9 @@ export default class SingUp extends Component {
     };
   }
 
-  showInConsole = () => {
+  showInConsole = event => {
     console.log(this.state);
+    event.preventDefault();
   };
 
   addMail = () => {
@@ -63,7 +64,7 @@ export default class SingUp extends Component {
   };
 
   handleChange = event => {
-    var categoryId = event.target.value;
+    var categoryId = Number.parseInt(event.target.value);
     var checkedArray = this.state.checked;
     if (checkedArray.includes(categoryId)) {
       checkedArray = checkedArray.filter(id => id !== categoryId);
@@ -72,6 +73,17 @@ export default class SingUp extends Component {
     }
 
     this.setState({ checked: checkedArray });
+  };
+
+  toggleAll = e => {
+    if (e.target.checked) {
+      var categoriesList = categories.map(item => {
+        return item.id;
+      });
+      this.setState({ checked: categoriesList });
+    } else {
+      this.setState({ checked: [] });
+    }
   };
 
   updateMail = e => {
@@ -84,12 +96,13 @@ export default class SingUp extends Component {
   render() {
     var categoriesList = categories.map(item => {
       return (
-        <div>
+        <div key={"category-key-" + item.id}>
           <label>
             <input
               type="checkbox"
               value={item.id}
               onChange={this.handleChange}
+              checked={this.state.checked.includes(item.id)}
             />
             {item.display}
           </label>
@@ -118,7 +131,7 @@ export default class SingUp extends Component {
           </section>
           <form>
             <label>
-              <input type="checkbox" />
+              <input type="checkbox" onChange={this.toggleAll} />
               ZAZNACZ WSZYSTKO
             </label>
             {categoriesList}
@@ -129,7 +142,7 @@ export default class SingUp extends Component {
             <h1>KROK 2</h1>
             <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
           </section>
-          <form>
+          <form onSubmit={this.showInConsole}>
             <h6>
               Podaj nam swój adres email, aby otrzymywać powiadomienia mailowe{" "}
             </h6>
@@ -150,15 +163,16 @@ export default class SingUp extends Component {
               Akceptuj regulamin
             </label>
             <br />
-            <button onClick={this.addMail}>Wyślij</button>
+            <button type="submit">Wyślij</button>
           </form>
-          <form>
+          <form onSubmit={this.showInConsole}>
             <h6>
               Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms{" "}
             </h6>
             <input
-              type="number"
-              placeholder="telefon"
+              type="tel"
+              pattern="[0-9]{9}"
+              placeholder="123456789"
               onChange={this.updateTel}
               value={this.state.tel}
               required
@@ -173,7 +187,7 @@ export default class SingUp extends Component {
               Akceptuj regulamin
             </label>
             <br />
-            <button onClick={this.addTel}>Wyślij</button>
+            <button type="submit">Wyślij</button>
           </form>
           <section>
             <h6>Zapisz się na push notification</h6>
@@ -185,13 +199,18 @@ export default class SingUp extends Component {
             <h1>Rezygnacja z powiadomień</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </section>
-          <form>
-            <input type="number" placeholder="telefon" required />
-            <button>Wyślij</button>
+          <form onSubmit={this.showInConsole}>
+            <input
+              type="tel"
+              pattern="[0-9]{9}"
+              placeholder="123456789"
+              required
+            />
+            <button type="submit">Wyślij</button>
           </form>
-          <form>
+          <form onSubmit={this.showInConsole}>
             <input type="email" placeholder="mail" required />
-            <button>Wyślij</button>
+            <button type="submit">Wyślij</button>
           </form>
         </section>
       </article>
