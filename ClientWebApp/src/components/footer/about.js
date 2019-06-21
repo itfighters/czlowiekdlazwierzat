@@ -32,7 +32,7 @@ export default class About extends Component {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src="./assets/facebook-box.svg" alt="Logo-facebook" />
+              <img src="/assets/facebook-box.svg" alt="Logo-facebook" />
             </a>
           </div>
         </div>

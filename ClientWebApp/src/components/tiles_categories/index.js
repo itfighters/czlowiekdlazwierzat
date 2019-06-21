@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TileCategory from "../tile_category";
-import { fetchCategories } from "../../services/categoryService";
+import { GetAllCategories } from "../../services/categoryService";
 import FetchCategoriesError from "../fetch_categories_error";
 import Loader from "../loader";
 
@@ -15,7 +15,7 @@ class TilesCategories extends Component {
   }
 
   componentDidMount() {
-    fetchCategories()
+    GetAllCategories()
       .then(response => {
         let categories = response.values;
         this.setState({

@@ -1,6 +1,8 @@
 import React from "react";
 import { GetDetails } from "../../services/auctionService";
+import { GetAllCategories } from "../../services/categoryService";
 import Loader from "../../components/loader";
+
 export default class Details extends React.Component {
   constructor(props) {
     super(props);
@@ -9,8 +11,15 @@ export default class Details extends React.Component {
 
   componentDidMount() {
     var id = this.props.match.params.id;
-    GetDetails(id)
-      .then(details => {
+
+    var getDetails = GetDetails(id);
+    var getCategories = GetAllCategories();
+    Promise.all([getDetails, getCategories])
+      .then(response => {
+        let [details, categories] = response;
+        details.categories = details.categories.map(category => {
+          return categories.values.find(x => x.id === category);
+        });
         this.setState({ auction: details, loading: false });
       })
       .catch(err => {
@@ -33,11 +42,14 @@ export default class Details extends React.Component {
       );
     }
     var auctionCategories = this.state.auction.categories.map(item => {
+      if (!item || !item.id) {
+        return null;
+      }
       return (
-        <div key={"category-" + item} className="button-tile-item">
-          <img src="/assets/leczenie.svg" alt="leczenie" />
+        <div key={"category-" + item.id} className="button-tile-item">
+          <img src={item.src || "/assets/leczenie.svg"} alt="leczenie" />
           <span className="txt">
-            <div>{item}</div>
+            <div>{item.name}</div>
           </span>
         </div>
       );
