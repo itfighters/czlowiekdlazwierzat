@@ -17,8 +17,7 @@ export default class Partners extends Component {
       autoPlay: true,
       infinite: true,
       responsive: {
-        0: { items: 2 },
-        1024: { items: "*" }
+        0: { items: 2 }
       }
     };
 
@@ -32,7 +31,7 @@ export default class Partners extends Component {
     ].map(partner => {
       return (
         <a href="/">
-          <img alt="partner" src={"/assets/" + partner}></img>
+          <img alt="partner" src={"/assets/" + partner} />
         </a>
       );
     });
@@ -46,7 +45,7 @@ export default class Partners extends Component {
             {...settings}
             ref={el => (this.Carousel = el)}
             items={partners}
-          ></AliceCarousel>
+          />
           <button onClick={() => this.Carousel._slidePrev()}>
             Prev button
           </button>

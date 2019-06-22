@@ -1,22 +1,14 @@
 import React, { Component } from "react";
 import {
   sendEmailAdressToServer,
-  sendPhoneNumberToServer
+  sendPhoneNumberToServer,
+  confirmPhoneNumber
 } from "../../services/substriction.services";
+import { GetAllCategories } from "../../services/categoryService";
 
-var categories = [
-  { id: 2, value: "srodkiNaNaprawy", display: "ŚRODKI NA NAPRAWY" },
-  { id: 3, value: "potrzebniLudzie", display: "POTRZEBNI LUDZIE" },
-  { id: 4, value: "pomocRzeczowa", display: "POMOC RZECZOWA" },
-  { id: 5, value: "srodkiNaLeczenie", display: "ŚRODKI NA LECZENIE" },
-  { id: 6, value: "potrzebnyTransport", display: "POTRZEBNY TRANSPORT" },
-  { id: 7, value: "potrzebnyLek", display: "POTRZEBNY LEK" },
-  {
-    id: 8,
-    value: "zastepczyDom",
-    display: "PILNIE POTRZEBNY DOM/ZASTĘPCZY DOM"
-  }
-];
+import Loader from "../../components/loader";
+import Popup from "../../components/popup";
+import { ContentTypes, Terms, Confirm } from "../../components/popup/content";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -26,33 +18,34 @@ export default class SignUp extends Component {
       acceptedMail: false,
       acceptedSms: false,
       email: "",
-      tel: ""
+      tel: "",
+      visiblePopup: false,
+      categories: []
     };
   }
+
+  componentDidMount() {
+    GetAllCategories().then(allCategories => {
+      this.setState({ categories: allCategories.values });
+    });
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown = e => {
+    if (e.keyCode === 27) {
+      this.setState({
+        visiblePopup: false
+      });
+    }
+  };
 
   showInConsole = event => {
     console.log(this.state);
     event.preventDefault();
-  };
-
-  addMail = () => {
-    sendEmailAdressToServer(this.state.email)
-      .then(resp => {
-        alert("zapisales sie");
-      })
-      .catch(err => {
-        alert("cos sie wywalilo");
-      });
-  };
-
-  addTel = () => {
-    sendPhoneNumberToServer(this.state.tel)
-      .then(resp => {
-        alert("zapisales sie");
-      })
-      .catch(err => {
-        alert("cos sie wywalilo");
-      });
   };
 
   acceptedChangeMail = () => {
@@ -77,7 +70,7 @@ export default class SignUp extends Component {
 
   toggleAll = e => {
     if (e.target.checked) {
-      var categoriesList = categories.map(item => {
+      var categoriesList = this.state.categories.map(item => {
         return item.id;
       });
       this.setState({ checked: categoriesList });
@@ -93,8 +86,77 @@ export default class SignUp extends Component {
     this.setState({ tel: e.target.value });
   };
 
+  showPopup = type => {
+    this.setState({
+      visiblePopup: type
+    });
+  };
+
+  closePopup = () => {
+    this.setState({
+      visiblePopup: false
+    });
+  };
+
+  confirmNumber = number => {
+    console.log("confirm", number);
+    confirmPhoneNumber(number)
+      .then(resp => {
+        alert("Zapisałeś się");
+      })
+      .catch(err => {
+        alert("cos sie wywalilo");
+      });
+  };
+
+  submitMail = e => {
+    e.preventDefault();
+    var categories = this.state.checked;
+    if (categories.length === 0) {
+      alert(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia"
+      );
+      return;
+    }
+    var mail = this.state.email;
+
+    sendEmailAdressToServer(mail, categories)
+      .then(resp => {
+        alert("zapisales sie");
+      })
+      .catch(err => {
+        alert("cos sie wywalilo");
+      });
+  };
+
+  submitTel = e => {
+    e.preventDefault();
+    var categories = this.state.checked;
+    if (categories.length === 0) {
+      alert(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia"
+      );
+      return;
+    }
+    var tel = this.state.tel;
+
+    sendPhoneNumberToServer(tel, categories)
+      .then(resp => {
+        this.setState({
+          visiblePopup: ContentTypes.Confirm
+        });
+      })
+      .catch(err => {
+        alert("cos sie wywalilo");
+      });
+  };
+
   render() {
-    var categoriesList = categories.map(item => {
+    if (this.state.categories.length === 0) {
+      return <Loader />;
+    }
+
+    var categoriesList = this.state.categories.map(item => {
       return (
         <div key={"category-key-" + item.id}>
           <label>
@@ -104,7 +166,7 @@ export default class SignUp extends Component {
               onChange={this.handleChange}
               checked={this.state.checked.includes(item.id)}
             />
-            {item.display}
+            {item.name}
           </label>
         </div>
       );
@@ -142,7 +204,7 @@ export default class SignUp extends Component {
             <h1>KROK 2</h1>
             <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
           </section>
-          <form onSubmit={this.showInConsole}>
+          <form onSubmit={this.submitMail}>
             <h6>
               Podaj nam swój adres email, aby otrzymywać powiadomienia mailowe{" "}
             </h6>
@@ -160,19 +222,27 @@ export default class SignUp extends Component {
                 onChange={this.acceptedChangeMail}
                 required
               />
-              Akceptuj regulamin
+              Akceptuj
             </label>
+            <span
+              className="terms"
+              onClick={() => this.showPopup(ContentTypes.Terms)}
+            >
+              {" "}
+              regulamin
+            </span>
             <br />
             <button type="submit">Wyślij</button>
           </form>
-          <form onSubmit={this.showInConsole}>
+          <form onSubmit={this.submitTel}>
             <h6>
               Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms{" "}
             </h6>
             <input
               type="tel"
+              placeholder="telefon"
+              title="format: 123456789"
               pattern="[0-9]{9}"
-              placeholder="123456789"
               onChange={this.updateTel}
               value={this.state.tel}
               required
@@ -184,8 +254,15 @@ export default class SignUp extends Component {
                 onChange={this.acceptedChangeSms}
                 required
               />
-              Akceptuj regulamin
+              Akceptuj
             </label>
+            <span
+              className="terms"
+              onClick={() => this.showPopup(ContentTypes.Terms)}
+            >
+              {" "}
+              regulamin
+            </span>
             <br />
             <button type="submit">Wyślij</button>
           </form>
@@ -203,7 +280,8 @@ export default class SignUp extends Component {
             <input
               type="tel"
               pattern="[0-9]{9}"
-              placeholder="123456789"
+              placeholder="telefon"
+              title="format: 123456789"
               required
             />
             <button type="submit">Wyślij</button>
@@ -213,6 +291,12 @@ export default class SignUp extends Component {
             <button type="submit">Wyślij</button>
           </form>
         </section>
+        <Popup visible={this.state.visiblePopup} close={this.closePopup}>
+          {this.state.visiblePopup === ContentTypes.Confirm && (
+            <Confirm submit={this.confirmNumber} />
+          )}
+          {this.state.visiblePopup === ContentTypes.Terms && <Terms />}
+        </Popup>
       </article>
     );
   }

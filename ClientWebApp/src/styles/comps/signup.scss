@@ -1,16 +1,19 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .signup-page {
-    .sign-to {
-        padding: 0 $side-padding;
-        p {
-            column-count: 2;
-        }
+  .sign-to {
+    padding: 0 $side-padding;
+    p {
+      column-count: 2;
     }
-    .step-one {
-        
-    }
-    .step-two {
+  }
+  .step-one {
+  }
+  .step-two {
+  }
+}
 
-    }
+.terms {
+  cursor: pointer;
+  color: magenta;
 }
