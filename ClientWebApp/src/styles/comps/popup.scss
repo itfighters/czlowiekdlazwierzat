@@ -1,0 +1,13 @@
+@import '../variables.scss';
+
+.popup-container{
+    padding: 0 20%;
+    top: 20%;
+    position: fixed;
+    width: 100%;
+}
+
+.popup{
+    border: 1px solid black;
+    background-color: burlywood;
+}

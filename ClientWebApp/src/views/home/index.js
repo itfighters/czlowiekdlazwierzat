@@ -1,11 +1,11 @@
-import React from 'react';
-import HomeTilesList from '../../components/homeTilesList';
+import React from "react";
+import HomeTilesList from "../../components/homeTilesList";
 
 export default function Home() {
-    return (
-        <div className="home-page">
-            <h1>Zbiórki</h1>
-            <HomeTilesList />
-        </div>
-    )
+  return (
+    <div className="home-page">
+      <h1>Zbiórki</h1>
+      <HomeTilesList />
+    </div>
+  );
 }

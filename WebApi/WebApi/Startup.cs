@@ -37,6 +37,7 @@ namespace WebApi
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
