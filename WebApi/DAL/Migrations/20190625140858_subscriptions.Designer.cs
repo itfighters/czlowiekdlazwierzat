@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190625080018_cleanup-06-25")]
-    partial class cleanup0625
+    [Migration("20190625140858_subscriptions")]
+    partial class subscriptions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,19 +158,38 @@ namespace DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
+                    b.Property<string>("ConfirmationToken");
 
-                    b.Property<string>("Email");
+                    b.Property<bool>("Confirmed");
 
-                    b.Property<string>("Phone");
+                    b.Property<string>("Contact");
+
+                    b.Property<bool>("Subscribed");
 
                     b.Property<DateTime>("Timestamp");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Subscription");
+                });
+
+            modelBuilder.Entity("DAL.Model.SubscriptionCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<Guid>("SubscriptionId");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Subscription");
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("SubscriptionCategories");
                 });
 
             modelBuilder.Entity("DAL.Model.User", b =>
@@ -221,11 +240,16 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DAL.Model.Subscription", b =>
+            modelBuilder.Entity("DAL.Model.SubscriptionCategory", b =>
                 {
                     b.HasOne("DAL.Model.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DAL.Model.Subscription", "Subscription")
+                        .WithMany("Categories")
+                        .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

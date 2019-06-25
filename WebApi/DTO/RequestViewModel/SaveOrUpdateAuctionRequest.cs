@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DTO.RequestViewModel
 {
@@ -27,8 +28,15 @@ namespace DTO.RequestViewModel
     {
         public AddAuctionRequestValidator()
         {
-            RuleFor(x => x.Title).NotEmpty().Length(1, 250).WithMessage("Podaj tytuł");
-            RuleFor(x => x.Description).NotEmpty().Length(1,500).WithMessage("Podaj opis");
+            RuleFor(x => x.Title).NotEmpty().Length(1, 100);
+            RuleFor(x => x.Description).NotEmpty().Length(1, 500);
+            RuleFor(x => x.Categories).NotEmpty().Custom((arr, context) =>
+            {
+                if (arr.Any(x => x < 1))
+                    context.AddFailure("Wrong category id (value should be between 1 and 6)");
+            });
         }
     }
+
+   
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Model;
 using DAL.Services.Concrete;
 using DTO.RequestViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +23,6 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] SendSubscriptionRequest value)
         {
-           
-
            _service.AddNotifications(value.AuctionId,(SubscriptionType) value.Type);
             return Ok();
         }

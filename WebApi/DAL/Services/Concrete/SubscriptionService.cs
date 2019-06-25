@@ -23,37 +23,33 @@ namespace DAL.Services.Concrete
 
         public void AddNotifications(int auctionId, SubscriptionType type)
         {
-            var categories = dbContext.Auctions
-                .Include(x => x.Categories)
-                .FirstOrDefault(x => x.Id == auctionId)
-                .Categories.Select(x => x.CategoryId);
+            // TODO:  rebuild whole logic
 
-            var subscriptions = dbContext.Subscriptions
-                .Where(x => categories.Contains(x.CategoryId))
-                .Where(x => (type == SubscriptionType.Email && !string.IsNullOrEmpty(x.Email))
-                            || type == SubscriptionType.Sms && !string.IsNullOrEmpty(x.Phone))
-                .ToList();
+            //var categories = dbContext.Auctions
+            //    .Include(x => x.Categories)
+            //    .FirstOrDefault(x => x.Id == auctionId)
+            //    .Categories.Select(x => x.CategoryId);
 
-            var notifications = subscriptions.Select(x => new Notification
-            {
-                AuctionId = auctionId,
-                Email = x.Email,
-                Phone = x.Phone,
-                Timestamp = DateTime.Now
-            });
+            //var subscriptions = dbContext.Subscriptions
+            //    .Where(x => categories.Contains(x.CategoryId))
+            //    .Where(x => (type == SubscriptionType.Email && !string.IsNullOrEmpty(x.Email))
+            //                || type == SubscriptionType.Sms && !string.IsNullOrEmpty(x.Phone))
+            //    .ToList();
 
-            dbContext.Notifications.AddRange(notifications);
-            dbContext.SaveChanges();
+            //var notifications = subscriptions.Select(x => new Notification
+            //{
+            //    AuctionId = auctionId,
+            //    Email = x.Email,
+            //    Phone = x.Phone,
+            //    Timestamp = DateTime.Now
+            //});
+
+            //dbContext.Notifications.AddRange(notifications);
+            //dbContext.SaveChanges();
         }
 
 
         
-    }
-
-    public enum SubscriptionType
-    {
-        Sms = 1,
-        Email =2
     }
 }
 

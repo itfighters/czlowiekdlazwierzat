@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class cleanup0625 : Migration
+    public partial class subscriptions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,22 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscription",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Contact = table.Column<string>(nullable: true),
+                    Timestamp = table.Column<DateTime>(nullable: false),
+                    Subscribed = table.Column<bool>(nullable: false),
+                    Confirmed = table.Column<bool>(nullable: false),
+                    ConfirmationToken = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscription", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,22 +126,27 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subscription",
+                name: "SubscriptionCategories",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Timestamp = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SubscriptionId = table.Column<Guid>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscription", x => x.Id);
+                    table.PrimaryKey("PK_SubscriptionCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subscription_Categories_CategoryId",
+                        name: "FK_SubscriptionCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubscriptionCategories_Subscription_SubscriptionId",
+                        column: x => x.SubscriptionId,
+                        principalTable: "Subscription",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -184,9 +205,14 @@ namespace DAL.Migrations
                 column: "NotificationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subscription_CategoryId",
-                table: "Subscription",
+                name: "IX_SubscriptionCategories_CategoryId",
+                table: "SubscriptionCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubscriptionCategories_SubscriptionId",
+                table: "SubscriptionCategories",
+                column: "SubscriptionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -198,7 +224,7 @@ namespace DAL.Migrations
                 name: "NotificationStatuses");
 
             migrationBuilder.DropTable(
-                name: "Subscription");
+                name: "SubscriptionCategories");
 
             migrationBuilder.DropTable(
                 name: "User");
@@ -208,6 +234,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Subscription");
 
             migrationBuilder.DropTable(
                 name: "Auctions");

@@ -21,7 +21,7 @@ namespace DAL.Model
 
         public byte[] Image { get; set; }
 
-        public  IList<AuctionCategory> Categories { get; set; }
+        public IList<AuctionCategory> Categories { get; set; }
 
         [MaxLength(500)]
         public string DotpayLink { get; set; }

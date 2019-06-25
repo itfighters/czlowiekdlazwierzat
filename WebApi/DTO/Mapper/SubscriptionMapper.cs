@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DAL.Model;
 using DTO.RequestViewModel;
@@ -8,14 +9,15 @@ namespace DTO.Mapper
 {
     public static class SubscriptionMapper
     {
-        public static Subscription FromAddSubscriptionRequest(SaveOrUpdateSubscriptionRequest from)
+        public static Subscription FromAddSubscriptionRequest(SubscribeRequest from)
         {
             return new Subscription()
             {
-                Email = from.Email,
-                Phone = from.Phone,
-                Timestamp = DateTime.Now,
-                CategoryId = from.CategoryId,
+                Contact = from.Value,
+                Categories = from.Categories.Select(x => new SubscriptionCategory
+                {
+                    CategoryId = x
+                }).ToList()
             };
         }
     }

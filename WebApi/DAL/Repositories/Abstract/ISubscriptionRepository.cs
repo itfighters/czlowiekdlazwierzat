@@ -1,9 +1,12 @@
 ﻿using DAL.Model;
+using System.Threading.Tasks;
 
 namespace DAL.Repositories.Abstract
 {
     public interface ISubscriptionRepository
     {
-        void AddSubscription(Subscription subscription);
+        Task Subscribe(Subscription subscription);
+        Task Unsubscribe(string contact);
+        Task Confirm(string token);
     }
 }
