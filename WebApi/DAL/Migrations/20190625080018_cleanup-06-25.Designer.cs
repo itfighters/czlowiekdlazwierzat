@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190615151711_notifications2")]
-    partial class notifications2
+    [Migration("20190625080018_cleanup-06-25")]
+    partial class cleanup0625
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("ContactNumber")
                         .IsRequired();
+
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime>("DateFrom");
 
@@ -102,6 +104,15 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new { Id = 1, Name = "ŚRODKI NA LECZENIE" },
+                        new { Id = 2, Name = "ŚRODKI NA NAPRAWY" },
+                        new { Id = 3, Name = "POTRZEBNY TRANSPORT" },
+                        new { Id = 4, Name = "POTRZEBNI LUDZIE" },
+                        new { Id = 5, Name = "POMOC RZECZOWA" },
+                        new { Id = 6, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY" }
+                    );
                 });
 
             modelBuilder.Entity("DAL.Model.Notification", b =>

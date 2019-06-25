@@ -23,47 +23,46 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public ListAuctionResponse Get()
-        {
-            return AuctionMappers.ToListAuctionResponse(auctionRepository.GetAuctions());
-        }
+        public async Task<ListAuctionResponse> Get(int page, int pageSize, int[] category)
+            => AuctionMappers.ToListAuctionResponse(await auctionRepository.GetAuctions(page, pageSize, category));
 
         [HttpGet("{id}")]
-        public AuctionResponse Get(int id)
-        {
-            return AuctionMappers.ToAuctionResponse(auctionRepository.GetAuction(id));
-        }
+        public async Task<AuctionResponse> Get(int id) => AuctionMappers.ToAuctionResponse(await auctionRepository.GetAuction(id));
+
+        [HttpGet("featured")]
+        public async Task<ListAuctionResponse> GetFeatured(int count = 6)
+            => AuctionMappers.ToListAuctionResponse(await auctionRepository.GetFeaturedAuctions(count));
 
         [HttpPost]
-        public IActionResult Post([FromBody] SaveOrUpdateAuctionRequest value)
+        public async Task<IActionResult> Post([FromBody] SaveOrUpdateAuctionRequest value)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            auctionRepository.AddAuction(AuctionMappers.FromAddAuctionRequest(value));
+            await auctionRepository.AddAuction(AuctionMappers.FromAddAuctionRequest(value));
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] SaveOrUpdateAuctionRequest value)
+        public async Task<IActionResult> Put(int id, [FromBody] SaveOrUpdateAuctionRequest value)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            auctionRepository.UpdateAuction(AuctionMappers.FromAddAuctionRequest(value));
+            await auctionRepository.UpdateAuction(AuctionMappers.FromAddAuctionRequest(value));
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            auctionRepository.DeleteAuction(id);
+            await auctionRepository.DeleteAuction(id);
             return Ok();
         }
     }

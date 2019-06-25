@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DAL.Model;
 using DAL.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DAL.Repositories.Concrete
 {
@@ -17,42 +17,58 @@ namespace DAL.Repositories.Concrete
             this.dbContext = dbContext;
         }
 
-        public Auction GetAuction(int id)
+        public async Task<Auction> GetAuction(int id)
         {
-            return dbContext.Auctions.Include(x=> x.Categories).FirstOrDefault(x=> x.Id == id);
+            return await dbContext.Auctions
+                .Include(x => x.Categories)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void AddAuction(Auction auction)
+        public async Task AddAuction(Auction auction)
         {
-            try
-            {
-                auction.CreatedAt = DateTime.Now;
-                dbContext.Auctions.Add(auction);
-                dbContext.SaveChanges();
-            }
-            catch (DbUpdateException /* ex */)
-            {
-                // Obsluga 
-            }
+            auction.CreatedAt = DateTime.Now;
+            dbContext.Auctions.Add(auction);
+            await dbContext.SaveChangesAsync();
         }
 
-        public async void DeleteAuction(int id)
+        public async Task DeleteAuction(int id)
         {
             var auction = dbContext.Auctions.Find(id);
             auction.IsDeleted = true;
-            UpdateAuction(auction);
+            await UpdateAuction(auction);
         }
 
-        public void UpdateAuction(Auction auction)
+        public async Task UpdateAuction(Auction auction)
         {
-            var auctionToUpdate = dbContext.Auctions.FirstOrDefault(a => a.Id == auction.Id);
+            var auctionToUpdate = dbContext.Auctions
+                .FirstOrDefault(a => a.Id == auction.Id);
+
             dbContext.Entry(auctionToUpdate).CurrentValues.SetValues(auction);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<Auction> GetAuctions()
+        public async Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category)
         {
-            return dbContext.Auctions.Include(x=> x.Categories).Where(x  => !x.IsDeleted).ToList();
+           
+            return await BaseAuctionsQuery()
+                .Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any())
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
+
+        public async Task<IEnumerable<Auction>> GetFeaturedAuctions(int count)
+        {
+            return await BaseAuctionsQuery()
+                .Where(x => x.Featured == true)
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+        }
+
+        private IQueryable<Auction> BaseAuctionsQuery() => dbContext.Auctions
+                .Include(x => x.Categories)
+                .Where(x => !x.IsDeleted);
     }
 }

@@ -11,7 +11,7 @@ namespace DTO.ResponseViewModel
         public string Description { get; set; }
 
         public byte[] Image { get; set; }
-        public List<int> Categories { get; set; }
+        public IEnumerable<int> Categories { get; set; }
         public string DotpayLink { get; set; }
         public string PaypalLink { get; set; }
 

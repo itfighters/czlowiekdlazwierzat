@@ -51,7 +51,7 @@ namespace DTO.Mapper
                 Account = auction.Account,
                 AddressFrom = auction.AddressFrom,
                 AddressTo = auction.AddressTo,
-                Categories = auction.Categories.Select(x => x.Id).ToList(),
+                Categories = auction.Categories.Select(x => x.CategoryId),
                 ContactNumber = auction.ContactNumber,
                 DateFrom = auction.DateFrom,
                 DateTo = auction.DateTo,
