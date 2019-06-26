@@ -1,4 +1,5 @@
 ﻿using DAL.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.Abstract
@@ -8,5 +9,7 @@ namespace DAL.Repositories.Abstract
         Task Subscribe(Subscription subscription);
         Task Unsubscribe(string contact);
         Task Confirm(string token);
+        Task<IEnumerable<Subscription>> GetSubscriptionsByAuction(Auction auction, SubscriptionType type);
+        Task<int> GetSubscriptionsCountByAuction(Auction auction, SubscriptionType type);
     }
 }

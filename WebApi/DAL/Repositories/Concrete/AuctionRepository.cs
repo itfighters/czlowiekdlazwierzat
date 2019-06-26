@@ -26,7 +26,6 @@ namespace DAL.Repositories.Concrete
 
         public async Task AddAuction(Auction auction)
         {
-            auction.CreatedAt = DateTime.Now;
             dbContext.Auctions.Add(auction);
             await dbContext.SaveChangesAsync();
         }
@@ -41,15 +40,27 @@ namespace DAL.Repositories.Concrete
         public async Task UpdateAuction(Auction auction)
         {
             var auctionToUpdate = dbContext.Auctions
+                .Include(x => x.Categories)
                 .FirstOrDefault(a => a.Id == auction.Id);
 
-            dbContext.Entry(auctionToUpdate).CurrentValues.SetValues(auction);
+            auctionToUpdate.Title = auction.Title;
+            auctionToUpdate.Description = auction.Description;
+            auctionToUpdate.DotpayLink = auction.DotpayLink;
+            auctionToUpdate.SiepomagaLink = auction.SiepomagaLink;
+            auctionToUpdate.PaypalLink = auction.PaypalLink;
+            auctionToUpdate.Image = auction.Image;
+            auctionToUpdate.Categories = auction.Categories;
+            auctionToUpdate.Account = auction.Account;
+            auctionToUpdate.DateFrom = auction.DateFrom;
+            auctionToUpdate.DateTo = auction.DateTo;
+            auctionToUpdate.AddressFrom = auction.AddressTo;
+            auctionToUpdate.ContactNumber = auction.ContactNumber;
+
             await dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category)
         {
-           
             return await BaseAuctionsQuery()
                 .Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any())
                 .OrderBy(x => x.Id)

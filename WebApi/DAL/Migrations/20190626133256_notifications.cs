@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class subscriptions : Migration
+    public partial class notifications : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,8 +27,9 @@ namespace DAL.Migrations
                     AddressFrom = table.Column<string>(maxLength: 500, nullable: true),
                     AddressTo = table.Column<string>(maxLength: 500, nullable: true),
                     ContactNumber = table.Column<string>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,10 +55,12 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Contact = table.Column<string>(nullable: true),
-                    Timestamp = table.Column<DateTime>(nullable: false),
+                    SubscriptionType = table.Column<int>(nullable: false),
                     Subscribed = table.Column<bool>(nullable: false),
                     Confirmed = table.Column<bool>(nullable: false),
-                    ConfirmationToken = table.Column<string>(nullable: true)
+                    ConfirmationToken = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,27 +79,6 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Timestamp = table.Column<DateTime>(nullable: false),
-                    AuctionId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Notifications_Auctions_AuctionId",
-                        column: x => x.AuctionId,
-                        principalTable: "Auctions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,6 +108,34 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AuctionId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    SubscriptionId = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Auctions_AuctionId",
+                        column: x => x.AuctionId,
+                        principalTable: "Auctions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Subscription_SubscriptionId",
+                        column: x => x.SubscriptionId,
+                        principalTable: "Subscription",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SubscriptionCategories",
                 columns: table => new
                 {
@@ -147,26 +157,6 @@ namespace DAL.Migrations
                         name: "FK_SubscriptionCategories_Subscription_SubscriptionId",
                         column: x => x.SubscriptionId,
                         principalTable: "Subscription",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NotificationStatuses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    Timestamp = table.Column<DateTime>(nullable: false),
-                    NotificationId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NotificationStatuses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NotificationStatuses_Notifications_NotificationId",
-                        column: x => x.NotificationId,
-                        principalTable: "Notifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -200,9 +190,9 @@ namespace DAL.Migrations
                 column: "AuctionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NotificationStatuses_NotificationId",
-                table: "NotificationStatuses",
-                column: "NotificationId");
+                name: "IX_Notifications_SubscriptionId",
+                table: "Notifications",
+                column: "SubscriptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubscriptionCategories_CategoryId",
@@ -221,7 +211,7 @@ namespace DAL.Migrations
                 name: "AuctionCategories");
 
             migrationBuilder.DropTable(
-                name: "NotificationStatuses");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "SubscriptionCategories");
@@ -230,16 +220,13 @@ namespace DAL.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Notifications");
+                name: "Auctions");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Subscription");
-
-            migrationBuilder.DropTable(
-                name: "Auctions");
         }
     }
 }

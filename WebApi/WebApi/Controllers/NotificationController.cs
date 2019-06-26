@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Model;
+using DAL.Repositories.Abstract;
 using DAL.Services.Concrete;
 using DTO.RequestViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -13,18 +14,25 @@ namespace WebApi.Controllers
     [ApiController]
     public class NotificationController : Controller
     {
-        private ISubscriptionService _service;
+        private readonly INotificationRepository notificationRepository;
 
-        public NotificationController(ISubscriptionService service)
+        public NotificationController(INotificationRepository notificationRepository)
         {
-            _service = service;
+            this.notificationRepository = notificationRepository;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ToBeSentCount(int auctionId, SubscriptionType type)=>
+            Ok(await notificationRepository.ToBeSentCount(auctionId, type));
+       
+
 
         [HttpPost]
-        public IActionResult Post([FromBody] SendSubscriptionRequest value)
+        public async Task<IActionResult> Post([FromBody] AddNotificationRequest value)
         {
-           _service.AddNotifications(value.AuctionId,(SubscriptionType) value.Type);
+            await notificationRepository.AddNotification(value.AuctionId, value.Type);
             return Ok();
         }
+
     }
 }

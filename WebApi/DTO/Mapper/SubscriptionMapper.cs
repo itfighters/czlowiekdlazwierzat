@@ -13,6 +13,7 @@ namespace DTO.Mapper
         {
             return new Subscription()
             {
+                SubscriptionType = from.SubscriptionType,
                 Contact = from.Value,
                 Categories = from.Categories.Select(x => new SubscriptionCategory
                 {
