@@ -1,30 +1,27 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
-namespace DTO.RequestViewModel
+namespace CQRS.QueryData
 {
-    public class SaveOrUpdateAuctionRequest
+    public class AuctionQueryData
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
         public byte[] Image { get; set; }
-        public List<int> Categories { get; set; }
+        public IEnumerable<int> Categories { get; set; }
         public string DotpayLink { get; set; }
+        public string PaypalLink { get; set; }
+
+        public bool Featured { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
         public string ContactNumber { get; set; }
-        public string PaypalLink { get; set; }
-        public bool Featured { get; set; }
     }
-
-   
-
-   
 }

@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using CQRS.Command.Auctions;
 using DAL;
 using DAL.Repositories.Abstract;
 using DAL.Repositories.Concrete;
 using DAL.Services.Abstract;
 using DAL.Services.Concrete;
-using DTO.RequestViewModel;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Middleware;
 
@@ -42,8 +37,10 @@ namespace WebApi
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionCommandValidator>());
 
+            //services.AddScoped<IMediator, Mediator>();
+            services.AddMediatR(typeof(AddAuctionCommand).GetTypeInfo().Assembly);
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()

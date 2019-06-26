@@ -1,17 +1,14 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace DTO.RequestViewModel
+namespace CQRS.Command.Auctions
 {
-    public class SaveOrUpdateAuctionRequest
+    public abstract class BaseAuctionCommand
     {
-        public int? Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
-        public List<int> Categories { get; set; }
+        public IEnumerable<int> Categories { get; set; }
         public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }
@@ -23,8 +20,4 @@ namespace DTO.RequestViewModel
         public string PaypalLink { get; set; }
         public bool Featured { get; set; }
     }
-
-   
-
-   
 }
