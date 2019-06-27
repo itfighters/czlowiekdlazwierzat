@@ -1,10 +1,6 @@
 ﻿using DAL.Model;
 using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace CQRS.Command.Subscriptions
 {
@@ -19,7 +15,7 @@ namespace CQRS.Command.Subscriptions
     {
         public SubscribeCommandValidator()
         {
-            RuleFor(x => x.Categories).NotEmpty()
+            RuleFor(x => x.Categories).NotEmpty();
 
             RuleFor(x => x.SubscriptionType).NotEmpty().IsInEnum();
 

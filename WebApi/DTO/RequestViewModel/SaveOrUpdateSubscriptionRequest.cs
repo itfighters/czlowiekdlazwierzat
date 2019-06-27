@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using DAL.Model;
-using DAL.Services.Concrete;
 using FluentValidation;
 
 namespace DTO.RequestViewModel

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CQRS.Command;
 using CQRS.Command.Auctions;
 using CQRS.Query.Auctions;
 using CQRS.QueryData;
 using DAL.Repositories.Abstract;
-using DTO.Mapper;
-using DTO.RequestViewModel;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -37,12 +32,15 @@ namespace WebApi.Controllers
         [HttpGet("featured")]
         public async Task<IEnumerable<AuctionQueryData>> GetFeatured([FromQuery] GetFeaturedAuctionsQuery query) => await mediator.Send(query);
 
+        [Authorize]
         [HttpPost]
         public async Task AddAuction([FromBody] AddAuctionCommand command) => await mediator.Send(command);
 
+        [Authorize]
         [HttpPut]
         public async Task Put([FromBody] UpdateAuctionCommand command) => await mediator.Send(command);
 
+        [Authorize]
         [HttpDelete]
         public async Task Delete([FromQuery] DeleteAuctionCommand command) => await mediator.Send(command);
     }

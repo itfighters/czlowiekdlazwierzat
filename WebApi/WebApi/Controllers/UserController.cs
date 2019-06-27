@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL.Repositories.Abstract;
-using DAL.Services.Abstract;
-using DTO.RequestViewModel;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using CQRS.Command.User;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -14,24 +9,11 @@ namespace WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
-        private readonly IJWTService jwtService;
+        private readonly IMediator mediatior;
 
-        public UserController(IUserRepository userRepository, IJWTService jwtService)
-        {
-            this.userRepository = userRepository;
-            this.jwtService = jwtService;
-        }
+        public UserController(IMediator mediatior) => this.mediatior = mediatior;
 
-        [HttpPost]
-        public IActionResult Post([FromBody] ValidateUserRequest value)
-        {
-            if (userRepository.Validate(value.Login, value.Password))
-                return BadRequest("Bad credentials");
-            else
-                return Ok(jwtService.GenerateToken());
-        }
-
-
+        [HttpPost("validate")]
+        public async Task<string> Validate([FromBody] ValidateUserCommand command) => await mediatior.Send(command);
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CQRS.Query.Categories;
 using CQRS.QueryData;
-using DAL.Repositories.Abstract;
-using DTO.Mapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
