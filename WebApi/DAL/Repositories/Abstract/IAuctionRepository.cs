@@ -9,15 +9,5 @@ namespace DAL.Repositories.Abstract
     {
         Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category);
         Task<IEnumerable<Auction>> GetFeaturedAuctions(int count);
-
-
-        Task<Auction> GetAuction(int id);
-
-        Task AddAuction(Auction auction);
-
-        Task DeleteAuction(int id);
-
-        Task UpdateAuction(Auction auction);
-
     }
 }

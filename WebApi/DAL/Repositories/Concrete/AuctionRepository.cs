@@ -17,48 +17,6 @@ namespace DAL.Repositories.Concrete
             this.dbContext = dbContext;
         }
 
-        public async Task<Auction> GetAuction(int id)
-        {
-            return await dbContext.Auctions
-                .Include(x => x.Categories)
-                .FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task AddAuction(Auction auction)
-        {
-            dbContext.Auctions.Add(auction);
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteAuction(int id)
-        {
-            var auction = dbContext.Auctions.Find(id);
-            auction.IsDeleted = true;
-            await UpdateAuction(auction);
-        }
-
-        public async Task UpdateAuction(Auction auction)
-        {
-            var auctionToUpdate = dbContext.Auctions
-                .Include(x => x.Categories)
-                .FirstOrDefault(a => a.Id == auction.Id);
-
-            auctionToUpdate.Title = auction.Title;
-            auctionToUpdate.Description = auction.Description;
-            auctionToUpdate.DotpayLink = auction.DotpayLink;
-            auctionToUpdate.SiepomagaLink = auction.SiepomagaLink;
-            auctionToUpdate.PaypalLink = auction.PaypalLink;
-            auctionToUpdate.Image = auction.Image;
-            auctionToUpdate.Categories = auction.Categories;
-            auctionToUpdate.Account = auction.Account;
-            auctionToUpdate.DateFrom = auction.DateFrom;
-            auctionToUpdate.DateTo = auction.DateTo;
-            auctionToUpdate.AddressFrom = auction.AddressTo;
-            auctionToUpdate.ContactNumber = auction.ContactNumber;
-
-            await dbContext.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category)
         {
             return await BaseAuctionsQuery()

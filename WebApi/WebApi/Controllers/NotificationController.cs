@@ -1,38 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL.Model;
-using DAL.Repositories.Abstract;
-using DAL.Services.Concrete;
-using DTO.RequestViewModel;
+﻿using System.Threading.Tasks;
+using CQRS.Command.Notifications;
+using CQRS.Query.Notifications;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NotificationController : Controller
     {
-        private readonly INotificationRepository notificationRepository;
+        private readonly IMediator mediator;
 
-        public NotificationController(INotificationRepository notificationRepository)
-        {
-            this.notificationRepository = notificationRepository;
-        }
+        public NotificationController(IMediator mediator) => this.mediator = mediator;
 
         [HttpGet]
-        public async Task<IActionResult> ToBeSentCount(int auctionId, SubscriptionType type)=>
-            Ok(await notificationRepository.ToBeSentCount(auctionId, type));
-       
-
+        public async Task<int> ToBeSentCount([FromQuery] ToBeSentQuery query) => await mediator.Send(query);
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AddNotificationRequest value)
-        {
-            await notificationRepository.AddNotification(value.AuctionId, value.Type);
-            return Ok();
-        }
-
+        public async Task Post([FromBody] AddNotificationCommand command) => await mediator.Send(command);
     }
 }
