@@ -16,7 +16,7 @@ namespace CQRS.Mapper
             Account = a.Account,
             AddressFrom = a.AddressFrom,
             AddressTo = a.AddressTo,
-            Categories = a.Categories.Select(x => x.CategoryId),
+            Categories = a.Categories?.Select(x => x.CategoryId),
             ContactNumber = a.ContactNumber,
             DateFrom = a.DateFrom,
             DateTo = a.DateTo,

@@ -1,21 +1,21 @@
 ﻿using DAL.Model;
 using FluentValidation;
+using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DTO.RequestViewModel
+namespace CQRS.Command.Notifications
 {
-    public class AddNotificationRequest
+    public class AddNotificationCommand : IRequest
     {
         public int AuctionId { get; set; }
         public SubscriptionType Type { get; set; }
     }
 
-    public class AddNotificationRequestValidator : AbstractValidator<AddNotificationRequest>
+    public class AddNotificationCommandValidator : AbstractValidator<AddNotificationCommand>
     {
-        public AddNotificationRequestValidator()
+        public AddNotificationCommandValidator()
         {
             RuleFor(x => x.AuctionId).NotEmpty();
             RuleFor(x => x.Type).NotEmpty().IsInEnum();

@@ -8,8 +8,6 @@ namespace DAL.Repositories.Abstract
 {
     public interface INotificationRepository
     {
-        Task AddNotification(int auctionId, SubscriptionType subscriptionType);
-
         Task<int> ToBeSentCount(int auctionId, SubscriptionType subscriptionType);
     }
 }

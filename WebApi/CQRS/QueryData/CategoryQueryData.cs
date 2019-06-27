@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DTO.ResponseViewModel
+namespace CQRS.QueryData
 {
-    public class CategoryResponse
+    public class CategoryQueryData
     {
         public int Id { get; set; }
         public string Name { get; set; }

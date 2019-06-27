@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190626192400_setup")]
-    partial class setup
+    [Migration("20190627092358_notifications")]
+    partial class notifications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

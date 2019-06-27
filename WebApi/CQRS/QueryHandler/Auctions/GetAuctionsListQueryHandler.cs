@@ -24,7 +24,8 @@ namespace CQRS.QueryHandler.Auctions
 
         public async Task<IEnumerable<AuctionQueryData>> Handle(GetAuctionsListQuery request, CancellationToken cancellationToken)
         {
-            var auctions = await auctionsRepository.GetAuctions(request.Page, request.PageSize, request.Categories);
+            var auctions = await auctionsRepository
+                .GetAuctions(request.Page, request.PageSize, request.Categories);
 
             return auctions.Select(AuctionMapper.FromAuctionToAuctionQueryData);
         }

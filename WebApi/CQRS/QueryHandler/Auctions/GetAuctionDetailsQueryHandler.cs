@@ -22,11 +22,15 @@ namespace CQRS.QueryHandler.Auctions
             this.dbContext = dbContext;
         }
 
-        public async Task<AuctionQueryData> Handle(GetAuctionDetailsQuery request, CancellationToken cancellationToken) =>
-            await dbContext.Auctions
+        public async Task<AuctionQueryData> Handle(GetAuctionDetailsQuery request, CancellationToken cancellationToken)
+        {
+            var auction = await dbContext.Auctions
                 .Include(x => x.Categories)
-                .Select(x=>AuctionMapper.FromAuctionToAuctionQueryData(x))
             .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+            return AuctionMapper.FromAuctionToAuctionQueryData(auction);
+        }
+
 
 
     }
