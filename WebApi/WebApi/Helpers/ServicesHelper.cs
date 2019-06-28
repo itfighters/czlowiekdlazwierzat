@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NotificationJobsLibrary.Services.Abstract;
+using NotificationJobsLibrary.Services.Concrete;
 using System;
 using System.Text;
 
@@ -23,6 +25,7 @@ namespace WebApi.Helpers
             this.services = services;
             this.configuration = configuration;
         }
+        
         public void ConfigureAuthServices()
         {
 
@@ -67,6 +70,9 @@ namespace WebApi.Helpers
         {
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ISMSService, SMSService>();
         }
     }
 }

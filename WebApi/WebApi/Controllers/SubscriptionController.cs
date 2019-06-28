@@ -10,12 +10,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class SubscriptionController : ControllerBase
     {
-        private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IMediator mediator;
 
-        public SubscriptionController(ISubscriptionRepository subscriptionRepository, IMediator mediator)
+        public SubscriptionController(IMediator mediator)
         {
-            _subscriptionRepository = subscriptionRepository;
             this.mediator = mediator;
         }
 

@@ -37,6 +37,7 @@ namespace WebApi
             var servicesHelper = new ServicesHelper(services, Configuration);
             servicesHelper.ConfigureSettings();
             servicesHelper.ConfigureServices();
+            servicesHelper.ConfigureRepositories();
             servicesHelper.ConfigureAuthServices();
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -56,7 +57,6 @@ namespace WebApi
             {
                 c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
             });
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

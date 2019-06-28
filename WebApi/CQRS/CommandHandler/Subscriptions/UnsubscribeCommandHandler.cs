@@ -1,5 +1,6 @@
 ﻿using CQRS.Command.Subscriptions;
 using DAL;
+using DAL.Model;
 using MediatR;
 using System;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace CQRS.CommandHandler.Subscriptions
                 subscription.ConfirmationToken = numb.ToString();
                 #endregion
                 subscription.Subscribed = false;
-                subscription.Confirmed = false;
+                subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
                 await dbContext.SaveChangesAsync();
             }
         }

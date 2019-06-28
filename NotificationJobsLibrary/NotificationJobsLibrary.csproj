@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <Compile Remove="Model\Auction.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\DatabaseContext.cs" />
-    <Compile Remove="Model\Auction.cs" />
-    <Compile Remove="Models\NotificationContext.cs" />
-    <Compile Remove="SMSService.cs" />
+    <ProjectReference Include="..\WebApi\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Options">
+      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.options\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

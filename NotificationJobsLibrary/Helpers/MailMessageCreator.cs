@@ -5,14 +5,15 @@ namespace NotificationJobsLibrary
 {
     public static class MailMessageCreator
     {
-        public static MailMessage GenerateMessage(string to, string subject, string body)
+
+        public static MailMessage GenerateMessage(string to, string from, string subject, string body)
         {
             var mailMessage = new MailMessage()
             {
                 BodyEncoding = Encoding.UTF8,
                 Priority = MailPriority.Normal,
                 IsBodyHtml = true,
-                From = new MailAddress(ConfigService.GetEmailConfig.From),
+                From = new MailAddress(from),
                 Subject = subject,
                 Body = body,
             };

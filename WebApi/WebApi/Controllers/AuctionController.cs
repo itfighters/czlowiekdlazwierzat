@@ -10,22 +10,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuctionController : ControllerBase
     {
-        private readonly IAuctionRepository auctionRepository;
         private readonly IMediator mediator;
 
-        public AuctionController(IAuctionRepository auctionRepository, IMediator mediator)
+        public AuctionController( IMediator mediator)
         {
-            this.auctionRepository = auctionRepository;
             this.mediator = mediator;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
 
+        [AllowAnonymous]
         [HttpGet("details")]
         public async Task<AuctionQueryData> Get([FromQuery] GetAuctionDetailsQuery query) => await mediator.Send(query);
 

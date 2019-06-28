@@ -1,4 +1,6 @@
-﻿using NotificationJobsLibrary.Models;
+﻿using Infrastructure;
+using Microsoft.Extensions.Options;
+using NotificationJobsLibrary.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -6,22 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace NotificationJobsLibrary
+namespace NotificationJobsLibrary.Services.Concrete
 {
-    public class PlaySmsHelper : IPlaySmsHelper
+    public class SMSService : ISMSService
     {
+        private readonly IOptions<SMSConfig> options;
         private HttpClient Client { get; }
         private UriBuilder UriBuilder { get; }
 
-        public PlaySmsHelper()
+        public SMSService(IOptions<SMSConfig> options)
         {
-            var config = new SmsConfig();
+            this.options = options;
             Client = new HttpClient();
-            UriBuilder = new UriBuilder(config.ApiUrl);
+            UriBuilder = new UriBuilder(options.Value.ApiUrl);
             var query = HttpUtility.ParseQueryString(string.Empty);
-            query["key"] = config.ApiKey;
-            query["password"] = config.ApiPassword;
-            query["from"] = config.From;
+            query["key"] = options.Value.ApiKey;
+            query["password"] = options.Value.ApiPassword;
+            query["from"] = options.Value.From;
             UriBuilder.Query = query.ToString();
         }
 
@@ -33,6 +36,8 @@ namespace NotificationJobsLibrary
             builder.AppendJoin("&to=", numbers);
 
             var result = await Client.GetAsync(builder.ToString());
+
+            //dodać logowanie
             return result.IsSuccessStatusCode;
         }
     }
