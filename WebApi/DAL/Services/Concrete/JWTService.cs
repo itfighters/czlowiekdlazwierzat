@@ -1,5 +1,6 @@
 ﻿using DAL.Model;
 using DAL.Services.Abstract;
+using Infrastructure;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,14 +12,17 @@ namespace DAL.Services.Concrete
 {
     public class JWTService : IJWTService
     {
-        private readonly string secret;
+        private readonly IOptions<JWTConfig> config;
 
-        public JWTService(string secret) => this.secret = secret;
+        public JWTService(IOptions<JWTConfig> config, IOptions<SMSConfig> smsConfig, IOptions<EmailConfig> emailConfig)
+        {
+            this.config = config;
+        }
 
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret); 
+            var key = Encoding.ASCII.GetBytes(config.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

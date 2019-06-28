@@ -7,6 +7,7 @@ using DAL.Repositories.Concrete;
 using DAL.Services.Abstract;
 using DAL.Services.Concrete;
 using FluentValidation.AspNetCore;
+using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Helpers;
 using WebApi.Middleware;
 
 namespace WebApi
@@ -32,38 +34,12 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            var keyString = Configuration.GetSection("AppSettings").GetValue<string>("Secret");
-            var key = Encoding.ASCII.GetBytes(keyString);
+            var servicesHelper = new ServicesHelper(services, Configuration);
+            servicesHelper.ConfigureSettings();
+            servicesHelper.ConfigureServices();
+            servicesHelper.ConfigureAuthServices();
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<IAuctionRepository, AuctionRepository>();
-            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
-
-            services.AddScoped<IJWTService, JWTService>((p) =>
-                new JWTService(keyString));
-           
-
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateLifetime = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionCommandValidator>());
 
@@ -88,7 +64,7 @@ namespace WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                UpdateDatabase(app);
+                DatabaseHelper.UpdateDatabase(app);
             }
             else
             {
@@ -105,19 +81,6 @@ namespace WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-        }
-
-        private static void UpdateDatabase(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<DatabaseContext>())
-                {
-                    //context.Database.Migrate();
-                }
-            }
         }
     }
 }
