@@ -30,6 +30,7 @@ namespace NotificationJobsLibrary.Services.Concrete
 
         public async Task<bool> SendAsync(string text, IEnumerable<string> numbers)
         {
+            //todo dodac sprawdzanie ile juz poszlo
             var builder = new StringBuilder(UriBuilder.ToString());
             builder.Append($"&msg={text}");
             builder.Append("&to=");

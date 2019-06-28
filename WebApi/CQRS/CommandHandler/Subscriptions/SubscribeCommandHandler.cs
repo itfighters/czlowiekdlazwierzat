@@ -25,10 +25,19 @@ namespace CQRS.CommandHandler.Subscriptions
 
         protected override async Task Handle(SubscribeCommand request, CancellationToken cancellationToken)
         {
-            if (dbContext.Subscriptions.Any(x => x.Contact == request.Value))
+            if (dbContext.Subscriptions.Any(x => x.Contact == request.Value && x.Subscribed && x.Confirmed))
                 throw new BusinessLogicException($"{request.Value} already subscribed");
 
-            var subscription = SubscriptionMapper.FromSubscribeCommandToSubscription(request, null);
+            var pendingConfirmation =
+                dbContext.Subscriptions.FirstOrDefault(x => x.Contact == request.Value && x.Subscribed && !x.Confirmed);
+            Subscription subscription = null;
+            if (pendingConfirmation == null)
+            {
+                subscription = SubscriptionMapper.FromSubscribeCommandToSubscription(request, null);
+                dbContext.Subscriptions.Add(subscription);
+            }
+            else
+                subscription = pendingConfirmation;
 
             #region tempshit
             //send sms/email with token & obtain token, save to db
@@ -39,13 +48,13 @@ namespace CQRS.CommandHandler.Subscriptions
 
             subscription.Subscribed = true;
             subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
-            dbContext.Subscriptions.Add(subscription);
             await dbContext.SaveChangesAsync();
             await mediator.Publish(new SubscribtionChangedEvent
             {
                 Contact = subscription.Contact,
                 SubscriptionType = subscription.SubscriptionType,
-                Token = subscription.ConfirmationToken
+                Token = subscription.ConfirmationToken,
+                ActionType = SubscribtionChangedEvent.SubriptionChangedType.Subscribe
             });
         }
     }

@@ -12,6 +12,8 @@ using NotificationJobsLibrary.Services.Abstract;
 using NotificationJobsLibrary.Services.Concrete;
 using System;
 using System.Text;
+using Microsoft.Extensions.Hosting;
+using NotificationJobs.Services;
 
 namespace WebApi.Helpers
 {
@@ -59,6 +61,9 @@ namespace WebApi.Helpers
 
             var smsConfig = configuration.GetSection("SMSConfig");
             services.Configure<SMSConfig>(smsConfig);
+
+            var jobsConfig = configuration.GetSection("JobsConfig");
+            services.Configure<JobsConfig>(jobsConfig);
         }
 
         public void ConfigureServices()
@@ -70,9 +75,12 @@ namespace WebApi.Helpers
         {
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
-
+            services.AddScoped<IJobsRepository, JobsRepository>();
+            
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISMSService, SMSService>();
+
+            services.AddSingleton<IHostedService, SmsNotificationsService>();
         }
     }
 }

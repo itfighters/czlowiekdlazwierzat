@@ -4,7 +4,9 @@
     {
         ReadyToSend = 1,
         Sending = 2,
-        Send = 3,
-        Failed = 4
+        Sent = 3,
+        Failed = 4,
+        UserUnsubscribed = 5,
+        Cancelled = 6
     }
 }

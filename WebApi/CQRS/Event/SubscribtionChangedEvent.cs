@@ -8,5 +8,12 @@ namespace CQRS.Event
         public string Contact { get; set; }
         public SubscriptionType SubscriptionType { get; set; }
         public string Token { get; set; }
+        public SubriptionChangedType ActionType { get; set; }
+
+        public enum SubriptionChangedType
+        {
+            Subscribe,
+            Unsubscribe
+        }
     }
 }

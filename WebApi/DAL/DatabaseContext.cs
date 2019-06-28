@@ -54,7 +54,7 @@ namespace DAL
             {
                 if (entry.Entity is ITimeStampedEntity timestamped)
                 {
-                    timestamped.UpdatedAt = DateTime.UtcNow;
+                    timestamped.UpdatedAt = DateTime.Now;
 
                     if (entry.State == EntityState.Added && timestamped.CreatedAt == default(DateTime))
                     {

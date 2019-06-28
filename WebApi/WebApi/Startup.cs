@@ -57,6 +57,7 @@ namespace WebApi
             {
                 c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
             });
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
