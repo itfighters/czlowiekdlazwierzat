@@ -1,0 +1,20 @@
+.toast {
+  position: fixed;
+  right: 2%;
+  top: 10%;
+  border: 1px red solid;
+  padding: 10px;
+  background-color: aquamarine;
+}
+
+.toast.error {
+  background-color: red;
+}
+
+.toast.waringn {
+  background-color: yellowgreen;
+}
+
+.toast.success {
+  background-color: green;
+}

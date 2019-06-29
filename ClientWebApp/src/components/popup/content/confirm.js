@@ -9,16 +9,16 @@ const Confirm = ({ submit }) => {
       }}
     >
       <div>
-        Na podany numer telefonu zostanie wysłany 6 cyfrowy kod weryfikacyjny.
+        Na podany numer telefonu zostanie wysłany 5 cyfrowy kod weryfikacyjny.
       </div>
       <label>Podaj kod z sms</label>
       <input
         type="tel"
-        pattern="[0-9]{6}"
-        placeholder="6 cyfrowy kod"
+        pattern="[0-9]{5}"
+        placeholder="5 cyfrowy kod"
         value={number}
         onChange={e => updateNumber(e.target.value)}
-        title="6 cyfrowy kod"
+        title="5 cyfrowy kod"
         required
       />
       <input type="submit" />
@@ -27,7 +27,7 @@ const Confirm = ({ submit }) => {
 
   function submitForm(e) {
     e.preventDefault();
-    submit();
+    submit(number);
   }
 };
 

@@ -1,25 +1,21 @@
-
-
-@import 'styles/reset.scss';
-@import 'styles/variables.scss';
-@import 'styles/typography.scss';
-@import 'styles/mixins.scss';
-@import 'styles/comps/buttons.scss';
-@import 'styles/comps/header.scss';
-@import 'styles/comps/footer.scss';
-@import 'styles/comps/details.scss';
-@import 'styles/comps/collection.scss';
-@import 'styles/comps/loader.scss';
-@import 'styles/comps/signup.scss';
-@import 'styles/comps/popup.scss';
-
-
+@import "styles/reset.scss";
+@import "styles/variables.scss";
+@import "styles/typography.scss";
+@import "styles/mixins.scss";
+@import "styles/comps/buttons.scss";
+@import "styles/comps/header.scss";
+@import "styles/comps/footer.scss";
+@import "styles/comps/details.scss";
+@import "styles/comps/collection.scss";
+@import "styles/comps/loader.scss";
+@import "styles/comps/signup.scss";
+@import "styles/comps/popup.scss";
+@import "styles/comps/toast.scss";
 
 body {
   margin: 0;
-  font-family: "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
