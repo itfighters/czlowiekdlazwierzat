@@ -1,25 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
-namespace DAL.Model
+﻿namespace DAL.Model
 {
-    [Table("NotificationStatuses")]
-    public class NotificationStatus
+    public enum NotificationStatus
     {
-        [Key]
-        public Guid Id { get; set; }
-        
-        public int Status { get; set; }
-
-        [Required]
-        public DateTime Timestamp { get; set; }
-
-        public Notification Notification { get; set; }
-
-        [Required]
-        public Guid NotificationId { get; set; }
+        ReadyToSend = 1,
+        Sending = 2,
+        Sent = 3,
+        Failed = 4,
+        UserUnsubscribed = 5,
+        Cancelled = 6
     }
 }

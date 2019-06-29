@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using System.Text;
+using CQRS.Command.Auctions;
 using DAL;
 using DAL.Repositories.Abstract;
 using DAL.Repositories.Concrete;
 using DAL.Services.Abstract;
 using DAL.Services.Concrete;
-using DTO.RequestViewModel;
 using FluentValidation.AspNetCore;
+using Infrastructure;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Helpers;
 using WebApi.Middleware;
 
 namespace WebApi
@@ -34,15 +34,17 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var servicesHelper = new ServicesHelper(services, Configuration);
+            servicesHelper.ConfigureSettings();
+            servicesHelper.ConfigureServices();
+            servicesHelper.ConfigureRepositories();
+            servicesHelper.ConfigureAuthServices();
+
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IAuctionRepository, AuctionRepository>();
-            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
-            services.AddScoped<ISubscriptionService, SubscriptionService>();
-            services.AddScoped<IJWTService, JWTService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionCommandValidator>());
+
+            services.AddMediatR(typeof(AddAuctionCommand).GetTypeInfo().Assembly);
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -63,7 +65,7 @@ namespace WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                UpdateDatabase(app);
+                DatabaseHelper.UpdateDatabase(app);
             }
             else
             {
@@ -72,6 +74,7 @@ namespace WebApi
 
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors("MyPolicy");
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();
@@ -79,19 +82,6 @@ namespace WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-        }
-
-        private static void UpdateDatabase(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<DatabaseContext>())
-                {
-                    context.Database.Migrate();
-                }
-            }
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DAL.Repositories.Abstract;
-using DTO.Mapper;
-using DTO.ResponseViewModel;
+using CQRS.Query.Categories;
+using CQRS.QueryData;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -13,23 +11,12 @@ namespace WebApi.Controllers
     [ApiController]
     public class CategoryController
     {
-        private readonly ICategoriesRepository repository;
+        private readonly IMediator mediator;
 
-        public CategoryController(ICategoriesRepository repository)
-        {
-            this.repository = repository;
-        }
+        public CategoryController(IMediator mediator) => this.mediator = mediator;
 
         [HttpGet]
-        public ListCategoryResponse Get()
-        {
-            return CategoryMapper.ToListCategoryResponse(repository.GetCategories());
-        }
+        public async Task<IEnumerable<CategoryQueryData>> Get() => await mediator.Send(new GetCategoriesListQuery());
 
-        [HttpGet("{id}")]
-        public CategoryResponse Get(int id)
-        {
-            return CategoryMapper.ToCategoryResponse(repository.GetCategory(id));
-        }
     }
 }

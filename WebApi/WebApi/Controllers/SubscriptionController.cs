@@ -1,6 +1,6 @@
-﻿using DAL.Repositories.Abstract;
-using DTO.Mapper;
-using DTO.RequestViewModel;
+﻿using CQRS.Command.Subscriptions;
+using DAL.Repositories.Abstract;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,45 +10,21 @@ namespace WebApi.Controllers
     [ApiController]
     public class SubscriptionController : ControllerBase
     {
-        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IMediator mediator;
 
-        public SubscriptionController(ISubscriptionRepository subscriptionRepository)
+        public SubscriptionController(IMediator mediator)
         {
-            _subscriptionRepository = subscriptionRepository;
+            this.mediator = mediator;
         }
 
         [HttpPost("subscribe")]
-        public async Task<IActionResult> Subscribe([FromBody] SubscribeRequest value)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await _subscriptionRepository.Subscribe(SubscriptionMapper.FromAddSubscriptionRequest(value));
-            return Ok();
-        }
+        public async Task Subscribe([FromBody] SubscribeCommand command) => await mediator.Send(command);
 
         [HttpPost("unsubscribe")]
-        public async Task<IActionResult> Unsubscribe([FromBody] string contact)
-        {
-            if (string.IsNullOrEmpty(contact))
-            {
-                return BadRequest("Contact cannot be null");
-            }
-            await _subscriptionRepository.Unsubscribe(contact);
-            return Ok();
-        }
+        public async Task Unsubscribe([FromBody] UnsubscribeCommand command) => await mediator.Send(command);
 
         [HttpPost("confirm")]
-        public async Task<IActionResult> Confirm([FromBody] string token)
-        {
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest("Contact cannot be null");
-            }
-            await _subscriptionRepository.Confirm(token);
-            return Ok();
-        }
+        public async Task Confirm([FromBody] ConfirmCommand command) => await mediator.Send(command);
 
     }
 }

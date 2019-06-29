@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL.Model
 {
     [Table("Auctions")]
-    public class Auction
+    public class Auction : ITimeStampedEntity 
     {
         [Key]
         public int Id { get; set; }
@@ -46,9 +46,8 @@ namespace DAL.Model
         [Required]
         public  string ContactNumber { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
         public  bool IsDeleted { get; set; }
-
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

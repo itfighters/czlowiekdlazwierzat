@@ -65,6 +65,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<DateTime>("UpdatedAt");
+
                     b.HasKey("Id");
 
                     b.ToTable("Auctions");
@@ -120,35 +122,21 @@ namespace DAL.Migrations
 
                     b.Property<int>("AuctionId");
 
-                    b.Property<string>("Email");
+                    b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Phone");
+                    b.Property<int>("Status");
 
-                    b.Property<DateTime>("Timestamp");
+                    b.Property<Guid>("SubscriptionId");
+
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuctionId");
 
+                    b.HasIndex("SubscriptionId");
+
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("DAL.Model.NotificationStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("NotificationId");
-
-                    b.Property<int>("Status");
-
-                    b.Property<DateTime>("Timestamp");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NotificationId");
-
-                    b.ToTable("NotificationStatuses");
                 });
 
             modelBuilder.Entity("DAL.Model.Subscription", b =>
@@ -162,9 +150,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("Contact");
 
+                    b.Property<DateTime>("CreatedAt");
+
                     b.Property<bool>("Subscribed");
 
-                    b.Property<DateTime>("Timestamp");
+                    b.Property<int>("SubscriptionType");
+
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -228,13 +220,10 @@ namespace DAL.Migrations
                         .WithMany()
                         .HasForeignKey("AuctionId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("DAL.Model.NotificationStatus", b =>
-                {
-                    b.HasOne("DAL.Model.Notification", "Notification")
+                    b.HasOne("DAL.Model.Subscription", "Subscription")
                         .WithMany()
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
