@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import * as firebase from "firebase/app";
+import "firebase/messaging";
 import {
   sendEmailAdressToServer,
   sendPhoneNumberToServer,
-  confirmPhoneNumber
+  confirmPhoneNumber,
+  sendTokenToServer
 } from "../../services/substriction.services";
 import { GetAllCategories } from "../../services/categoryService";
 
@@ -151,6 +154,33 @@ export default class SignUp extends Component {
       });
   };
 
+  pushNotification = async e => {
+    var categories = this.state.checked;
+    if (categories.length === 0) {
+      alert(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia"
+      );
+      return;
+    }
+    var token = await this.askForPermissioToReceiveNotifications();
+    sendTokenToServer(token, categories).catch(err => {
+      alert("cos sie wywalilo");
+    });
+  };
+
+  askForPermissioToReceiveNotifications = async () => {
+    try {
+      const messaging = firebase.messaging();
+      await messaging.requestPermission();
+      const token = await messaging.getToken();
+      console.log("token:", token);
+
+      return token;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     if (this.state.categories.length === 0) {
       return <Loader />;
@@ -268,7 +298,7 @@ export default class SignUp extends Component {
           </form>
           <section>
             <h6>Zapisz się na push notification</h6>
-            <button>Zapisz się!</button>
+            <button onClick={this.pushNotification}>Zapisz się!</button>
           </section>
         </section>
         <section>

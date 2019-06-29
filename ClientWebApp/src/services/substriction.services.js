@@ -43,3 +43,18 @@ export function confirmPhoneNumber(code) {
     return Promise.resolve(response);
   });
 }
+
+export function sendTokenToServer(token, categories) {
+  return fetch(URL, {
+    method: "post",
+    body: JSON.stringify({
+      token: token,
+      categories: categories
+    })
+  }).then(response => {
+    if (response.status !== 200) {
+      throw new Error(response.status);
+    }
+    return Promise.resolve(response);
+  });
+}
