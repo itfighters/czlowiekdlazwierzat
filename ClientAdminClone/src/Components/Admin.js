@@ -11,7 +11,7 @@ export function Admin()
             <Route exact path="/admin" component={List} />
             <Route path="/admin/list" component={List} />
             <Route path="/admin/add" component={Add} />
-
+            
 
 
         </Router>

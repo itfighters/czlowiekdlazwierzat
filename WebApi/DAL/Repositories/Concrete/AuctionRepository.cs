@@ -17,6 +17,12 @@ namespace DAL.Repositories.Concrete
             this.dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<Auction>> GetAllAuctions()
+        {
+            return await BaseAuctionsQuery()
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category)
         {
             return await BaseAuctionsQuery()

@@ -1,4 +1,4 @@
-const authTokenKey = 'AUTH_KEY';
+export const authTokenKey = 'AUTH_KEY';
 
 export function isAuthenticated()
 {

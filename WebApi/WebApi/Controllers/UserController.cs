@@ -14,6 +14,6 @@ namespace WebApi.Controllers
         public UserController(IMediator mediatior) => this.mediatior = mediatior;
 
         [HttpPost("validate")]
-        public async Task<string> Validate([FromBody] ValidateUserCommand command) => await mediatior.Send(command);
+        public async Task<IActionResult> Validate([FromBody] ValidateUserCommand command) => Ok(new { Token = await mediatior.Send(command) });
     }
 }

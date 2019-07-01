@@ -1,44 +1,49 @@
 import React from 'react';
 import { Button, Form, Grid, Message, Header, Segment } from 'semantic-ui-react'
-import {
+import
+{
     Link
 } from 'react-router-dom';
 import loginService from '../service/loginService';
+import { authTokenKey, isAuthenticated } from '../Utils/auth';
 
 
-class Login extends React.Component {
-    constructor(props) {
+class Login extends React.Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
-            login_re:'',
-            password_re: '',
-            password_has_error: false
+            logine: '',
+            password: '',
+            invalid_credentials: false
         };
-
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-   
-    handleChange = (event) => {
-        const { value } = event.target
 
-        this.setState({
-            password_re: value
-        });
-    }
-
-    handleSubmit(event) {
-        loginService.sendLogUser(this.state.login_re, this.state.password_re).then(response=>
-            {if(response.success){
-                localStorage.setItem("token", response)
-            }
-            else{
-                this.setState({password_has_error: true})
-                alert('Hasło nieprawidłowe!')
-            }})
+    handleSubmit(event)
+    {
+        loginService.sendLogUser(this.state.login, this.state.password)
+            .then(response => response.json())
+            .then(response =>
+            {
+                if (response.token) {
+                    localStorage.setItem(authTokenKey, response.token);
+                    this.props.history.push('/admin/list');
+                }
+                else {
+                    this.setState({ invalid_credentials: true });
+                }
+            })
         event.preventDefault();
     }
-    render() {
+
+    render()
+    {
+        if (isAuthenticated()) {
+            this.props.history.push('/admin/list');
+            return null;
+        }
         return (
             <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450 }}>
@@ -47,24 +52,24 @@ class Login extends React.Component {
                     </Header>
                     <Form size='large'>
                         <Segment stacked>
-                        <Form.Input
+                            <Form.Input
                                 fluid icon="user"
                                 iconPosition='left'
                                 placeholder='Wprowadź login'
                                 type='text'
-                                value={this.state.userPassword}
-                                onChange={this.handleChange}
+                                value={this.state.login}
+                                onChange={(e) => { this.setState({ login: e.target.value }) }}
                             />
                             <Form.Input
                                 fluid icon="lock"
                                 iconPosition='left'
                                 placeholder='Wprowadź hasło'
                                 type='password'
-                                value={this.state.userPassword}
-                                onChange={this.handleChange}
+                                value={this.state.password}
+                                onChange={(e) => { this.setState({ password: e.target.value }) }}
                             />
                             <Button onClick={this.handleSubmit} color='black' fluid size='large'>
-                                Zaloguj 
+                                Zaloguj
                              </Button>
                         </Segment>
                     </Form>

@@ -15,12 +15,8 @@ function App() {
     <Router>
       <div>
         <Route path="/login" component={Login} />
-        <Route path="/form" component={SmsBox} />
-        <Route path="/form2" component={EmailBox} />
-        <Route path="/form3" component={PushBox} />
+        <Route path="/" exact component={Login}/>
         <ProtectedRoutes path="/admin" component={Admin} />
-        <Route path="/addform" component={AddForm} />
-        <Route path="/updateform/:id" component={updateForm} />
       </div>
     </Router>
   );
