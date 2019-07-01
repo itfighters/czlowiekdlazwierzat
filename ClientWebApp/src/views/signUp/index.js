@@ -35,7 +35,7 @@ export default class SignUp extends Component {
 
   componentDidMount() {
     GetAllCategories().then(allCategories => {
-      this.setState({ categories: allCategories.values });
+      this.setState({ categories: allCategories });
     });
     document.addEventListener("keydown", this.handleKeyDown);
   }
