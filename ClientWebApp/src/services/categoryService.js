@@ -1,10 +1,12 @@
+import { API_URL } from "../config";
+
+const URL = API_URL + "category";
+
 var allCategories = [];
 
 export function GetAllCategories() {
   if (allCategories.length === 0) {
-    return fetch(
-      "https://czlowiekdlazwierzat.azurewebsites.net/server/api/category/"
-    )
+    return fetch(URL)
       .then(response => response.json())
       .then(categories => {
         allCategories = categories;

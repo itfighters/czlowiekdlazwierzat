@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CollectionTile from "../homeCollectionTile";
-import { fetchTiles } from "../../services/tilesService";
+import { fetchTiles } from "../../services/auctionService";
 import TilesListFetchError from "../tiles_list_error";
 import Loader from "../loader";
 
