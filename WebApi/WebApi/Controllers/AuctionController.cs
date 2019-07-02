@@ -24,24 +24,22 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
+        public async Task<ListResponse<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
 
         [AllowAnonymous]
         [HttpGet("details")]
         public async Task<AuctionQueryData> Get([FromQuery] GetAuctionDetailsQuery query) => await mediator.Send(query);
 
+        [AllowAnonymous]
         [HttpGet("featured")]
         public async Task<IEnumerable<AuctionQueryData>> GetFeatured([FromQuery] GetFeaturedAuctionsQuery query) => await mediator.Send(query);
 
-        [Authorize]
         [HttpPost]
         public async Task AddAuction([FromBody] AddAuctionCommand command) => await mediator.Send(command);
 
-        [Authorize]
         [HttpPut]
         public async Task Put([FromBody] UpdateAuctionCommand command) => await mediator.Send(command);
 
-        [Authorize]
         [HttpDelete]
         public async Task Delete([FromQuery] DeleteAuctionCommand command) => await mediator.Send(command);
     }

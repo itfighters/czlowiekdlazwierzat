@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormEmail from './FormEmail';
-import notificationService from '../service/notificationService';
+import notificationService from '../../service/notificationService';
 
 class EmailBox extends Component {
   constructor(props) {
