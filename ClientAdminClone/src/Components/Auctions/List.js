@@ -1,56 +1,26 @@
 import React from 'react';
-import { getAuctions } from '../../service/auctionsService';
+import { getAuctions, deleteAuction } from '../../service/auctionsService';
+import { Confirm } from 'semantic-ui-react';
+import { toast } from 'react-toastify';
 
-
-export class List extends React.Component {
-    constructor() {
+export class List extends React.Component
+{
+    constructor()
+    {
         super();
         this.state = {
             values: [],
             totalCount: 0,
             page: 1,
             pageSize: 5,
-            isLoading: false
+            isLoading: false,
+            deleteConfirmOpen: false,
+            toBeDeleted: null
         };
     }
 
-    componentDidMount() {
-        this.loadAuctions();
-    }
-
-    loadAuctions() {
-        this.setState({ isLoading: true });
-        getAuctions(this.state.page, this.state.pageSize)
-            .then(response => response.json())
-            .then(response => { this.setState({ isLoading: false, ...response }) });
-    }
-
-    pages() {
-        var pages = [];
-        var pagesCount = this.state.totalCount / this.state.pageSize + 1;
-        for (var i = 1; i < pagesCount; i++) {
-            pages.push
-                (
-                    <a
-                        key={i}
-                        onClick={this.showPage.bind(this, i)}
-                        className={this.state.page == i ? 'active item' : 'item'}>
-                        {i}
-                    </a>
-                );
-        }
-        return pages;
-    }
-
-    showPage = (page) => {
-        if (page > 0 && page <= this.pages().length)
-            this.setState({ page: page }, this.loadAuctions);
-    }
-
-    nextPage = () => this.showPage(this.state.page + 1);
-    previousPage = () => this.showPage(this.state.page - 1);
-
-    render() {
+    render()
+    {
         return (
             <React.Fragment>
                 <table className="ui celled padded table">
@@ -63,8 +33,8 @@ export class List extends React.Component {
                             <th className="three wide"></th>
                         </tr></thead>
                     <tbody>
-
-                        {this.state.values.map(a => {
+                        {this.state.values.map(a =>
+                        {
                             return <tr key={a.id}>
                                 <td>
                                     {a.title}
@@ -83,7 +53,8 @@ export class List extends React.Component {
                                         onClick={() => { this.props.history.push(`/admin/edit/${a.id}`) }}>
                                         Edytuj
                                     </button>
-                                    <button class="ui red button">
+                                    <button class="ui red button"
+                                        onClick={this.deleteClicked.bind(this, a.id)}>
                                         Usuń
                                     </button>
                                 </td>
@@ -93,9 +64,9 @@ export class List extends React.Component {
                     <tfoot>
                         <tr>
                             <th colSpan="5">
-                            <button class="ui blue button"
-                                        onClick={() => { this.props.history.push(`/admin/add`) }}>
-                                        Dodaj
+                                <button class="ui blue button"
+                                    onClick={() => { this.props.history.push(`/admin/add`) }}>
+                                    Dodaj
                                     </button>
                                 <div className="ui right floated pagination menu">
                                     <a className="icon item" onClick={this.previousPage}>
@@ -112,7 +83,75 @@ export class List extends React.Component {
                             </th>
                         </tr></tfoot>
                 </table>
+                <Confirm open={this.state.deleteConfirmOpen}
+                    header='Potwierdzenie'
+                    cancelButton='Anuluj'
+                    confirmButton='Potwierdź'
+                    content='Czy potwierdzasz usunięcie aukcji?'
+                    onCancel={() => { this.setState({ toBeDeleted: null, deleteConfirmOpen: false }) }}
+                    onConfirm={this.deleteConfirm.bind(this)} />
             </React.Fragment>
         )
+    }
+
+    componentDidMount()
+    {
+        this.loadAuctions();
+    }
+
+    loadAuctions()
+    {
+        this.setState({ isLoading: true });
+        getAuctions(this.state.page, this.state.pageSize)
+            .then(response => response.json())
+            .then(response => { this.setState({ isLoading: false, ...response }) });
+    }
+
+    pages()
+    {
+        var pages = [];
+        var pagesCount = this.state.totalCount / this.state.pageSize + 1;
+        for (var i = 1; i < pagesCount; i++) {
+            pages.push
+                (
+                    <a
+                        key={i}
+                        onClick={this.showPage.bind(this, i)}
+                        className={this.state.page == i ? 'active item' : 'item'}>
+                        {i}
+                    </a>
+                );
+        }
+        return pages;
+    }
+
+    showPage = (page) =>
+    {
+        if (page > 0 && page <= this.pages().length)
+            this.setState({ page: page }, this.loadAuctions);
+    }
+
+    nextPage = () => this.showPage(this.state.page + 1);
+    previousPage = () => this.showPage(this.state.page - 1);
+
+    deleteClicked=(id)=>this.setState(
+            {
+                toBeDeleted: id,
+                deleteConfirmOpen: true
+            });
+
+    deleteConfirm()
+    {
+        this.setState({ toBeDeleted: null, deleteConfirmOpen: false });
+        deleteAuction(this.state.toBeDeleted)
+            .then(response =>
+            {
+                if (response.ok)
+                    toast.success("Usunięcie powiodło się");
+                else
+                    toast.error("Usunięcie nie powiodło się");
+
+                this.loadAuctions();
+            })
     }
 }

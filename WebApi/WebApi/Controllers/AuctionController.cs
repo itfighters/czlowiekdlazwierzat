@@ -41,6 +41,6 @@ namespace WebApi.Controllers
         public async Task Put([FromBody] UpdateAuctionCommand command) => await mediator.Send(command);
 
         [HttpDelete]
-        public async Task Delete([FromQuery] DeleteAuctionCommand command) => await mediator.Send(command);
+        public async Task Delete([FromQuery] DeleteAuctionCommand command) =>  await mediator.Send(command);
     }
 }

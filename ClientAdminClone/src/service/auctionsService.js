@@ -13,3 +13,16 @@ export function getAuctions(page,pageSize) {
         }
     })
 }
+
+export function deleteAuction(id)
+{
+    var url = new URL("https://localhost:44335/api/auction");
+    url.searchParams.append('id',id);
+    return fetch(url, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem(authTokenKey)}`
+        }
+    })
+}
