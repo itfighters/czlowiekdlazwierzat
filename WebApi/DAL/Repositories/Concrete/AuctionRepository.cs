@@ -17,20 +17,27 @@ namespace DAL.Repositories.Concrete
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Auction>> GetAllAuctions()
-        {
-            return await BaseAuctionsQuery()
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category)
         {
-            return await BaseAuctionsQuery()
-                .Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any())
+            var query = BaseAuctionsQuery();
+            if (category != null && category.Length > 0)
+                query = query.Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any());
+
+            return await query
                 .OrderBy(x => x.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetAuctionsCount(int[] category)
+        {
+            var query = BaseAuctionsQuery();
+            if (category != null && category.Length > 0)
+                query = query.Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any());
+
+            return await query
+                .CountAsync();
         }
 
         public async Task<IEnumerable<Auction>> GetFeaturedAuctions(int count)

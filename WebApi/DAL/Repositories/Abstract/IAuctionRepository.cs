@@ -8,7 +8,7 @@ namespace DAL.Repositories.Abstract
     public interface IAuctionRepository
     {
         Task<IEnumerable<Auction>> GetAuctions(int page, int pageSize, int[] category);
-        Task<IEnumerable<Auction>> GetAllAuctions();
+        Task<int> GetAuctionsCount(int[] category);
         Task<IEnumerable<Auction>> GetFeaturedAuctions(int count);
     }
 }

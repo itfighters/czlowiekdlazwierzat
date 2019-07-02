@@ -24,7 +24,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
+        public async Task<ListResponse<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
 
         [AllowAnonymous]
         [HttpGet("details")]
@@ -33,9 +33,6 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         [HttpGet("featured")]
         public async Task<IEnumerable<AuctionQueryData>> GetFeatured([FromQuery] GetFeaturedAuctionsQuery query) => await mediator.Send(query);
-
-        [HttpGet("all")]
-        public async Task<IEnumerable<AuctionQueryData>> GetAll([FromQuery] GetAllAuctionsListQuery query) => await mediator.Send(query);
 
         [HttpPost]
         public async Task AddAuction([FromBody] AddAuctionCommand command) => await mediator.Send(command);
