@@ -16,10 +16,13 @@ export default class Details extends React.Component {
     var getCategories = GetAllCategories();
     Promise.all([getDetails, getCategories])
       .then(response => {
-        let [details, categories] = response;
+        let details = response[0];
+        let categories = response[1];
+        // let [details, categories] = response;
         details.categories = details.categories.map(category => {
-          return categories.values.find(x => x.id === category);
+          return categories.find(x => x.id === category);
         });
+
         this.setState({ auction: details, loading: false });
       })
       .catch(err => {

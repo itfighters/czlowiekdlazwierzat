@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CollectionTile from "../homeCollectionTile";
-import { fetchTiles } from "../../services/auctionService";
+import { fetchFeaturedTiles } from "../../services/auctionService";
 import TilesListFetchError from "../tiles_list_error";
 import Loader from "../loader";
 
@@ -15,9 +15,9 @@ class HomeTilesList extends Component {
   }
 
   componentDidMount() {
-    fetchTiles()
+    fetchFeaturedTiles()
       .then(response => {
-        let tiles = response.values
+        let tiles = response
           .sort(function(a, b) {
             return new Date(a.dateTo) - new Date(b.dateTo);
           })
