@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>6fc542d9-b821-4dd6-a2ad-826a481af772</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,15 +21,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NotificationJobsLibrary\NotificationJobsLibrary.csproj" />
-    <ProjectReference Include="..\..\NotificationJobs\NotificationJobs.csproj" />
     <ProjectReference Include="..\CQRS\CQRS.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\NotificationJobsLibrary\NotificationJobsLibrary.csproj" />
+    <ProjectReference Include="..\NotificationJobs\NotificationJobs.csproj" />
   </ItemGroup>
 
 </Project>
