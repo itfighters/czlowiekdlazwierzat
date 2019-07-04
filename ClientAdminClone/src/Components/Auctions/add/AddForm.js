@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
-import PostForm from './PostForm';
-import { Grid, Header } from 'semantic-ui-react';
-import postService from '../service/postService';
+import React, { Component } from "react";
+import PostForm from "./PostForm";
+import { Grid, Header } from "semantic-ui-react";
+import { creatAuction } from "../../../service/auctionsService";
 
 class AddForm extends Component {
   onSumbit = form => {
-    return postService.addForm(form);
+    console.log(form);
+    return creatAuction(form);
   };
 
   render() {
-    console.log(this);
-    console.log(this.onSumbit);
-
     return (
       <Grid
         textAlign="center"
-        style={{ height: '100vh' }}
+        style={{ height: "100vh" }}
         verticalAlign="middle"
-        marginTop="10px"
+        margintop="10px"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="black" textAlign="center">

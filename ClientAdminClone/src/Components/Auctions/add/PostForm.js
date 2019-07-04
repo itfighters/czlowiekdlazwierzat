@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   TextArea,
   Input,
@@ -6,10 +6,9 @@ import {
   Button,
   Image,
   Form,
-  Dropdown,
-  Loader,
-} from 'semantic-ui-react';
-import postService from '../service/postService';
+  Dropdown
+} from "semantic-ui-react";
+import { GetCategories } from "../../../service/categoryService";
 
 class PostForm extends Component {
   constructor(props) {
@@ -17,48 +16,60 @@ class PostForm extends Component {
 
     const { form, isUpdate } = this.props;
     if (isUpdate) this.state = { form: { ...form } };
-    console.log(this.props.onSubmit);
 
     this.state.loaded = false;
   }
   state = {
+    // form: {
+    //   title: "",
+    //   image: null,
+    //   description: "",
+    //   multichoiceCategories: [],
+    //   dotpayLink: "",
+    //   paypalLink: "",
+    //   siepomagaLink: "",
+    //   checkboxKonto: false,
+    //   dateStart: "",
+    //   dateEnd: "",
+    //   adressStart: "",
+    //   adressEnd: "",
+    //   phone: ""
+    // },
     form: {
-      title: '',
+      title: "Moja zbiurka",
       image: null,
-      description: '',
-      multichoiceCategories: [],
-      dotpayLink: '',
-      paypalLink: '',
-      siepomagaLink: '',
-      checkboxKonto: false,
-      dateStart: null,
-      dateEnd: null,
-      adressStart: '',
-      adressEnd: '',
-      phone: '',
+      description: "Test desc",
+      multichoiceCategories: [1,3],
+      dotpayLink: "https://itfighters.pl",
+      paypalLink: "https://itfighters.pl",
+      siepomagaLink: "https://itfighters.pl",
+      checkboxKonto: true,
+      dateStart: "",
+      dateEnd: "",
+      adressStart: "",
+      adressEnd: "",
+      phone: "111111111"
     },
     loaded: false,
     categories: [],
     duringUpload: false,
     uploaded: false,
-    uploadStatus: false,
+    uploadStatus: false
   };
   componentDidMount() {
-    postService.loadCategories().then(categories =>
+    GetCategories().then(categories =>
       this.setState({
         loaded: true,
-        categories: categories.values.map(category => ({
+        categories: categories.map(category => ({
           key: category.id,
           text: category.name,
-          value: category.id,
-        })),
+          value: category.id
+        }))
       })
     );
   }
 
   onChange = (e, { name, value }) => {
-    console.log(name);
-    console.log(value);
     this.setState(({ form }) => ({ form: { ...form, [name]: value } }));
   };
   formSubmitted = e => {
@@ -75,7 +86,7 @@ class PostForm extends Component {
           this.setState({ duringUpload: false, uploadStatus: false })
         );
   };
-  options = [{ key: 'klucz', text: 'nazwa', value: 'wartosc' }];
+  options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
   render() {
     const {
@@ -91,7 +102,7 @@ class PostForm extends Component {
       dateEnd,
       adressStart,
       adressEnd,
-      phone,
+      phone
     } = this.state.form;
 
     const {
@@ -99,11 +110,11 @@ class PostForm extends Component {
       categories,
       duringUpload,
       uploaded,
-      uploadStatus,
+      uploadStatus
     } = this.state;
 
     return (
-      <Form onSubmit={this.formSubmitted} style={{ marginBottom: '50px' }}>
+      <Form onSubmit={this.formSubmitted} style={{ marginBottom: "50px" }}>
         <Form.Field
           control={Input}
           name="title"
@@ -131,19 +142,19 @@ class PostForm extends Component {
           value={description}
           onChange={this.onChange}
         />
-        <Form.Field label="Wybierz kategorię" control="Wybierz">
-          <Dropdown
-            placeholder="Kategorie"
-            fluid
-            multiple
-            selection
-            options={categories}
-            name="multichoiceCategories"
-            value={multichoiceCategories}
-            onChange={this.onChange}
-            loading={!loaded}
-          />
-        </Form.Field>
+        <Form.Field
+          label="Wybierz kategorię"
+          control={Dropdown}
+          placeholder="Kategorie"
+          fluid
+          multiple
+          selection
+          options={categories}
+          name="multichoiceCategories"
+          value={multichoiceCategories}
+          onChange={this.onChange}
+          loading={!loaded}
+        />
         <Form.Field
           control={Input}
           label="Dotpay"
@@ -172,7 +183,7 @@ class PostForm extends Component {
           control={Checkbox}
           label="Konto"
           name="chceckboxKonto"
-          value={checkboxKonto}
+          checked={checkboxKonto}
           onChange={this.onChange}
         />
         <Form.Group widths="equal">
@@ -182,6 +193,7 @@ class PostForm extends Component {
             placeholder="Data początkowa"
             name="dateStart"
             value={dateStart}
+            type="date"
             onChange={this.onChange}
           />
           <Form.Field
@@ -190,10 +202,11 @@ class PostForm extends Component {
             placeholder="Data końcowa"
             name="dateEnd"
             value={dateEnd}
+            type="date"
             onChange={this.onChange}
           />
         </Form.Group>
-        <Form.Group widths="equal">
+        {/* <Form.Group widths="equal">
           <Form.Field
             control={Input}
             label="Adres początkowy"
@@ -210,7 +223,7 @@ class PostForm extends Component {
             value={adressEnd}
             onChange={this.onChange}
           />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Field
           control={Input}
           label="Telefon"
@@ -220,12 +233,12 @@ class PostForm extends Component {
           onChange={this.onChange}
         />
         <Button type="submit" color="green" size="big" disabled={duringUpload}>
-          Wyślij{' '}
+          Wyślij{" "}
           {uploaded && !duringUpload
             ? uploadStatus
-              ? 'Uploaded!'
-              : 'Cannot upload :('
-            : ''}
+              ? "Uploaded!"
+              : "Cannot upload :("
+            : ""}
         </Button>
       </Form>
     );
