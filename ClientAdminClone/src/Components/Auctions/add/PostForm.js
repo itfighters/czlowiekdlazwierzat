@@ -33,13 +33,14 @@ class PostForm extends Component {
     //   dateEnd: "",
     //   adressStart: "",
     //   adressEnd: "",
-    //   phone: ""
+    //   phone: "",
+    // files: null
     // },
     form: {
       title: "Moja zbiurka",
-      image: null,
+      image: "",
       description: "Test desc",
-      multichoiceCategories: [1,3],
+      multichoiceCategories: [1, 3],
       dotpayLink: "https://itfighters.pl",
       paypalLink: "https://itfighters.pl",
       siepomagaLink: "https://itfighters.pl",
@@ -48,7 +49,8 @@ class PostForm extends Component {
       dateEnd: "",
       adressStart: "",
       adressEnd: "",
-      phone: "111111111"
+      phone: "111111111",
+      files: null
     },
     loaded: false,
     categories: [],
@@ -88,6 +90,17 @@ class PostForm extends Component {
   };
   options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
+  uploadImage = e => {
+    var files = e.target.files;
+    var reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState(({ form }) => ({
+        form: { ...form, image: reader.result }
+      }));
+    };
+    reader.readAsDataURL(files[0]);
+  };
+
   render() {
     const {
       title,
@@ -105,6 +118,7 @@ class PostForm extends Component {
       phone
     } = this.state.form;
 
+    console.log(image);
     const {
       loaded,
       categories,
@@ -123,17 +137,28 @@ class PostForm extends Component {
           value={title}
           onChange={this.onChange}
         />
-        <Form.Field>
-          <Image
-            src="/images/wireframe/image.png"
-            size="small"
-            alt="Wrong img :("
-            wrapped
-            name="image"
-            value={image}
-            onChange={this.onChange}
-          />
-        </Form.Field>
+        <Form.Field
+          label="Wybierz zdjęcie"
+          control={Input}
+          placeholder="Zdjęcie..."
+          name="pic"
+          type="File"
+          accept="image/*"
+          onChange={this.uploadImage}
+        />
+        {image && (
+          <Form.Field>
+            <Image
+              src={image}
+              size="small"
+              alt="wybrane zdjecie"
+              wrapped
+              name="image"
+              value={image}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+        )}
         <Form.Field
           control={TextArea}
           label="Opis"
