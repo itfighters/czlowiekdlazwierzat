@@ -2,11 +2,21 @@ import React, { Component } from "react";
 import PostForm from "./PostForm";
 import { Grid, Header } from "semantic-ui-react";
 import { creatAuction } from "../../../service/auctionsService";
+import { toast } from "react-toastify";
 
 class AddForm extends Component {
   onSumbit = form => {
     console.log(form);
-    return creatAuction(form);
+    return creatAuction(form)
+      .then(response => {
+        if (response.status !== 200) {
+          throw new Error(response.status);
+        }
+        toast.success("Zbiórka została dodana");
+      })
+      .catch(err => {
+        toast.error("Dodawanie nie powiodło się, spróbuj ponownie później");
+      });
   };
 
   render() {

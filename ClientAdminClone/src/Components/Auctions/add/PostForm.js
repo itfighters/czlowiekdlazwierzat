@@ -29,7 +29,7 @@ class PostForm extends Component {
       paypalLink: "",
       siepomagaLink: "",
       checkboxKonto: true,
-      dateStart: "",
+      dateStart: this.getCurrentDate(),
       dateEnd: "",
       adressStart: "",
       adressEnd: "",
@@ -39,7 +39,6 @@ class PostForm extends Component {
     loaded: false,
     categories: [],
     duringUpload: false,
-    uploaded: false,
     uploadStatus: false
   };
   componentDidMount() {
@@ -55,13 +54,18 @@ class PostForm extends Component {
     );
   }
 
+  getCurrentDate() {
+    var date = new Date();
+    var currentDate = date.toISOString().slice(0, 10);
+    return currentDate;
+  }
+
   onChange = (e, { name, value }) => {
     this.setState(({ form }) => ({ form: { ...form, [name]: value } }));
   };
   formSubmitted = e => {
     e.preventDefault();
 
-    this.setState({ duringUpload: true, uploaded: true });
     const { loaded, form } = this.state;
 
     if (loaded)
@@ -103,13 +107,7 @@ class PostForm extends Component {
     } = this.state.form;
 
     console.log(image);
-    const {
-      loaded,
-      categories,
-      duringUpload,
-      uploaded,
-      uploadStatus
-    } = this.state;
+    const { loaded, categories, duringUpload } = this.state;
 
     return (
       <Form onSubmit={this.formSubmitted} style={{ marginBottom: "50px" }}>
@@ -120,6 +118,7 @@ class PostForm extends Component {
           placeholder="Tytuł"
           value={title}
           onChange={this.onChange}
+          required
         />
         <Form.Field
           label="Wybierz zdjęcie"
@@ -150,6 +149,7 @@ class PostForm extends Component {
           name="description"
           value={description}
           onChange={this.onChange}
+          required
         />
         <Form.Field
           label="Wybierz kategorię"
@@ -163,6 +163,7 @@ class PostForm extends Component {
           value={multichoiceCategories}
           onChange={this.onChange}
           loading={!loaded}
+          required
         />
         <Form.Field
           control={Input}
@@ -243,11 +244,6 @@ class PostForm extends Component {
         />
         <Button type="submit" color="green" size="big" disabled={duringUpload}>
           Wyślij{" "}
-          {uploaded && !duringUpload
-            ? uploadStatus
-              ? "Uploaded!"
-              : "Cannot upload :("
-            : ""}
         </Button>
       </Form>
     );
