@@ -28,7 +28,7 @@ class PostForm extends Component {
       dotpayLink: "",
       paypalLink: "",
       siepomagaLink: "",
-      checkboxKonto: false,
+      checkboxKonto: true,
       dateStart: "",
       dateEnd: "",
       adressStart: "",
@@ -191,7 +191,7 @@ class PostForm extends Component {
         <Form.Field
           control={Checkbox}
           label="Konto"
-          name="chceckboxKonto"
+          name="checkboxKonto"
           checked={checkboxKonto}
           onChange={this.onChange}
         />
