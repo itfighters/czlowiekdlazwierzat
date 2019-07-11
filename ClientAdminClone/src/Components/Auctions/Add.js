@@ -4,6 +4,6 @@ import AddForm from './add/AddForm'
 export function Add()
 {
     return (
-        <AddForm />
+        <AddForm header={'Dodaj nową zbiórkę'} />
     )
 }

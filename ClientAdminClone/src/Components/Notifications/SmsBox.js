@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
 import FormSms from './FormSms';
-import notificationService from '../service/notificationService';
+import React, { Component } from 'react';
+import notificationService from '../../service/notificationService';
 
 class SmsBox extends Component {
   constructor(props) {
@@ -42,3 +42,4 @@ class SmsBox extends Component {
 }
 
 export default SmsBox;
+

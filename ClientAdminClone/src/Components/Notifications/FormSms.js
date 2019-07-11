@@ -20,7 +20,7 @@ const FormSms = ({
 }) => (
   <Grid textAlign="center">
     <Grid.Column style={{ maxWidth: 500 }}>
-      <Header as="h2" color="teal" textAlign="center">
+      <Header as="h4" color="teal" textAlign="center">
         WYSYŁANIE WIADOMOŚCI SMS
       </Header>
       <Form size="large">
