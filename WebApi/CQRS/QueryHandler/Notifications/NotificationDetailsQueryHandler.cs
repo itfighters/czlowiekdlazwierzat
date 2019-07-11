@@ -37,8 +37,8 @@ namespace CQRS.QueryHandler.Notifications
             var alreadySent = dbContext.Notifications
                 .Include(x=>x.Subscription)
                 .Where(x => x.UpdatedAt.Month == DateTime.Now.Month
-                && x.UpdatedAt.Year == DateTime.Now.Month
-                && x.Status == NotificationStatus.ReadyToSend || x.Status == NotificationStatus.Sending || x.Status == NotificationStatus.Sent);
+                && x.UpdatedAt.Year == DateTime.Now.Year
+                && (x.Status == NotificationStatus.ReadyToSend || x.Status == NotificationStatus.Sending || x.Status == NotificationStatus.Sent));
 
             return new Dictionary<SubscriptionType, NotificationDetails>(new KeyValuePair<SubscriptionType, NotificationDetails>[] {
                 await GetNotificationDetails(SubscriptionType.Email, auction, alreadySent),

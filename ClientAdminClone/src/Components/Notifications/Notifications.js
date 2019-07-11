@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import notificationService from '../../service/notificationService';
 import PropTypes from 'prop-types';
 import NotificationBox from './NotificationBox';
+import { toast } from "react-toastify";
 
 export default class Notifications extends Component
 {
@@ -30,6 +31,11 @@ export default class Notifications extends Component
     }
 
     componentWillMount()
+    {
+        this.loadNotificationDetails();
+    }
+
+    loadNotificationDetails()
     {
         notificationService.notificationsDetails(this.props.auctionId)
             .then(resp => resp.json())
@@ -61,11 +67,17 @@ export default class Notifications extends Component
 
     confirmed(notificationType)
     {
-        console.log(notificationType);
-        notificationService.sendNotification(this.props.auctionId,notificationType)
-        .then(resp=>{
-            console.log(resp);
-        })
+        notificationService.sendNotification(this.props.auctionId, notificationType)
+            .then(resp =>
+            {
+                if (resp.ok) {
+                    toast.success('Poprawnie dodano notyfikację');
+                }
+                else {
+                    toast.error('Dodanie notyfikacji nie powiodło się');
+                }
+                this.loadNotificationDetails();
+            });
     }
 }
 
