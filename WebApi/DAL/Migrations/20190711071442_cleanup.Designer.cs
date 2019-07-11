@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190707150417_image_byte_to_string")]
-    partial class image_byte_to_string
+    [Migration("20190711071442_cleanup")]
+    partial class cleanup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
