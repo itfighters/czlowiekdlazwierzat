@@ -5,6 +5,10 @@ import { creatAuction } from "../../../service/auctionsService";
 import { toast } from "react-toastify";
 
 class AddForm extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   onSumbit = form => {
     console.log(form);
     return creatAuction(form)
@@ -29,7 +33,7 @@ class AddForm extends Component {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="black" textAlign="center">
-            Dodaj formularz
+            {this.props.header}
           </Header>
           <PostForm onSubmit={this.onSumbit} />
         </Grid.Column>

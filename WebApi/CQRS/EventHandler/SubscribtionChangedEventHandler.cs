@@ -31,18 +31,22 @@ namespace CQRS.EventHandler
                         break;
                     }
                 case SubscriptionType.Sms:
-                {
-                    var notificationText =
-                        notification.ActionType == SubscribtionChangedEvent.SubriptionChangedType.Subscribe
-                            ? SMSTemplate.SubscribeTemplate(notification.Token)
-                            : SMSTemplate.UnsubscribeTemplate(notification.Token);
-                        result = await smsService.SendAsync( notificationText, new string[] { notification.Contact });
+                    {
+                        var notificationText =
+                            notification.ActionType == SubscribtionChangedEvent.SubriptionChangedType.Subscribe
+                                ? SMSTemplate.SubscribeTemplate(notification.Token)
+                                : SMSTemplate.UnsubscribeTemplate(notification.Token);
+                        result = await smsService.SendAsync(notificationText, new string[] { notification.Contact });
+                        break;
+                    }
+                case SubscriptionType.Push:
+                    {
                         break;
                     }
                 default: throw new NotImplementedException();
             }
 
-            if(!result)
+            if (!result)
             {
                 //zalogować 
             }

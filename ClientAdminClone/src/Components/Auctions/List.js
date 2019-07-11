@@ -43,10 +43,10 @@ export class List extends React.Component
                                     {a.description}
                                 </td>
                                 <td>
-                                    {a.dateFrom}
+                                    {new Date(a.dateFrom).toLocaleDateString()}
                                 </td>
                                 <td>
-                                    {a.dateTo}
+                                    {new Date(a.dateTo).toLocaleDateString()}
                                 </td>
                                 <td>
                                     <button class="ui gray button"
