@@ -10,14 +10,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-function App() {
+function App()
+{
   return (
     <Router>
-    <ToastContainer/>
-    <Header/>
+      <ToastContainer />
+      <Header />
       <div>
         <Route path="/login" component={Login} />
-        <Route path="/" exact component={Login}/>
+        <Route path="/" exact component={Login} />
         <ProtectedRoutes path="/admin" component={Admin} />
       </div>
     </Router>
