@@ -51,7 +51,7 @@ namespace DAL.Migrations
 
                     b.Property<bool>("Featured");
 
-                    b.Property<byte[]>("Image");
+                    b.Property<string>("Image");
 
                     b.Property<bool>("IsDeleted");
 

@@ -1,5 +1,3 @@
-import { list, postExample } from './mock';
-
 export const delay = (t, v) =>
   new Promise(resolve => setTimeout(resolve.bind(null, v), t));
 

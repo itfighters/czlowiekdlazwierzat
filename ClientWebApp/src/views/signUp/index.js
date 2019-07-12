@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import * as firebase from "firebase/app";
+import "firebase/messaging";
 import {
-  sendEmailAdressToServer,
-  sendPhoneNumberToServer,
-  confirmPhoneNumber
+  subscribe,
+  confirmPhoneNumber,
+  subscriptionType,
+  unsubscribe
 } from "../../services/substriction.services";
 import { GetAllCategories } from "../../services/categoryService";
+import Toast from "../../components/toast";
 
 import Loader from "../../components/loader";
 import Popup from "../../components/popup";
@@ -19,14 +23,19 @@ export default class SignUp extends Component {
       acceptedSms: false,
       email: "",
       tel: "",
+      unsubscribeTel: "",
+      unsubscribeEmail: "",
       visiblePopup: false,
-      categories: []
+      categories: [],
+      visibleToast: false,
+      toastText: "",
+      toastClass: ""
     };
   }
 
   componentDidMount() {
     GetAllCategories().then(allCategories => {
-      this.setState({ categories: allCategories.values });
+      this.setState({ categories: allCategories });
     });
     document.addEventListener("keydown", this.handleKeyDown);
   }
@@ -86,6 +95,14 @@ export default class SignUp extends Component {
     this.setState({ tel: e.target.value });
   };
 
+  updateUnsubscribeTel = e => {
+    this.setState({ unsubscribeTel: e.target.value });
+  };
+
+  updateunsubscribeEmail = e => {
+    this.setState({ unsubscribeEmail: e.target.value });
+  };
+
   showPopup = type => {
     this.setState({
       visiblePopup: type
@@ -98,57 +115,128 @@ export default class SignUp extends Component {
     });
   };
 
+  showToast = (text, state) => {
+    this.setState({
+      visibleToast: true,
+      toastText: text,
+      toastClass: state
+    });
+  };
+
+  onCloseToast = () => {
+    this.setState({
+      visibleToast: false,
+      toastText: "",
+      toastClass: ""
+    });
+  };
+
   confirmNumber = number => {
-    console.log("confirm", number);
-    confirmPhoneNumber(number)
+    var tel = this.state.tel;
+    confirmPhoneNumber(number, tel)
       .then(resp => {
-        alert("Zapisałeś się");
+        this.closePopup();
+        this.showToast("Zapisałeś się!", "success");
       })
-      .catch(err => {
-        alert("cos sie wywalilo");
-      });
+      .catch(this.handleError);
   };
 
   submitMail = e => {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
-      alert(
-        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia"
+      this.showToast(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia",
+        "warning"
       );
       return;
     }
     var mail = this.state.email;
 
-    sendEmailAdressToServer(mail, categories)
+    subscribe(mail, subscriptionType.Email, categories)
       .then(resp => {
-        alert("zapisales sie");
+        this.showToast(
+          "Na Twojego emaila został wysłany link do potwierdzenia adresu",
+          "success"
+        );
       })
-      .catch(err => {
-        alert("cos sie wywalilo");
-      });
+      .catch(this.handleError);
   };
 
   submitTel = e => {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
-      alert(
-        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia"
+      this.showToast(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia",
+        "warning"
       );
       return;
     }
     var tel = this.state.tel;
 
-    sendPhoneNumberToServer(tel, categories)
+    subscribe(tel, subscriptionType.Sms, categories)
       .then(resp => {
         this.setState({
           visiblePopup: ContentTypes.Confirm
         });
       })
-      .catch(err => {
-        alert("cos sie wywalilo");
-      });
+      .catch(this.handleError);
+  };
+
+  handleError = err => {
+    console.error(err);
+    this.showToast(`Wystąpił błąd: ${err.Message || err}`, "error");
+  };
+
+  unsubscribeTel = e => {
+    e.preventDefault();
+    var tel = this.state.unsubscribeTel;
+    unsubscribe(tel)
+      .then(() => {
+        this.showToast("Zostałeś wypisany z powiadomień", "success");
+      })
+      .catch(this.handleError);
+  };
+
+  unsubscribeEmail = e => {
+    e.preventDefault();
+    var mail = this.state.unsubscribeEmail;
+    unsubscribe(mail)
+      .then(() => {
+        this.showToast("Zostałeś wypisany z powiadomień", "success");
+      })
+      .catch(this.handleError);
+  };
+
+  pushNotification = async e => {
+    var categories = this.state.checked;
+    if (categories.length === 0) {
+      this.showToast(
+        "Proszę wybierz z jakiej kategorii chcesz otrzymywać powiadomienia",
+        "warning"
+      );
+      return;
+    }
+    var token = await this.askForPermissioToReceiveNotifications();
+    subscribe(token, subscriptionType.Push, categories)
+      .then(() => {
+        this.showToast("Zostałeś zapisany na powiadomienia", "success");
+      })
+      .catch(this.handleError);
+  };
+
+  askForPermissioToReceiveNotifications = async () => {
+    try {
+      const messaging = firebase.messaging();
+      await messaging.requestPermission();
+      const token = await messaging.getToken();
+      console.log("token:", token);
+
+      return token;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   render() {
@@ -268,7 +356,7 @@ export default class SignUp extends Component {
           </form>
           <section>
             <h6>Zapisz się na push notification</h6>
-            <button>Zapisz się!</button>
+            <button onClick={this.pushNotification}>Zapisz się!</button>
           </section>
         </section>
         <section>
@@ -276,18 +364,26 @@ export default class SignUp extends Component {
             <h1>Rezygnacja z powiadomień</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </section>
-          <form onSubmit={this.showInConsole}>
+          <form onSubmit={this.unsubscribeTel}>
             <input
               type="tel"
               pattern="[0-9]{9}"
               placeholder="telefon"
               title="format: 123456789"
+              onChange={this.updateUnsubscribeTel}
+              value={this.state.unsubscribeTel}
               required
             />
             <button type="submit">Wyślij</button>
           </form>
-          <form onSubmit={this.showInConsole}>
-            <input type="email" placeholder="mail" required />
+          <form onSubmit={this.unsubscribeEmail}>
+            <input
+              type="email"
+              placeholder="mail"
+              onChange={this.updateunsubscribeEmail}
+              value={this.state.unsubscribeEmail}
+              required
+            />
             <button type="submit">Wyślij</button>
           </form>
         </section>
@@ -297,6 +393,12 @@ export default class SignUp extends Component {
           )}
           {this.state.visiblePopup === ContentTypes.Terms && <Terms />}
         </Popup>
+        <Toast
+          visible={this.state.visibleToast}
+          state={this.state.toastClass}
+          text={this.state.toastText}
+          onClose={this.onCloseToast}
+        />
       </article>
     );
   }

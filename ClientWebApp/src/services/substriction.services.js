@@ -1,10 +1,18 @@
-const URL = ""; //add when it will be ready
+import { API_URL } from "../config";
 
-export function sendEmailAdressToServer(emailAdress, categories) {
-  return fetch(URL, {
+const URL = API_URL + "subscription";
+
+export const subscriptionType = { Sms: 1, Email: 2, Push: 3 };
+
+export function subscribe(value, type, categories) {
+  return fetch(`${URL}/subscribe`, {
     method: "post",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
-      mail: emailAdress,
+      value: value,
+      subscriptionType: type,
       categories: categories
     })
   }).then(response => {
@@ -15,12 +23,15 @@ export function sendEmailAdressToServer(emailAdress, categories) {
   });
 }
 
-export function sendPhoneNumberToServer(phoneNumber, categories) {
-  return fetch(URL, {
+export function confirmPhoneNumber(code, tel) {
+  return fetch(`${URL}/confirm`, {
     method: "post",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
-      number: phoneNumber,
-      categories: categories
+      token: code,
+      contact: tel
     })
   }).then(response => {
     if (response.status !== 200) {
@@ -30,11 +41,14 @@ export function sendPhoneNumberToServer(phoneNumber, categories) {
   });
 }
 
-export function confirmPhoneNumber(code) {
-  return fetch(URL, {
+export function unsubscribe(tel) {
+  return fetch(`${URL}/unsubscribe`, {
     method: "post",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
-      code: code
+      contact: tel
     })
   }).then(response => {
     if (response.status !== 200) {
