@@ -29,7 +29,8 @@ namespace CQRS.CommandHandler.Subscriptions
                 throw new BusinessLogicException($"{request.Value} already subscribed");
 
             var pendingConfirmation =
-                dbContext.Subscriptions.FirstOrDefault(x => x.Contact == request.Value && x.Subscribed && !x.Confirmed);
+                dbContext.Subscriptions.FirstOrDefault(x =>
+                    x.Contact == request.Value && x.Subscribed && !x.Confirmed);
             Subscription subscription = null;
             if (pendingConfirmation == null)
             {
@@ -40,15 +41,19 @@ namespace CQRS.CommandHandler.Subscriptions
                 subscription = pendingConfirmation;
 
             #region tempshit
+
             //send sms/email with token & obtain token, save to db
             Random rnd = new Random();
             int numb = rnd.Next(10000, 99000);
             subscription.ConfirmationToken = numb.ToString();
+
             #endregion
 
             subscription.Subscribed = true;
             subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
             await dbContext.SaveChangesAsync();
+
+
             await mediator.Publish(new SubscribtionChangedEvent
             {
                 Contact = subscription.Contact,
@@ -56,6 +61,7 @@ namespace CQRS.CommandHandler.Subscriptions
                 Token = subscription.ConfirmationToken,
                 ActionType = SubscribtionChangedEvent.SubriptionChangedType.Subscribe
             });
+
         }
     }
 }

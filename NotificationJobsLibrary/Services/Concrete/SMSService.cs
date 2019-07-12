@@ -14,24 +14,31 @@ namespace NotificationJobsLibrary.Services.Concrete
     {
         private readonly IOptions<SMSConfig> options;
         private HttpClient Client { get; }
-        private UriBuilder UriBuilder { get; }
+        private UriBuilder SendSmsUriBuilder { get; }
+        private UriBuilder GetBalanceUriBuilder { get; }
+
 
         public SMSService(IOptions<SMSConfig> options)
         {
             this.options = options;
             Client = new HttpClient();
-            UriBuilder = new UriBuilder(options.Value.ApiUrl);
+            SendSmsUriBuilder = new UriBuilder(options.Value.SmsSendUrl);
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = options.Value.ApiKey;
             query["password"] = options.Value.ApiPassword;
             query["from"] = options.Value.From;
-            UriBuilder.Query = query.ToString();
+            SendSmsUriBuilder.Query = query.ToString();
+            GetBalanceUriBuilder = new UriBuilder(options.Value.GetBalanceUrl);
+            query = HttpUtility.ParseQueryString(string.Empty);
+            query["key"] = options.Value.ApiKey;
+            query["password"] = options.Value.ApiPassword;
+            query["product"] = "SMS";
+            GetBalanceUriBuilder.Query = query.ToString();
         }
 
         public async Task<bool> SendAsync(string text, IEnumerable<string> numbers)
         {
-            //todo dodac sprawdzanie ile juz poszlo
-            var builder = new StringBuilder(UriBuilder.ToString());
+            var builder = new StringBuilder(SendSmsUriBuilder.ToString());
             builder.Append($"&msg={text}");
             builder.Append("&to=");
             builder.AppendJoin("&to=", numbers);
@@ -40,6 +47,18 @@ namespace NotificationJobsLibrary.Services.Concrete
 
             //dodać logowanie
             return result.IsSuccessStatusCode;
+        }
+
+        private async Task<int> GetBalance()
+        {
+            var builder = new StringBuilder(GetBalanceUriBuilder.ToString());
+            var result = await Client.PostAsync(builder.ToString(), null);
+            if (result.IsSuccessStatusCode)
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }
