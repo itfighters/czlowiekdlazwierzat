@@ -1,27 +1,21 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DAL;
-using DAL.Model;
-using DAL.Repositories.Abstract;
-using DAL.Repositories.Concrete;
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using DAL.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using NotificationJobs.Services.Abstract;
-using NotificationJobs.Services.Auction;
 using NotificationJobs.Services.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NotificationJobs.Jobs
 {
-    public class SmsNotificationJob : BackgroundService
+    public class PushNotificationJob : BackgroundService
     {
         private IServiceProvider serviceProvider { get; }
 
-        public SmsNotificationJob(IServiceProvider serviceProvider)
+        public PushNotificationJob(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
@@ -34,7 +28,7 @@ namespace NotificationJobs.Jobs
                 using (var scope = serviceProvider.CreateScope())
                 {
                     var notificationHelper = scope.ServiceProvider.GetRequiredService<INotificationHelper>();
-                    var notificationSender = scope.ServiceProvider.GetRequiredService<IAuctionSmsNotification>();
+                    var notificationSender = scope.ServiceProvider.GetRequiredService<IAuctionEmailNotification>();
                     delay = await notificationHelper.SendNotification(SubscriptionType.Sms, notificationSender);
                 }
                 await Task.Delay(delay);

@@ -14,9 +14,7 @@ using NotificationJobs.Services.Concrete;
 using NotificationJobsLibrary.Services.Abstract;
 using NotificationJobsLibrary.Services.Concrete;
 using System.Text;
-using Microsoft.Extensions.Hosting;
 using NLog.Web;
-using NotificationJobs.Services;
 using Utils;
 using Utils.Abstract;
 
@@ -104,6 +102,8 @@ namespace WebApi.Helpers
         public void RunBackgroundServices()
         {
             services.AddHostedService<SmsNotificationJob>();
+            services.AddHostedService<EmailNotificationJob>();
+            services.AddHostedService<PushNotificationJob>();
         }
     }
 }
