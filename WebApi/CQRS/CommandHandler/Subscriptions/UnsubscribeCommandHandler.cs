@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CQRS.Event;
+using Utils.Abstract;
 
 namespace CQRS.CommandHandler.Subscriptions
 {
@@ -14,11 +15,13 @@ namespace CQRS.CommandHandler.Subscriptions
     {
         private readonly DatabaseContext dbContext;
         private readonly IMediator mediator;
+        private readonly IConfirmationCodesGenerator confiramationCodesGenerator;
 
-        public UnsubscribeCommandHandler(DatabaseContext dbContext, IMediator mediator)
+        public UnsubscribeCommandHandler(DatabaseContext dbContext, IMediator mediator, IConfirmationCodesGenerator confiramationCodesGenerator)
         {
             this.dbContext = dbContext;
             this.mediator = mediator;
+            this.confiramationCodesGenerator = confiramationCodesGenerator;
         }
 
         protected override async Task Handle(UnsubscribeCommand request, CancellationToken cancellationToken)
@@ -32,9 +35,7 @@ namespace CQRS.CommandHandler.Subscriptions
             {
                 #region tempshit
                 //send sms with token & obtain token, save to db
-                Random rnd = new Random();
-                int numb = rnd.Next(10000, 99000);
-                subscription.ConfirmationToken = numb.ToString();
+                subscription.ConfirmationToken = confiramationCodesGenerator.GenerateCode();
                 #endregion
                 subscription.Subscribed = false;
                 subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
