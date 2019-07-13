@@ -1,22 +1,14 @@
 ﻿using System.Reflection;
-using System.Text;
 using CQRS.Command.Auctions;
 using DAL;
-using DAL.Repositories.Abstract;
-using DAL.Repositories.Concrete;
-using DAL.Services.Abstract;
-using DAL.Services.Concrete;
 using FluentValidation.AspNetCore;
-using Infrastructure;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Helpers;
 using WebApi.Middleware;
@@ -39,7 +31,6 @@ namespace WebApi
             servicesHelper.ConfigureServices();
             servicesHelper.ConfigureRepositories();
             servicesHelper.ConfigureAuthServices();
-            servicesHelper.ConfigureBackgroudServices();
             servicesHelper.ConfigureUtils();
             servicesHelper.ConfigureLogger();
 
@@ -61,6 +52,8 @@ namespace WebApi
                 c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
             });
 
+
+            servicesHelper.RunBackgroundServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

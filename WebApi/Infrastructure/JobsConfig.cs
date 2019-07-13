@@ -7,7 +7,9 @@ namespace Infrastructure
     public class JobsConfig
     {
         public string ServiceShortUrl { get; set; }
-        public SmsNotificationsConfig SmsNotificationsConfig { get; set; }
+        public int SleepPeriod { get; set; }
+        public int PackageSize { get; set; }
+        //public SmsNotificationsConfig SmsNotificationsConfig { get; set; }
     }
 
     public class SmsNotificationsConfig
