@@ -26,8 +26,9 @@ namespace CQRS.EventHandler
             switch (notification.SubscriptionType)
             {
                 case SubscriptionType.Email:
-                    {
-                        result = emailService.SendMessage("rozyckirozycki@gmail.com", "todosubject", "todobody");
+                {
+                    var message = MailTemplate.NotificationTemplate("Zbiórka dla Reksia", "LOREM");
+                        result = emailService.SendMessage("m.rozycki@avanade.com", "Nowa pomoc", message);
                         break;
                     }
                 case SubscriptionType.Sms:

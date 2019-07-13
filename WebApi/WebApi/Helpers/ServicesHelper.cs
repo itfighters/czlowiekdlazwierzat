@@ -16,6 +16,10 @@ using NotificationJobsLibrary.Services.Abstract;
 using NotificationJobsLibrary.Services.Concrete;
 using System;
 using System.Text;
+using Microsoft.Extensions.Hosting;
+using NotificationJobs.Services;
+using Utils;
+using Utils.Abstract;
 
 namespace WebApi.Helpers
 {
@@ -86,6 +90,11 @@ namespace WebApi.Helpers
 
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISMSService, SMSService>();
+        }
+
+        public void ConfigureUtils()
+        {
+            services.AddScoped<IConfirmationCodesGenerator, ConfirmationCodesGenerator>();
         }
 
         public void RunBackgroundServices()

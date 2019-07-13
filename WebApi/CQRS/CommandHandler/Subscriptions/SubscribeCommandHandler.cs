@@ -9,6 +9,7 @@ using DAL;
 using DAL.Exceptions;
 using DAL.Model;
 using MediatR;
+using Utils.Abstract;
 
 namespace CQRS.CommandHandler.Subscriptions
 {
@@ -16,11 +17,13 @@ namespace CQRS.CommandHandler.Subscriptions
     {
         private readonly DatabaseContext dbContext;
         private readonly IMediator mediator;
+        private readonly IConfirmationCodesGenerator confiramationCodesGenerator;
 
-        public SubscribeCommandHandler(DatabaseContext dbContext, IMediator mediator)
+        public SubscribeCommandHandler(DatabaseContext dbContext, IMediator mediator, IConfirmationCodesGenerator confiramationCodesGenerator)
         {
             this.dbContext = dbContext;
             this.mediator = mediator;
+            this.confiramationCodesGenerator = confiramationCodesGenerator;
         }
 
         protected override async Task Handle(SubscribeCommand request, CancellationToken cancellationToken)
@@ -29,7 +32,8 @@ namespace CQRS.CommandHandler.Subscriptions
                 throw new BusinessLogicException($"{request.Value} already subscribed");
 
             var pendingConfirmation =
-                dbContext.Subscriptions.FirstOrDefault(x => x.Contact == request.Value && x.Subscribed && !x.Confirmed);
+                dbContext.Subscriptions.FirstOrDefault(x =>
+                    x.Contact == request.Value && x.Subscribed && !x.Confirmed);
             Subscription subscription = null;
             if (pendingConfirmation == null)
             {
@@ -40,15 +44,16 @@ namespace CQRS.CommandHandler.Subscriptions
                 subscription = pendingConfirmation;
 
             #region tempshit
+
             //send sms/email with token & obtain token, save to db
-            Random rnd = new Random();
-            int numb = rnd.Next(10000, 99000);
-            subscription.ConfirmationToken = numb.ToString();
+            subscription.ConfirmationToken = confiramationCodesGenerator.GenerateCode();
             #endregion
 
             subscription.Subscribed = true;
             subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
             await dbContext.SaveChangesAsync();
+
+
             await mediator.Publish(new SubscribtionChangedEvent
             {
                 Contact = subscription.Contact,
@@ -56,6 +61,7 @@ namespace CQRS.CommandHandler.Subscriptions
                 Token = subscription.ConfirmationToken,
                 ActionType = SubscribtionChangedEvent.SubriptionChangedType.Subscribe
             });
+
         }
     }
 }

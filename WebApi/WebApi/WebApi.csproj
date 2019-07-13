@@ -31,6 +31,7 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\NotificationJobsLibrary\NotificationJobsLibrary.csproj" />
     <ProjectReference Include="..\NotificationJobs\NotificationJobs.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
   </ItemGroup>
 
 </Project>
