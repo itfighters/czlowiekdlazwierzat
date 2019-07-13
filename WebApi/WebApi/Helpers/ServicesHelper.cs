@@ -13,6 +13,7 @@ using NotificationJobsLibrary.Services.Concrete;
 using System;
 using System.Text;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 using NotificationJobs.Services;
 using Utils;
 using Utils.Abstract;
@@ -51,6 +52,11 @@ namespace WebApi.Helpers
                    ValidateAudience = false
                };
            });
+        }
+
+        public void ConfigureLogger()
+        {
+            NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
         }
 
         public void ConfigureSettings()

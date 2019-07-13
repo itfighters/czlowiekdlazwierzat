@@ -41,6 +41,7 @@ namespace WebApi
             servicesHelper.ConfigureAuthServices();
             servicesHelper.ConfigureBackgroudServices();
             servicesHelper.ConfigureUtils();
+            servicesHelper.ConfigureLogger();
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
