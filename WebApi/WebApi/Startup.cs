@@ -34,6 +34,9 @@ namespace WebApi
             servicesHelper.ConfigureUtils();
             servicesHelper.ConfigureLogger();
 
+            services.AddSpaStaticFiles(configuration =>
+            { configuration.RootPath = "WebApps"; });
+
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionCommandValidator>());
@@ -72,12 +75,42 @@ namespace WebApi
             app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
+
+           
+
             app.UseMvc();
+
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
+            app.Map("/admin", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebApps/admin";
+                    spa.Options.DefaultPage = "/admin/index.html";
+                });
+            });
+
+            app.Map("", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebApps";
+                });
+            });
+
+
+
+
+
+
         }
     }
 }
