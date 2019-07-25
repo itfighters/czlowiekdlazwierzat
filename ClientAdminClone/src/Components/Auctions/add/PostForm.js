@@ -8,7 +8,6 @@ import {
   Form,
   Dropdown
 } from "semantic-ui-react";
-import { GetCategories } from "../../../service/categoryService";
 
 class PostForm extends Component {
   constructor(props) {
@@ -36,8 +35,8 @@ class PostForm extends Component {
         checkboxKonto: true,
         dateStart: this.getCurrentDate(),
         dateEnd: "",
-        adressStart: "",
-        adressEnd: "",
+        // adressStart: "",
+        // adressEnd: "",
         phone: "",
         files: null
       };
@@ -89,8 +88,8 @@ class PostForm extends Component {
       checkboxKonto,
       dateStart,
       dateEnd,
-      adressStart,
-      adressEnd,
+      // adressStart,
+      // adressEnd,
       phone
     } = this.state.form;
 
