@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default class TilesListDetails extends Component {
   render() {
@@ -15,7 +16,6 @@ export default class TilesListDetails extends Component {
           <img src={imageSrc} alt="zdjecie-potrzeby" />
           <h2 className="title">{tile.title}</h2>
           <h4 className="description">{tile.description}</h4>
-          <button>Więcej</button>
         </div>
       </Link>
     );

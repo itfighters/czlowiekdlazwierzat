@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="ClientAdminClone\**" />
+    <Compile Remove="ClientWebApp\**" />
+    <Content Remove="ClientAdminClone\**" />
+    <Content Remove="ClientWebApp\**" />
+    <EmbeddedResource Remove="ClientAdminClone\**" />
+    <EmbeddedResource Remove="ClientWebApp\**" />
+    <None Remove="ClientAdminClone\**" />
+    <None Remove="ClientWebApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\admin\" />
+    <Folder Include="wwwroot\public\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +50,12 @@
   <ItemGroup>
     <Content Update="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="WebApps\app\asset-manifest.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="WebApps\app\manifest.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 

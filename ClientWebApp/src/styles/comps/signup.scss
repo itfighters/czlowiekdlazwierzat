@@ -1,15 +1,161 @@
 @import "../variables.scss";
 
 .signup-page {
+  padding: 0 $side-padding;
   .sign-to {
-    padding: 0 $side-padding;
-    p {
-      column-count: 2;
+    h1 {
+      margin-top: 58px;
+      color: $gray;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    .notofications-description {
+      display: flex;
+      .description1{
+        margin-right: 2vw;
+      }
+      .description2{
+        margin-left: 2vw;
+      }
     }
   }
-  .step-one {
+  .step-one{
+    display: flex;
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid $primary-color;
+    h1 {
+      font-weight: bold;
+      color: $gray;
+    }
+    .step-one-description {
+    width: 40%;
+    }
+    section{
+      text-align: right;
+      color: $gray;
+      margin-left: 3rem;
+      width: 460px;
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+    }
+    .checkbox-section{
+      margin-left: 3%;
+      margin-top: 1rem;
+      form{
+        color: $primary-color;
+        font-size: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        .checkbox-item {
+          width: 25%;
+          margin-bottom: 1rem;
+          display: flex;
+        }
+        input {
+          margin-right: 1rem;
+        }
+      }
+    }
   }
   .step-two {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid $primary-color;
+    .step-two-description {
+      display: flex;
+      width: 40%;
+      section {
+        width: 460px;
+        margin-left: 3rem;
+        text-align: right;
+        margin-bottom: 3rem;
+      }
+    }
+    h1 {
+      margin-top: 58px;
+      color: $gray;
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .flex {
+      display: flex;
+      font-size: 14px;
+      div {
+        background-color: $dark-gray;
+      color: white;
+        h6 {
+          margin: 4rem 0;
+        }
+      }
+      .email-container {
+        width: 580px;
+        form {
+          margin-left: 6rem;
+          margin-right: 3rem;
+        }
+      }
+      .sms-container {
+        width: 435px;
+        height: 335px;
+        margin:0 3rem;
+        form {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+      }
+      .notifications-container {
+        width: 580px;
+          section {
+            margin-left: 3rem;
+            margin-right: 6rem;
+          }
+      }
+    }
+  }
+  .resignation {
+    display: flex;
+    margin-top: 58px;
+    margin-bottom: 20rem;
+    .resignation-description {
+      width:40%;
+      section {
+        width: 460px;
+        margin-left: 3rem;
+        text-align: right;
+        margin-bottom: 3rem;
+      }
+    }
+    button {
+      border: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      color: $primary-color;
+    }
+    input {
+      border: none;
+      outline: none;
+      border-bottom: 2px solid $primary-color;
+      display: block;
+      margin-left: auto;
+      display: flex;
+      width: 360px;
+    }
+    h1 {
+      color: $gray;
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .resignation-email {
+      width: 360px;
+      margin-right: 5rem;
+    }
+    .resignation-phone {
+      width: 360px;
+    }
   }
 }
 

@@ -2,6 +2,7 @@
   "name": "client-admin-clone",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/admin/",
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
     "react": "^16.8.6",
