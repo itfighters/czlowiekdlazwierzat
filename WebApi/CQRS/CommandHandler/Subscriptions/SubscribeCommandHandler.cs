@@ -8,8 +8,8 @@ using CQRS.Mapper;
 using DAL;
 using DAL.Exceptions;
 using DAL.Model;
+using Infrastructure.Abstract;
 using MediatR;
-using Utils.Abstract;
 
 namespace CQRS.CommandHandler.Subscriptions
 {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CQRS.Event;
-using Utils.Abstract;
+using Infrastructure.Abstract;
 
 namespace CQRS.CommandHandler.Subscriptions
 {
