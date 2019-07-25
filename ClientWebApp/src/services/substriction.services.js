@@ -1,10 +1,13 @@
 import { API_URL } from "../config";
+import { mockPromisse } from "./mockData";
 
 const URL = API_URL + "subscription";
 
 export const subscriptionType = { Sms: 1, Email: 2, Push: 3 };
 
 export function subscribe(value, type, categories) {
+  return mockPromisse();
+
   return fetch(`${URL}/subscribe`, {
     method: "post",
     headers: {
@@ -24,6 +27,8 @@ export function subscribe(value, type, categories) {
 }
 
 export function confirmPhoneNumber(code, tel) {
+  return mockPromisse();
+
   return fetch(`${URL}/confirm`, {
     method: "post",
     headers: {
