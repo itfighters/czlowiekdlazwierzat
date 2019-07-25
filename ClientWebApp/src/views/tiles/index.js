@@ -19,7 +19,6 @@ export default class Tiles extends Component {
     const { selectedCategoryId } = this.state;
     return (
       <div>
-        Zbiórki
         <TilesCategories
           setCategory={this.setCategory}
           selectedCategoryId={selectedCategoryId}

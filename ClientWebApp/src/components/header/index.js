@@ -45,7 +45,7 @@ const Header = ({ history }) => {
           </li>
           <li>
               <NavLink className="btn btn-primary" to="/signup">
-              Zapisz się na powiadomienia
+              Powiadomienia
             </NavLink>
           </li>
         </ul>

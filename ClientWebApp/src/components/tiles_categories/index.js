@@ -62,9 +62,10 @@ class TilesCategories extends Component {
 
     return (
       <section>
-        sortuj wg kategorii
-        <br />
-        {categories}
+        <p className="categories-header">Wybierz kategorie</p>
+        <div className='inline-collection'>
+          {categories}
+        </div>
       </section>
     );
   }
