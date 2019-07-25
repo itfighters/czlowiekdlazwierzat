@@ -1,22 +1,14 @@
 ﻿using System.Reflection;
-using System.Text;
 using CQRS.Command.Auctions;
 using DAL;
-using DAL.Repositories.Abstract;
-using DAL.Repositories.Concrete;
-using DAL.Services.Abstract;
-using DAL.Services.Concrete;
 using FluentValidation.AspNetCore;
-using Infrastructure;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Helpers;
 using WebApi.Middleware;
@@ -39,6 +31,11 @@ namespace WebApi
             servicesHelper.ConfigureServices();
             servicesHelper.ConfigureRepositories();
             servicesHelper.ConfigureAuthServices();
+            servicesHelper.ConfigureUtils();
+            servicesHelper.ConfigureLogger();
+
+            services.AddSpaStaticFiles(configuration =>
+            { configuration.RootPath = "WebApps"; });
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -58,6 +55,8 @@ namespace WebApi
                 c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
             });
 
+
+            servicesHelper.RunBackgroundServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -76,12 +75,42 @@ namespace WebApi
             app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
+
+           
+
             app.UseMvc();
+
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
+            app.Map("/admin", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebApps/admin";
+                    spa.Options.DefaultPage = "/admin/index.html";
+                });
+            });
+
+            app.Map("", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebApps";
+                });
+            });
+
+
+
+
+
+
         }
     }
 }

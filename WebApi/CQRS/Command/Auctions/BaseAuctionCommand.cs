@@ -7,7 +7,7 @@ namespace CQRS.Command.Auctions
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public IEnumerable<int> Categories { get; set; }
         public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }

@@ -1,7 +1,9 @@
 import React from 'react';
+import AddForm from './add/AddForm'
+
 export function Add()
 {
     return (
-        <h1>dodawanie zbiorek</h1>
+        <AddForm header={'Dodaj nową zbiórkę'} />
     )
 }

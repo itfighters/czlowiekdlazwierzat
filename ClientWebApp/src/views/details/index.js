@@ -63,11 +63,7 @@ export default class Details extends React.Component {
         <section className="tile-details">
           <div className="wrap-tile">
             <div className="img">
-              <img
-                src="https://i.ytimg.com/vi/OdXSnjVCuzM/maxresdefault.jpg"
-                alt="zdj pieska"
-              />
-              {/* {this.state.auction.image} */}
+              <img src={this.state.auction.image} alt="zdj zbiórki" />
             </div>
             <div className="description">
               <h2>{this.state.auction.title}</h2>

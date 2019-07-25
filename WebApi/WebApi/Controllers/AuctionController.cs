@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using CQRS.Command.Auctions;
 using CQRS.Query.Auctions;
 using CQRS.QueryData;
-using DAL.Repositories.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

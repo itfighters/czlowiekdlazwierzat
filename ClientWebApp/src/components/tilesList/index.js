@@ -17,7 +17,7 @@ class TilesList extends Component {
   componentDidMount() {
     fetchTiles()
       .then(response => {
-        let tiles = response;
+        let tiles = response.values;
         this.setState({
           tiles: tiles,
           error: false,

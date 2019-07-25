@@ -6,14 +6,17 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NotificationJobs.Jobs;
+using NotificationJobs.Services.Abstract;
+using NotificationJobs.Services.Auction;
+using NotificationJobs.Services.Concrete;
 using NotificationJobsLibrary.Services.Abstract;
 using NotificationJobsLibrary.Services.Concrete;
-using System;
 using System.Text;
-using Microsoft.Extensions.Hosting;
-using NotificationJobs.Services;
+using NLog.Web;
+using Utils;
+using Utils.Abstract;
 
 namespace WebApi.Helpers
 {
@@ -27,7 +30,7 @@ namespace WebApi.Helpers
             this.services = services;
             this.configuration = configuration;
         }
-        
+
         public void ConfigureAuthServices()
         {
 
@@ -51,6 +54,11 @@ namespace WebApi.Helpers
            });
         }
 
+        public void ConfigureLogger()
+        {
+            NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+        }
+
         public void ConfigureSettings()
         {
             var jwtConfig = configuration.GetSection("JWTConfig");
@@ -69,18 +77,33 @@ namespace WebApi.Helpers
         public void ConfigureServices()
         {
             services.AddScoped<IJWTService, JWTService>();
+            services.AddScoped<IAuctionSmsNotification, AuctionSmsNotification>();
+            services.AddScoped<IAuctionEmailNotification, AuctionEmailNotification>();
+            services.AddScoped<INotificationHelper, NotificationHelper>();
         }
+
+      
 
         public void ConfigureRepositories()
         {
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<IJobsRepository, JobsRepository>();
-            
+
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISMSService, SMSService>();
+        }
 
-            services.AddSingleton<IHostedService, SmsNotificationsService>();
+        public void ConfigureUtils()
+        {
+            services.AddScoped<IConfirmationCodesGenerator, ConfirmationCodesGenerator>();
+        }
+
+        public void RunBackgroundServices()
+        {
+            services.AddHostedService<SmsNotificationJob>();
+            services.AddHostedService<EmailNotificationJob>();
+            services.AddHostedService<PushNotificationJob>();
         }
     }
 }

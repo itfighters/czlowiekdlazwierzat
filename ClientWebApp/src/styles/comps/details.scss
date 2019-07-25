@@ -54,10 +54,11 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+
         .donate-buttons {
             display: flex;     
             margin-right: 5%;
-            flex-wrap: wrap;
+
             .btn-rounded{
                 width: 230px;
                 margin: 0 30px;

@@ -43,17 +43,17 @@ export class List extends React.Component
                                     {a.description}
                                 </td>
                                 <td>
-                                    {a.dateFrom}
+                                    {new Date(a.dateFrom).toLocaleDateString()}
                                 </td>
                                 <td>
-                                    {a.dateTo}
+                                    {new Date(a.dateTo).toLocaleDateString()}
                                 </td>
                                 <td>
-                                    <button class="ui gray button"
+                                    <button className="ui gray button"
                                         onClick={() => { this.props.history.push(`/admin/edit/${a.id}`) }}>
                                         Edytuj
                                     </button>
-                                    <button class="ui red button"
+                                    <button className="ui red button"
                                         onClick={this.deleteClicked.bind(this, a.id)}>
                                         Usuń
                                     </button>
@@ -64,7 +64,7 @@ export class List extends React.Component
                     <tfoot>
                         <tr>
                             <th colSpan="5">
-                                <button class="ui blue button"
+                                <button className="ui blue button"
                                     onClick={() => { this.props.history.push(`/admin/add`) }}>
                                     Dodaj
                                     </button>
