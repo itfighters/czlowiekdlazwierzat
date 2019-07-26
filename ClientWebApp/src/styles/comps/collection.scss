@@ -27,6 +27,9 @@
     img {
       display: block;
       width: 100%;
+      object-fit: cover;
+      object-position: 50% 0;
+      height: 300px;
     }
     .title {
       margin: 7% 0 7% 3%;
