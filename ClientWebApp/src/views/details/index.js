@@ -67,7 +67,7 @@ export default class Details extends React.Component {
             </div>
             <div className="description">
               <h2>{this.state.auction.title}</h2>
-              <span>{this.state.auction.description}</span>
+              <p>{this.state.auction.description}</p>
             </div>
           </div>
           <div className="buttons-tile">{auctionCategories}</div>
