@@ -45,11 +45,23 @@ namespace DAL.Repositories.Concrete
 
         public async Task<IEnumerable<Auction>> GetFeaturedAuctions(int count)
         {
-            return await BaseAuctionsQuery()
+            var featuredAuctions = await BaseAuctionsQuery()
                 .Where(x => x.Featured == true)
                 .OrderByDescending(x => x.CreatedAt)
                 .Take(count)
                 .ToListAsync();
+
+            if (featuredAuctions.Count > 0)
+            {
+                return featuredAuctions;
+            }
+            else
+            {
+                return await BaseAuctionsQuery()
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+            }
         }
 
         private IQueryable<Auction> BaseAuctionsQuery() => dbContext.Auctions
