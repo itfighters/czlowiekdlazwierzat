@@ -25,6 +25,8 @@ namespace DAL.Services.Concrete
             var key = Encoding.ASCII.GetBytes(config.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Issuer = config.Value.Issuer, 
+                Audience = config.Value.Audience,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
@@ -32,6 +34,7 @@ namespace DAL.Services.Concrete
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }

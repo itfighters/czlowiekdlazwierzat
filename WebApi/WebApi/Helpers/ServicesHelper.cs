@@ -47,9 +47,11 @@ namespace WebApi.Helpers
                {
                    ValidateIssuerSigningKey = true,
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("JWTConfig").GetValue<string>("Secret"))),
+                   ValidIssuer = configuration.GetSection("JWTConfig").GetValue<string>("Issuer"),
+                   ValidAudience = configuration.GetSection("JWTConfig").GetValue<string>("Audience"),
                    ValidateLifetime = true,
-                   ValidateIssuer = false,
-                   ValidateAudience = false
+                   ValidateIssuer = true,
+                   ValidateAudience = true
                };
            });
         }
