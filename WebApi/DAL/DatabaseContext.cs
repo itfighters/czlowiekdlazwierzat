@@ -33,7 +33,7 @@ namespace DAL
                 new { Id = 3, Name = "POTRZEBNY TRANSPORT", IsDeleted = false },
                 new { Id = 4, Name = "POTRZEBNI LUDZIE", IsDeleted = false },
                 new { Id = 5, Name = "POMOC RZECZOWA", IsDeleted = false },
-                new { Id = 6, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY", IsDeleted = false }
+                new { Id = 6, Name = "POTRZEBNY DOM", IsDeleted = false }
                 );
         }
 
