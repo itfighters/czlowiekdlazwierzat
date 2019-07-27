@@ -20,20 +20,18 @@ const Header = ({ history }) => {
         <ul>
           {showButtons && (
             <>
-              <li>
+              <li className="back-button">
                 <NavLink to="/tiles">
                   <img
                     alt="ikona nagłówka"
-                    className="icon-back"
                     src="/assets/arrow-back.svg"
                   />
                 </NavLink>
               </li>
-              <li>
+              <li className="home-button">
                 <NavLink to="/">
                   <img
                     alt="ikona nagłówka"
-                    className="icon-home"
                     src="/assets/home.png"
                   />
                 </NavLink>

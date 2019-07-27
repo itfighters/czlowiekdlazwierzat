@@ -284,14 +284,13 @@ export default class SignUp extends Component
     var categoriesList = this.state.categories.map(item =>
     {
       return (
-        <div className="checkbox-item" key={"category-key-" + item.id}>
-          <Checkbox
-            id={item.id}
-            text={item.name}
-            checked={this.state.checked.includes(item.id)}
-            onChange={this.handleChange}
-          ></Checkbox>
-        </div>
+        <Checkbox
+          key={"category-key-" + item.id}
+          id={item.id}
+          text={item.name}
+          checked={this.state.checked.includes(item.id)}
+          onChange={this.handleChange}
+        ></Checkbox>
       );
     });
 
@@ -300,7 +299,7 @@ export default class SignUp extends Component
         <section className="sign-to">
           <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
           <div className="notofications-description">
-            <div className="description1"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.Duis aute irure dolor in
@@ -308,7 +307,7 @@ export default class SignUp extends Component
             pariatur.Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </div>
-            <div className="description2"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.Duis aute irure dolor in
@@ -318,15 +317,27 @@ export default class SignUp extends Component
             </div>
           </div>
         </section>
-        <section className="step-one">
-          <div className="step-one-description">
-            <section>
-              <h1>KROK 1 </h1>
-              <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
-            </section>
+        <section className="notification-section">
+          <div className="header">
+            <h1>KROK 1 </h1>
+            <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
           </div>
-          <div className="checkbox-section">
-            <form>
+          <div className="content">
+            <form className="category-checkboxes">
+              <Checkbox
+                text={'ZAZNACZ WSZYSTKO'}
+                onChange={this.toggleAll}></Checkbox>
+              {categoriesList}
+            </form>
+          </div>
+        </section>
+        <section className="notification-section">
+          <div className="header">
+            <h1>KROK 2 </h1>
+            <p>Wybierz w jaki sposób chcesz odbierać powiadomienia</p>
+          </div>
+          <div className="content">
+            <form className="category-checkboxes">
               <Checkbox
                 text={'ZAZNACZ WSZYSTKO'}
                 onChange={this.toggleAll}></Checkbox>

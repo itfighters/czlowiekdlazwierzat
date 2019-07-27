@@ -1,55 +1,67 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .main-header {
-    padding: 0 $side-padding;
-    height: 185px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 0 $side-padding;
+  height: 185px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px -3px 14px 3px #c5c5c5;
+
+  @media only screen and (max-width: 1023px) {
+    height: 90px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    height: 62px;
+  }
+
+  .logo-nav {
+    height: 130px;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0px -3px 14px 3px #c5c5c5;
     @media only screen and (max-width: 1023px) {
-        height: 90px;
+      height: 50px;
     }
     @media only screen and (max-width: 767px) {
-        height: 62px;
+      height: 42px;
     }
-    .logo-nav {
-        height: 130px;
-        transition: all 0.3s ease-in-out;
-        @media only screen and (max-width: 1023px) {
-            height: 50px;
-        }
+    img {
+      height: 100%;
+      display: block;
+    }
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    ul {
+      display: flex;
+      flex-direction: row;
+      font-size: $fs-small;
+      align-items: center;
+      li {
+        margin-left: 36px;
         @media only screen and (max-width: 767px) {
-            height: 42px;
+          margin-left: 20px;
         }
-        img {
-            height: 100%;
-            display: block;
+        a {
+          cursor: pointer;
+          border-radius: 3px;
+          @media only screen and (max-width: 767px) {
+            height: 40px;
+            font-size: $fs-small;
+          }
         }
+      }
+
+      li.back-button,
+      li.home-button {
+        @media only screen and (max-width: 767px) {
+          display: none;
+        }
+      }
+
+      
     }
-    nav {
-        display: flex;
-        align-items: center;
-        ul {
-            display: flex;
-            flex-direction: row;
-            font-size: $fs-paragraph;
-            align-items: center;
-            li {
-                margin-left: 36px;
-                @media only screen and (max-width: 767px) {
-                    margin-left: 20px;
-                }
-                a {
-                    cursor: pointer;
-                    border-radius: 3px;
-                    @media only screen and (max-width: 767px) {
-                        height: 40px;
-                        font-size: 10px;
-                    }
-                }
-            }
-        }
-    }
+  }
 }

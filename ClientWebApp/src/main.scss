@@ -36,7 +36,7 @@ code {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: $fs-extra-large;
   font-weight: 500;
   text-transform: uppercase;
   margin-bottom: 30px;
@@ -46,3 +46,10 @@ h1 {
   padding: 60px $side-padding 0 $side-padding;
 }
 
+
+.empty-content
+{
+  font-size:$fs-medium;
+  text-align: center;
+  height: 200px;
+}

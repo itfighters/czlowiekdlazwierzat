@@ -6,20 +6,23 @@
     h1 {
       margin-top: 58px;
       color: $gray;
-      font-size: 40px;
+      font-size: $fs-extra-large;
       font-weight: bold;
     }
     .notofications-description {
       display: flex;
-      .description1{
-        margin-right: 2vw;
-      }
-      .description2{
-        margin-left: 2vw;
+      flex-wrap: wrap;
+      .description-part {
+        flex-grow: 1;
+        flex-basis: 50%;
+        @media only screen and (max-width: 767px) {
+          flex-basis: 100%;
+        }
+        padding: 0 5px;
       }
     }
   }
-  .step-one{
+  .step-one {
     display: flex;
     margin-top: 3rem;
     padding-bottom: 3rem;
@@ -29,9 +32,9 @@
       color: $gray;
     }
     .step-one-description {
-    width: 40%;
+      width: 40%;
     }
-    section{
+    section {
       text-align: right;
       color: $gray;
       margin-left: 3rem;
@@ -40,12 +43,12 @@
         margin-bottom: 0.5rem;
       }
     }
-    .checkbox-section{
+    .checkbox-section {
       margin-left: 3%;
       margin-top: 1rem;
-      form{
+      form {
         color: $primary-color;
-        font-size: 14px;
+        font-size: $fs-small;
         display: flex;
         flex-wrap: wrap;
         .checkbox-item {
@@ -75,16 +78,16 @@
     h1 {
       margin-top: 58px;
       color: $gray;
-      font-size: 40px;
+      font-size: $fs-extra-large;
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
     .flex {
       display: flex;
-      font-size: 14px;
+      font-size: $fs-small;
       div {
         background-color: $dark-gray;
-      color: white;
+        color: white;
         h6 {
           margin: 4rem 0;
         }
@@ -99,7 +102,7 @@
       .sms-container {
         width: 435px;
         height: 335px;
-        margin:0 3rem;
+        margin: 0 3rem;
         form {
           margin-left: 1rem;
           margin-right: 1rem;
@@ -107,10 +110,10 @@
       }
       .notifications-container {
         width: 580px;
-          section {
-            margin-left: 3rem;
-            margin-right: 6rem;
-          }
+        section {
+          margin-left: 3rem;
+          margin-right: 6rem;
+        }
       }
     }
   }
@@ -119,7 +122,7 @@
     margin-top: 58px;
     margin-bottom: 20rem;
     .resignation-description {
-      width:40%;
+      width: 40%;
       section {
         width: 460px;
         margin-left: 3rem;
@@ -145,7 +148,7 @@
     }
     h1 {
       color: $gray;
-      font-size: 40px;
+      font-size: $fs-extra-large;
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
@@ -155,6 +158,46 @@
     }
     .resignation-phone {
       width: 360px;
+    }
+  }
+
+  .notification-section {
+    margin: 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #009688;
+    .header {
+      flex-grow: 1;
+      flex-basis: 25%;
+      text-align: right;
+      color: $gray;
+      h1 {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+    }
+
+    .content {
+      flex-grow: 6;
+      .category-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .checkbox-container {
+          flex-basis: 31%;
+          @media only screen and (max-width: 767px) {
+            flex-grow: 1;
+            flex-basis: 51%;
+          }
+        }
+      }
+    }
+
+    .header,
+    .content {
+      margin: 10px 0;
     }
   }
 }
