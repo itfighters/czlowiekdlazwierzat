@@ -94,7 +94,7 @@ export default class List extends Component {
     ));
     return (
       <>
-        <Link to={`category/`}>
+        <Link to="categories/add">
           <button className="ui blue button">
             <Icon name="add" />
             dodaj
