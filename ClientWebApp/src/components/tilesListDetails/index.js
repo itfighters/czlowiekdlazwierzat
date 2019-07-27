@@ -15,7 +15,6 @@ export default class TilesListDetails extends Component {
           <img src={imageSrc} alt="zdjecie-potrzeby" />
           <h2 className="title">{tile.title}</h2>
           <h4 className="description">{tile.description}</h4>
-          <button>Więcej</button>
         </div>
       </Link>
     );

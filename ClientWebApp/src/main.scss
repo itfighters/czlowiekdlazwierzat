@@ -11,6 +11,7 @@
 @import "styles/comps/signup.scss";
 @import "styles/comps/popup.scss";
 @import "styles/comps/toast.scss";
+@import "styles/comps/inline-collection.scss";
 
 body {
   margin: 0;
@@ -44,3 +45,4 @@ h1 {
 .home-page {
   padding: 60px $side-padding 0 $side-padding;
 }
+
