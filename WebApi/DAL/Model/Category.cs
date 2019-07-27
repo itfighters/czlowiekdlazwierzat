@@ -19,5 +19,8 @@ namespace DAL.Model
 
         public bool IsDeleted { get; set; }
 
+        public int? ImageId { get; set; }
+        public Image Image { get; set; }
+
     }
 }

@@ -19,7 +19,8 @@ namespace DAL.Model
         [MaxLength(500)]
         public string Description { get; set; }
 
-        public string Image { get; set; }
+        public int? ImageId { get; set; }
+        public Image Image { get; set; }
 
         public IList<AuctionCategory> Categories { get; set; }
 

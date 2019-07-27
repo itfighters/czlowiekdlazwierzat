@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { GetCategories, RemoveCategory } from "../../service/categoryService";
+import {
+  GetCategories,
+  RemoveCategory,
+  PlaceholderImg
+} from "../../service/categoryService";
 import { toast } from "react-toastify";
 import { Table, Icon, Image, Dimmer, Loader, Confirm } from "semantic-ui-react";
 
@@ -69,10 +73,7 @@ export default class List extends Component {
       <Table.Row key={`category-${category.id}`}>
         <Table.Cell>{category.name}</Table.Cell>
         <Table.Cell>
-          <Image
-            src="http://www.workingthedoors.co.uk/wp-content/themes/petsitter/images/job-placeholder.gif"
-            size="small"
-          />
+          <Image src={category.image || PlaceholderImg} size="small" />
         </Table.Cell>
         <Table.Cell>
           <Link to={`category/${category.id}`}>
@@ -93,6 +94,13 @@ export default class List extends Component {
     ));
     return (
       <>
+        <Link to={`category/`}>
+          <button className="ui blue button">
+            <Icon name="add" />
+            dodaj
+          </button>
+        </Link>
+
         <Table>
           <Table.Header>
             <Table.Row>
@@ -114,12 +122,6 @@ export default class List extends Component {
           }}
           onConfirm={async () => await this.removeCategory()}
         />
-        <Link to={`category/`}>
-          <button className="ui blue button">
-            <Icon name="add" />
-            dodaj
-          </button>
-        </Link>
       </>
     );
   }

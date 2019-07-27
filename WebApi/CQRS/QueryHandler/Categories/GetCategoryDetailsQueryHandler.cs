@@ -25,10 +25,10 @@ namespace CQRS.QueryHandler.Categories
         public async Task<CategoryDetailsQueryData> Handle(GetCategoryDetailsQuery request, CancellationToken cancellationToken)
         {
 
-            var category = await dbContext.Categories
+            var category = await dbContext.Categories.Include(x=>x.Image)
                 .FirstOrDefaultAsync(cat => cat.Id == request.Id);
 
-            return CategoryDetailsMapper.FromCategoryToCategoryDetailsQueryData(category);
+            return CategoryMapper.FromCategoryToCategoryDetailsQueryData(category);
         }
 
     }

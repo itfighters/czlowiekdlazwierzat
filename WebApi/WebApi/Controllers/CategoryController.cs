@@ -25,9 +25,14 @@ namespace WebApi.Controllers
         [HttpGet("details")]
         public async Task<CategoryDetailsQueryData> GetDetails([FromQuery] GetCategoryDetailsQuery query) => await mediator.Send(query);
 
-        [AllowAnonymous]
         [HttpDelete]
         public async Task Delete([FromQuery] DeleteCategoryCommand command) => await mediator.Send(command);
 
+        [HttpPost]
+        public async Task Add([FromBody] AddCategoryCommand command) => await mediator.Send(command);
+
+        [HttpPut]
+        public async Task Update([FromBody] UpdateCategoryCommand command) => await mediator.Send(command);
     }
+
 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CQRS.QueryData
+namespace CQRS.Command.Categories
 {
-    public class CategoryQueryData
+    public abstract class BaseCategoryCommand
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
     }
