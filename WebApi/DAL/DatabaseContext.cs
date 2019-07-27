@@ -27,12 +27,12 @@ namespace DAL
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>()
                 .HasData(
-                new { Id = 1, Name = "ŚRODKI NA LECZENIE" },
-                new { Id = 2, Name = "ŚRODKI NA NAPRAWY" },
-                new { Id = 3, Name = "POTRZEBNY TRANSPORT" },
-                new { Id = 4, Name = "POTRZEBNI LUDZIE" },
-                new { Id = 5, Name = "POMOC RZECZOWA" },
-                new { Id = 6, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY" }
+                new { Id = 1, Name = "ŚRODKI NA LECZENIE", IsDeleted = false },
+                new { Id = 2, Name = "ŚRODKI NA NAPRAWY", IsDeleted = false },
+                new { Id = 3, Name = "POTRZEBNY TRANSPORT", IsDeleted = false },
+                new { Id = 4, Name = "POTRZEBNI LUDZIE", IsDeleted = false },
+                new { Id = 5, Name = "POMOC RZECZOWA", IsDeleted = false },
+                new { Id = 6, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY", IsDeleted = false }
                 );
         }
 
