@@ -78,10 +78,7 @@ namespace WebApi
             app.UseAuthentication();
             app.UseHttpsRedirection();
 
-           
-
             app.UseMvc();
-
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -107,11 +104,6 @@ namespace WebApi
                     spa.Options.SourcePath = "WebApps";
                 });
             });
-
-
-
-
-
 
         }
     }

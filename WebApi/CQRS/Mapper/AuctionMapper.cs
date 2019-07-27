@@ -22,7 +22,7 @@ namespace CQRS.Mapper
             DateTo = a.DateTo,
             DotpayLink = a.DotpayLink,
             SiepomagaLink = a.SiepomagaLink,
-            Image = a.Image,
+            Image = a.Image?.Source,
             Featured = a.Featured,
             PaypalLink = a.PaypalLink
         };
@@ -39,12 +39,12 @@ namespace CQRS.Mapper
              result.SiepomagaLink = command.SiepomagaLink;
              result.PaypalLink = command.PaypalLink;
              result.Featured = command.Featured;
-             result.DateTo = command.DateTo ?? DateTime.Now.AddYears(100); //TODO: wyjasnic kiedys
+             result.DateTo = command.DateTo ?? DateTime.Now.AddYears(1); //TODO: wyjasnic kiedys
              result.AddressTo = command.AddressTo;
              result.DateFrom = command.DateFrom ?? DateTime.Now;
              result.ContactNumber = command.ContactNumber;
              result.AddressFrom = command.AddressFrom;
-             result.Image = command.Image;
+             result.Image = new Image() {Source = command.Image};
              result.DotpayLink = command.DotpayLink;
 
              return result;

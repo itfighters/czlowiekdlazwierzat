@@ -23,10 +23,10 @@ namespace CQRS.CommandHandler
         protected override async Task Handle(UpdateAuctionCommand request, CancellationToken cancellationToken)
         {
             var auctionToUpdate = dbContext.Auctions
-                .Include(x => x.Categories)
+                .Include(x => x.Categories).Include(x=>x.Image)
                 .FirstOrDefault(a => a.Id == request.Id);
 
-            if (auctionToUpdate==null)
+            if (auctionToUpdate == null)
                 throw new BusinessLogicException($"Auction {request.Id} doesn't exist");
 
             auctionToUpdate = AuctionMapper.FromAuctionCommandToAuction(request, auctionToUpdate);
@@ -36,13 +36,21 @@ namespace CQRS.CommandHandler
             auctionToUpdate.DotpayLink = request.DotpayLink;
             auctionToUpdate.SiepomagaLink = request.SiepomagaLink;
             auctionToUpdate.PaypalLink = request.PaypalLink;
-            auctionToUpdate.Image = request.Image;
             auctionToUpdate.Categories = request.Categories?.Select(x => new AuctionCategory() { CategoryId = x }).ToList();
             auctionToUpdate.Account = request.Account;
             auctionToUpdate.DateFrom = request.DateFrom ?? DateTime.Now;
             auctionToUpdate.DateTo = request.DateTo ?? DateTime.Now.AddYears(100);
             auctionToUpdate.AddressFrom = request.AddressTo;
             auctionToUpdate.ContactNumber = request.ContactNumber;
+
+            if (auctionToUpdate.Image == null && !String.IsNullOrWhiteSpace(request.Image))
+            {
+                auctionToUpdate.Image = new Image() { Source = request.Image };
+            }
+            else if (auctionToUpdate.Image != null)
+            {
+                auctionToUpdate.Image.Source = request.Image;
+            }
 
             await dbContext.SaveChangesAsync();
         }

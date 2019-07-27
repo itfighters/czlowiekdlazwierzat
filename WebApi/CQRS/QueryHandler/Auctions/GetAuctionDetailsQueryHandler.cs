@@ -25,7 +25,7 @@ namespace CQRS.QueryHandler.Auctions
         public async Task<AuctionQueryData> Handle(GetAuctionDetailsQuery request, CancellationToken cancellationToken)
         {
             var auction = await dbContext.Auctions
-                .Include(x => x.Categories)
+                .Include(x => x.Categories).Include(x => x.Image)
             .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             return AuctionMapper.FromAuctionToAuctionQueryData(auction);

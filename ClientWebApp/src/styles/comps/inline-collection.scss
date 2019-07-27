@@ -1,7 +1,7 @@
 @import "../variables.scss";
 
 .categories-header {
-  font-size: $fs-section-header;
+  font-size: $fs-medium;
   color: $light-gray;
   text-align: center;
   margin: 10px 0;
@@ -31,7 +31,7 @@
       text-align: center;
       color: $light-gray;
       margin-top: 5px;
-      font-size: $fs-paragraph;
+      font-size: $fs-small;
     }
 
     .category-selected {

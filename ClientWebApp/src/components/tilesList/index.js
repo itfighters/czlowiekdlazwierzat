@@ -45,9 +45,7 @@ class TilesList extends Component {
       return <TilesListFetchError />;
     }
 
-    if (!tiles || tiles.length === 0) {
-      return <div>Brak zbiórek</div>;
-    }
+   
     let tilesList;
 
     if (selectedCategoryId) {
@@ -62,6 +60,10 @@ class TilesList extends Component {
       tilesList = tiles.map(tile => {
         return <TilesListDetails tile={tile} key={tile.id} />;
       });
+    }
+
+    if (!tilesList || tilesList.length === 0) {
+      return <div className="empty-content">Brak zbiórek danego typu</div>;
     }
 
     return <div className="collections-list">{tilesList}</div>;

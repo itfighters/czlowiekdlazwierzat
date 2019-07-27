@@ -8,7 +8,6 @@ import {
   Form,
   Dropdown
 } from "semantic-ui-react";
-import { GetCategories } from "../../../service/categoryService";
 
 class PostForm extends Component {
   constructor(props) {
@@ -16,42 +15,32 @@ class PostForm extends Component {
 
     const { form, isUpdate } = this.props;
     if (isUpdate) this.state = { form: { ...form } };
-
-    this.state.loaded = false;
-  }
-  state = {
-    form: {
-      title: "",
-      image: null,
-      description: "",
-      multichoiceCategories: [],
-      dotpayLink: "",
-      paypalLink: "",
-      siepomagaLink: "",
-      checkboxKonto: true,
-      dateStart: this.getCurrentDate(),
-      dateEnd: "",
-      adressStart: "",
-      adressEnd: "",
-      phone: "",
-      files: null
-    },
-    loaded: false,
-    categories: [],
-    duringUpload: false,
-    uploadStatus: false
-  };
-  componentDidMount() {
-    GetCategories().then(categories =>
-      this.setState({
-        loaded: true,
-        categories: categories.map(category => ({
-          key: category.id,
-          text: category.name,
-          value: category.id
-        }))
-      })
-    );
+    console.log(this.props.auction);
+    this.state = {
+      categories: [],
+      duringUpload: false,
+      uploadStatus: false
+    };
+    if (this.props.auction) {
+      this.state.form = { ...this.props.auction };
+    } else {
+      this.state.form = {
+        title: "",
+        image: null,
+        description: "",
+        multichoiceCategories: [],
+        dotpayLink: "",
+        paypalLink: "",
+        siepomagaLink: "",
+        checkboxKonto: true,
+        dateStart: this.getCurrentDate(),
+        dateEnd: "",
+        // adressStart: "",
+        // adressEnd: "",
+        phone: "",
+        files: null
+      };
+    }
   }
 
   getCurrentDate() {
@@ -63,18 +52,16 @@ class PostForm extends Component {
   onChange = (e, { name, value }) => {
     this.setState(({ form }) => ({ form: { ...form, [name]: value } }));
   };
+
   formSubmitted = e => {
     e.preventDefault();
 
-    const { loaded, form } = this.state;
+    const { form } = this.state;
 
-    if (loaded)
-      this.props
-        .onSubmit(form)
-        .then(() => this.setState({ duringUpload: false, uploadStatus: true }))
-        .catch(() =>
-          this.setState({ duringUpload: false, uploadStatus: false })
-        );
+    this.props
+      .onSubmit(form)
+      .then(() => this.setState({ duringUpload: false, uploadStatus: true }))
+      .catch(() => this.setState({ duringUpload: false, uploadStatus: false }));
   };
   options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
@@ -101,13 +88,13 @@ class PostForm extends Component {
       checkboxKonto,
       dateStart,
       dateEnd,
-      adressStart,
-      adressEnd,
+      // adressStart,
+      // adressEnd,
       phone
     } = this.state.form;
 
-    console.log(image);
-    const { loaded, categories, duringUpload } = this.state;
+    const { duringUpload } = this.state;
+    const { categories } = this.props;
 
     return (
       <Form onSubmit={this.formSubmitted} style={{ marginBottom: "50px" }}>
@@ -162,7 +149,6 @@ class PostForm extends Component {
           name="multichoiceCategories"
           value={multichoiceCategories}
           onChange={this.onChange}
-          loading={!loaded}
           required
         />
         <Form.Field

@@ -22,9 +22,9 @@ namespace CQRS.QueryHandler.Auctions
         }
         public async Task<IEnumerable<AuctionQueryData>> Handle(GetFeaturedAuctionsQuery request, CancellationToken cancellationToken)
         {
-            var auctions = await auctionRepository.GetFeaturedAuctions(request.Count);
+            var featuredAuctions = await auctionRepository.GetFeaturedAuctions(request.Count);
 
-            return auctions.Select(AuctionMapper.FromAuctionToAuctionQueryData);
+            return featuredAuctions.Select(AuctionMapper.FromAuctionToAuctionQueryData);
         }
     }
 }

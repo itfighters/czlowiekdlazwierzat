@@ -27,17 +27,20 @@
     img {
       display: block;
       width: 100%;
+      object-fit: cover;
+      object-position: 50% 0;
+      height: 300px;
     }
     .title {
       margin: 7% 0 7% 3%;
-      font-size: 14px;
+      font-size: $fs-small;
       text-transform: uppercase;
       font-weight: 600;
       word-break: break-word;
       color: black;
     }
     .description {
-      font-size: 12px;
+      font-size: $fs-small;
       margin-bottom: 7px;
       margin-left: 3%;
       word-break: break-word;

@@ -20,10 +20,11 @@ namespace CQRS.QueryHandler.Categories
         }
 
         public async Task<IEnumerable<CategoryQueryData>> Handle(GetCategoriesListQuery request, CancellationToken cancellationToken)=>
-            await dbContext.Categories
+            await dbContext.Categories.Where(x=>!x.IsDeleted).Include(x=>x.Image)
             .Select(x=>new CategoryQueryData {
                 Id = x.Id,
-                Name = x.Name
+                Name = x.Name,
+                Image = x.Image.Source
             })
             .ToListAsync();
     }

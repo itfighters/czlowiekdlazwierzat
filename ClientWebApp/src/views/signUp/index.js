@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
-import {
+import
+{
   subscribe,
   confirmPhoneNumber,
   subscriptionType,
@@ -13,9 +14,12 @@ import Toast from "../../components/toast";
 import Loader from "../../components/loader";
 import Popup from "../../components/popup";
 import { ContentTypes, Terms, Confirm } from "../../components/popup/content";
+import Checkbox from "../../components/checkbox/checkbox";
 
-export default class SignUp extends Component {
-  constructor(props) {
+export default class SignUp extends Component
+{
+  constructor(props)
+  {
     super(props);
     this.state = {
       checked: [],
@@ -33,18 +37,22 @@ export default class SignUp extends Component {
     };
   }
 
-  componentDidMount() {
-    GetAllCategories().then(allCategories => {
+  componentDidMount()
+  {
+    GetAllCategories().then(allCategories =>
+    {
       this.setState({ categories: allCategories });
     });
     document.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount()
+  {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyDown = e => {
+  handleKeyDown = e =>
+  {
     if (e.keyCode === 27) {
       this.setState({
         visiblePopup: false
@@ -52,20 +60,24 @@ export default class SignUp extends Component {
     }
   };
 
-  showInConsole = event => {
+  showInConsole = event =>
+  {
     console.log(this.state);
     event.preventDefault();
   };
 
-  acceptedChangeMail = () => {
+  acceptedChangeMail = () =>
+  {
     this.setState({ acceptedMail: !this.state.acceptedMail });
   };
 
-  acceptedChangeSms = () => {
+  acceptedChangeSms = () =>
+  {
     this.setState({ acceptedSms: !this.state.acceptedSms });
   };
 
-  handleChange = event => {
+  handleChange = event =>
+  {
     var categoryId = Number.parseInt(event.target.value);
     var checkedArray = this.state.checked;
     if (checkedArray.includes(categoryId)) {
@@ -77,9 +89,11 @@ export default class SignUp extends Component {
     this.setState({ checked: checkedArray });
   };
 
-  toggleAll = e => {
+  toggleAll = e =>
+  {
     if (e.target.checked) {
-      var categoriesList = this.state.categories.map(item => {
+      var categoriesList = this.state.categories.map(item =>
+      {
         return item.id;
       });
       this.setState({ checked: categoriesList });
@@ -88,34 +102,41 @@ export default class SignUp extends Component {
     }
   };
 
-  updateMail = e => {
+  updateMail = e =>
+  {
     this.setState({ email: e.target.value });
   };
-  updateTel = e => {
+  updateTel = e =>
+  {
     this.setState({ tel: e.target.value });
   };
 
-  updateUnsubscribeTel = e => {
+  updateUnsubscribeTel = e =>
+  {
     this.setState({ unsubscribeTel: e.target.value });
   };
 
-  updateunsubscribeEmail = e => {
+  updateunsubscribeEmail = e =>
+  {
     this.setState({ unsubscribeEmail: e.target.value });
   };
 
-  showPopup = type => {
+  showPopup = type =>
+  {
     this.setState({
       visiblePopup: type
     });
   };
 
-  closePopup = () => {
+  closePopup = () =>
+  {
     this.setState({
       visiblePopup: false
     });
   };
 
-  showToast = (text, state) => {
+  showToast = (text, state) =>
+  {
     this.setState({
       visibleToast: true,
       toastText: text,
@@ -123,7 +144,8 @@ export default class SignUp extends Component {
     });
   };
 
-  onCloseToast = () => {
+  onCloseToast = () =>
+  {
     this.setState({
       visibleToast: false,
       toastText: "",
@@ -131,17 +153,20 @@ export default class SignUp extends Component {
     });
   };
 
-  confirmNumber = number => {
+  confirmNumber = number =>
+  {
     var tel = this.state.tel;
     confirmPhoneNumber(number, tel)
-      .then(resp => {
+      .then(resp =>
+      {
         this.closePopup();
         this.showToast("Zapisałeś się!", "success");
       })
       .catch(this.handleError);
   };
 
-  submitMail = e => {
+  submitMail = e =>
+  {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
@@ -154,7 +179,8 @@ export default class SignUp extends Component {
     var mail = this.state.email;
 
     subscribe(mail, subscriptionType.Email, categories)
-      .then(resp => {
+      .then(resp =>
+      {
         this.showToast(
           "Na Twojego emaila został wysłany link do potwierdzenia adresu",
           "success"
@@ -163,7 +189,8 @@ export default class SignUp extends Component {
       .catch(this.handleError);
   };
 
-  submitTel = e => {
+  submitTel = e =>
+  {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
@@ -176,7 +203,8 @@ export default class SignUp extends Component {
     var tel = this.state.tel;
 
     subscribe(tel, subscriptionType.Sms, categories)
-      .then(resp => {
+      .then(resp =>
+      {
         this.setState({
           visiblePopup: ContentTypes.Confirm
         });
@@ -184,32 +212,38 @@ export default class SignUp extends Component {
       .catch(this.handleError);
   };
 
-  handleError = err => {
+  handleError = err =>
+  {
     console.error(err);
     this.showToast(`Wystąpił błąd: ${err.Message || err}`, "error");
   };
 
-  unsubscribeTel = e => {
+  unsubscribeTel = e =>
+  {
     e.preventDefault();
     var tel = this.state.unsubscribeTel;
     unsubscribe(tel)
-      .then(() => {
+      .then(() =>
+      {
         this.showToast("Zostałeś wypisany z powiadomień", "success");
       })
       .catch(this.handleError);
   };
 
-  unsubscribeEmail = e => {
+  unsubscribeEmail = e =>
+  {
     e.preventDefault();
     var mail = this.state.unsubscribeEmail;
     unsubscribe(mail)
-      .then(() => {
+      .then(() =>
+      {
         this.showToast("Zostałeś wypisany z powiadomień", "success");
       })
       .catch(this.handleError);
   };
 
-  pushNotification = async e => {
+  pushNotification = async e =>
+  {
     var categories = this.state.checked;
     if (categories.length === 0) {
       this.showToast(
@@ -220,13 +254,15 @@ export default class SignUp extends Component {
     }
     var token = await this.askForPermissioToReceiveNotifications();
     subscribe(token, subscriptionType.Push, categories)
-      .then(() => {
+      .then(() =>
+      {
         this.showToast("Zostałeś zapisany na powiadomienia", "success");
       })
       .catch(this.handleError);
   };
 
-  askForPermissioToReceiveNotifications = async () => {
+  askForPermissioToReceiveNotifications = async () =>
+  {
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
@@ -239,24 +275,22 @@ export default class SignUp extends Component {
     }
   };
 
-  render() {
+  render()
+  {
     if (this.state.categories.length === 0) {
       return <Loader />;
     }
 
-    var categoriesList = this.state.categories.map(item => {
+    var categoriesList = this.state.categories.map(item =>
+    {
       return (
-        <div className="checkbox-item" key={"category-key-" + item.id}>
-          <label>
-            <input
-              type="checkbox"
-              value={item.id}
-              onChange={this.handleChange}
-              checked={this.state.checked.includes(item.id)}
-            />
-          </label>
-            <span>{item.name}</span>
-        </div>
+        <Checkbox
+          key={"category-key-" + item.id}
+          id={item.id}
+          text={item.name}
+          checked={this.state.checked.includes(item.id)}
+          onChange={this.handleChange}
+        ></Checkbox>
       );
     });
 
@@ -265,7 +299,7 @@ export default class SignUp extends Component {
         <section className="sign-to">
           <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
           <div className="notofications-description">
-            <div className="description1"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.Duis aute irure dolor in
@@ -273,7 +307,7 @@ export default class SignUp extends Component {
             pariatur.Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </div>
-            <div className="description2"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.Duis aute irure dolor in
@@ -283,31 +317,42 @@ export default class SignUp extends Component {
             </div>
           </div>
         </section>
-        <section className="step-one">
-          <div className="step-one-description">
-            <section>
-              <h1>KROK 1 </h1>
-              <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
-            </section>
+        <section className="notification-section">
+          <div className="header">
+            <h1>KROK 1 </h1>
+            <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
           </div>
-          <div className="checkbox-section">
-            <form>
-              <label className="checkbox-item">
-              <input type="checkbox" onChange={this.toggleAll} />
-                ZAZNACZ WSZYSTKO
-              </label>
+          <div className="content">
+            <form className="category-checkboxes">
+              <Checkbox
+                text={'ZAZNACZ WSZYSTKO'}
+                onChange={this.toggleAll}></Checkbox>
+              {categoriesList}
+            </form>
+          </div>
+        </section>
+        <section className="notification-section">
+          <div className="header">
+            <h1>KROK 2 </h1>
+            <p>Wybierz w jaki sposób chcesz odbierać powiadomienia</p>
+          </div>
+          <div className="content">
+            <form className="category-checkboxes">
+              <Checkbox
+                text={'ZAZNACZ WSZYSTKO'}
+                onChange={this.toggleAll}></Checkbox>
               {categoriesList}
             </form>
           </div>
         </section>
         <section className="step-two">
-        <div className="step-two-description">
-          <section>
-            <h1>KROK 2</h1>
-            <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
-          </section>
-          <div></div>
-        </div>
+          <div className="step-two-description">
+            <section>
+              <h1>KROK 2</h1>
+              <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
+            </section>
+            <div></div>
+          </div>
           <div className="flex">
             <div className="email-container">
               <form onSubmit={this.submitMail}>
@@ -384,40 +429,40 @@ export default class SignUp extends Component {
           </div>
         </section>
         <section className="resignation">
-        <div className="resignation-description">
-          <section>
-            <h1>Rezygnacja</h1>
-            <p>Aby zrezygnowa z powiadomień e-mail lub SMS podaj swój adres e-mail lub numer telefonu.</p>
-          </section>
-        </div>
-        <div className="resignation-email">
-          <form onSubmit={this.unsubscribeEmail}>
-            <input
-              type="email"
-              placeholder="mail"
-              onChange={this.updateunsubscribeEmail}
-              value={this.state.unsubscribeEmail}
-              required
-            />
-            <div>CAPTCHA</div>
-            <button type="submit">Wyślij</button>
-          </form>
-        </div>
+          <div className="resignation-description">
+            <section>
+              <h1>Rezygnacja</h1>
+              <p>Aby zrezygnowa z powiadomień e-mail lub SMS podaj swój adres e-mail lub numer telefonu.</p>
+            </section>
+          </div>
+          <div className="resignation-email">
+            <form onSubmit={this.unsubscribeEmail}>
+              <input
+                type="email"
+                placeholder="mail"
+                onChange={this.updateunsubscribeEmail}
+                value={this.state.unsubscribeEmail}
+                required
+              />
+              <div>CAPTCHA</div>
+              <button type="submit">Wyślij</button>
+            </form>
+          </div>
           <div className="resignation-phone">
-          <form onSubmit={this.unsubscribeTel}>
-            <input
-              type="tel"
-              pattern="[0-9]{9}"
-              placeholder="telefon"
-              title="format: 123456789"
-              onChange={this.updateUnsubscribeTel}
-              value={this.state.unsubscribeTel}
-              required
-            />
-            < div > CAPTCHA </div>
-            <button type="submit">Wyślij</button>
-          </form>
-        </div>
+            <form onSubmit={this.unsubscribeTel}>
+              <input
+                type="tel"
+                pattern="[0-9]{9}"
+                placeholder="telefon"
+                title="format: 123456789"
+                onChange={this.updateUnsubscribeTel}
+                value={this.state.unsubscribeTel}
+                required
+              />
+              < div > CAPTCHA </div>
+              <button type="submit">Wyślij</button>
+            </form>
+          </div>
         </section>
         <Popup visible={this.state.visiblePopup} close={this.closePopup}>
           {this.state.visiblePopup === ContentTypes.Confirm && (
