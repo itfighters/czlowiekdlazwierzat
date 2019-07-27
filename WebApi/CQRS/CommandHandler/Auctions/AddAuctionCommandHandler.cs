@@ -21,16 +21,9 @@ namespace CQRS.CommandHandler
 
         protected override async Task Handle(AddAuctionCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var auction = AuctionMapper.FromAuctionCommandToAuction(request, null);
-                dbContext.Auctions.Add(auction);
-                await dbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            var auction = AuctionMapper.FromAuctionCommandToAuction(request, null);
+            dbContext.Auctions.Add(auction);
+            await dbContext.SaveChangesAsync();
         }
     }
 }
