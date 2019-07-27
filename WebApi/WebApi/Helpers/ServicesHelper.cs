@@ -14,9 +14,9 @@ using NotificationJobs.Services.Concrete;
 using NotificationJobsLibrary.Services.Abstract;
 using NotificationJobsLibrary.Services.Concrete;
 using System.Text;
+using Infrastructure.Abstract;
+using Infrastructure.Utils;
 using NLog.Web;
-using Utils;
-using Utils.Abstract;
 
 namespace WebApi.Helpers
 {
@@ -72,6 +72,9 @@ namespace WebApi.Helpers
 
             var jobsConfig = configuration.GetSection("JobsConfig");
             services.Configure<JobsConfig>(jobsConfig);
+
+            var pushConfig = configuration.GetSection("PushConfig");
+            services.Configure<PushConfig>(pushConfig);
         }
 
         public void ConfigureServices()
@@ -79,6 +82,7 @@ namespace WebApi.Helpers
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IAuctionSmsNotification, AuctionSmsNotification>();
             services.AddScoped<IAuctionEmailNotification, AuctionEmailNotification>();
+            services.AddScoped<IAuctionPushNotification, AuctionPushNotification>();
             services.AddScoped<INotificationHelper, NotificationHelper>();
         }
 
@@ -92,6 +96,7 @@ namespace WebApi.Helpers
 
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISMSService, SMSService>();
+            services.AddScoped<IPushService, PushService>();
         }
 
         public void ConfigureUtils()

@@ -12,6 +12,11 @@ namespace Infrastructure
         //public SmsNotificationsConfig SmsNotificationsConfig { get; set; }
     }
 
+    public class PushConfig
+    {
+        public string ServiceKey { get; set; }
+    }
+
     public class SmsNotificationsConfig
     {
         public int SleepPeriod { get; set; }

@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using NotificationJobsLibrary.Models;
 
 namespace NotificationJobsLibrary.Services.Concrete
 {
@@ -36,7 +39,7 @@ namespace NotificationJobsLibrary.Services.Concrete
             GetBalanceUriBuilder.Query = query.ToString();
         }
 
-        public async Task<bool> SendAsync(string text, IEnumerable<string> numbers)
+        public async Task<SendNotificationResult> SendAsync(string text, IEnumerable<string> numbers)
         {
             var builder = new StringBuilder(SendSmsUriBuilder.ToString());
             builder.Append($"&msg={text}");
@@ -44,21 +47,36 @@ namespace NotificationJobsLibrary.Services.Concrete
             builder.AppendJoin("&to=", numbers);
 
             var result = await Client.GetAsync(builder.ToString());
-
-            //dodać logowanie
-            return result.IsSuccessStatusCode;
-        }
-
-        private async Task<int> GetBalance()
-        {
-            var builder = new StringBuilder(GetBalanceUriBuilder.ToString());
-            var result = await Client.PostAsync(builder.ToString(), null);
             if (result.IsSuccessStatusCode)
             {
-                return 1;
+                using (var content = await result.Content.ReadAsStreamAsync())
+                {
+                    var serializer = new XmlSerializer(typeof(SMSServiceResponse));
+                    var response = serializer.Deserialize(content) as SMSServiceResponse;
+                    return new SendNotificationResult()
+                    {
+                        IsSuccessful = response?.Result == "OK",
+                        LogMessage = response?.Result == "OK"
+                            ? $"Sms notification {text} sent to {string.Join(",", numbers)}"
+                            : $"Error during SMS send to {string.Join(",", numbers)}, error code: {response.ErrorCode}, error message: {response.ErrorMsg}"
+                    };
+                }
             }
+            else
+            {
+                return new SendNotificationResult();
+            }
+        }
 
-            return 0;
+        [XmlRoot(ElementName = "response")]
+        public class SMSServiceResponse
+        {
+            [XmlElement("result")]
+            public string Result { get; set; }
+            [XmlElement("errorMsg")]
+            public string ErrorMsg { get; set; }
+            [XmlElement("errorCode")]
+            public string ErrorCode { get; set; }
         }
     }
 }

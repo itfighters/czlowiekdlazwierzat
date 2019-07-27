@@ -33,20 +33,9 @@ namespace CQRS.CommandHandler.Subscriptions
                 throw new Exception("Subscription doesn't exist");
             else
             {
-                #region tempshit
-                //send sms with token & obtain token, save to db
-                subscription.ConfirmationToken = confiramationCodesGenerator.GenerateCode();
-                #endregion
                 subscription.Subscribed = false;
-                subscription.Confirmed = subscription.SubscriptionType == SubscriptionType.Push ? true : false;
+                subscription.Confirmed = true;
                 await dbContext.SaveChangesAsync();
-                await mediator.Publish(new SubscribtionChangedEvent
-                {
-                    Contact = subscription.Contact,
-                    SubscriptionType = subscription.SubscriptionType,
-                    Token = subscription.ConfirmationToken,
-                    ActionType = SubscribtionChangedEvent.SubriptionChangedType.Unsubscribe
-                });
             }
         }
     }

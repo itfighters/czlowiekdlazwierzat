@@ -27,7 +27,8 @@ namespace NotificationJobs.Jobs
                 {
                     var notificationHelper = scope.ServiceProvider.GetRequiredService<INotificationHelper>();
                     var notificationSender = scope.ServiceProvider.GetRequiredService<IAuctionEmailNotification>();
-                    delay = await notificationHelper.SendNotification(SubscriptionType.Sms, notificationSender);
+                    await notificationHelper.CancelUbsubscribedNotifications(SubscriptionType.Email);
+                    delay = await notificationHelper.SendNotification(SubscriptionType.Email, notificationSender);
                 }
                 await Task.Delay(delay);
             }

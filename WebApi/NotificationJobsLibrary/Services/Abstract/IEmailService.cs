@@ -1,7 +1,10 @@
-﻿namespace NotificationJobsLibrary.Services.Abstract
+﻿using System.Threading.Tasks;
+using NotificationJobsLibrary.Models;
+
+namespace NotificationJobsLibrary.Services.Abstract
 {
     public interface IEmailService
     {
-        bool SendMessage(string email, string subject, string body);
+        Task<SendNotificationResult> SendMessage(string email, string subject, string body);
     }
 }

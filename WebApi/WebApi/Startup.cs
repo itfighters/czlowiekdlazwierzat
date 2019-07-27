@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Helpers;
 using WebApi.Middleware;
@@ -19,6 +20,7 @@ namespace WebApi
     {
         public Startup(IConfiguration configuration)
         {
+            NLogBuilder.ConfigureNLog("nlog.config");
             Configuration = configuration;
         }
 

@@ -4,27 +4,31 @@ using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Build.Framework;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi.Middleware
 {
     public class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
-
-        public ExceptionMiddleware(RequestDelegate next)
+        private readonly RequestDelegate next;
+        private readonly ILogger<ExceptionMiddleware> logger;
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
-            _next = next;
+            this.next = next;
+            this.logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
             {
-                await _next(httpContext);
+                await next(httpContext);
             }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(httpContext, ex);
+                logger.LogError(ex, ex.Message);
             }
         }
 

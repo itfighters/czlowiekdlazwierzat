@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure.Abstract;
 
 namespace Infrastructure.Utils
 {
