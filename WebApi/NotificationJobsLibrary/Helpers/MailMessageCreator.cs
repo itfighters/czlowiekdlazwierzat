@@ -22,9 +22,6 @@ namespace NotificationJobsLibrary
             LinkedResource logo = new LinkedResource(Path.Combine(imagesPath, "logo.png"));
             logo.ContentId = "logoId";
             logo.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
-            LinkedResource fb = new LinkedResource(Path.Combine(imagesPath, "facebook.png"));
-            fb.ContentId = "facebook";
-            fb.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
             LinkedResource thumbnail = new LinkedResource(Path.Combine(imagesPath, "thumbnail.png"));
             thumbnail.ContentId = "thumbnail";
             thumbnail.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
@@ -34,7 +31,6 @@ namespace NotificationJobsLibrary
 
             AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
             htmlView.LinkedResources.Add(logo);
-            htmlView.LinkedResources.Add(fb);
             htmlView.LinkedResources.Add(thumbnail);
             htmlView.LinkedResources.Add(background);
             mailMessage.AlternateViews.Add(htmlView);
