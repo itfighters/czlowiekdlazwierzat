@@ -4,16 +4,14 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190727110940_remove-category")]
-    partial class removecategory
+    partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,17 +46,23 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(500);
 
+                    b.Property<bool>("Dotpay");
+
                     b.Property<string>("DotpayLink")
                         .HasMaxLength(500);
 
                     b.Property<bool>("Featured");
 
-                    b.Property<string>("Image");
+                    b.Property<int?>("ImageId");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("PaypalLink")
                         .HasMaxLength(500);
+
+                    b.Property<bool>("Paypall");
+
+                    b.Property<bool>("Publish");
 
                     b.Property<string>("SiepomagaLink")
                         .HasMaxLength(500);
@@ -70,6 +74,8 @@ namespace DAL.Migrations
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Auctions");
                 });
@@ -99,6 +105,8 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ImageId");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
@@ -106,6 +114,8 @@ namespace DAL.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Categories");
 
@@ -115,8 +125,22 @@ namespace DAL.Migrations
                         new { Id = 3, IsDeleted = false, Name = "POTRZEBNY TRANSPORT" },
                         new { Id = 4, IsDeleted = false, Name = "POTRZEBNI LUDZIE" },
                         new { Id = 5, IsDeleted = false, Name = "POMOC RZECZOWA" },
-                        new { Id = 6, IsDeleted = false, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY" }
+                        new { Id = 6, IsDeleted = false, Name = "POTRZEBNY DOM" }
                     );
+                });
+
+            modelBuilder.Entity("DAL.Model.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Source")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("DAL.Model.Notification", b =>
@@ -205,6 +229,13 @@ namespace DAL.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("DAL.Model.Auction", b =>
+                {
+                    b.HasOne("DAL.Model.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+                });
+
             modelBuilder.Entity("DAL.Model.AuctionCategory", b =>
                 {
                     b.HasOne("DAL.Model.Auction", "Auction")
@@ -216,6 +247,13 @@ namespace DAL.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Model.Category", b =>
+                {
+                    b.HasOne("DAL.Model.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("DAL.Model.Notification", b =>

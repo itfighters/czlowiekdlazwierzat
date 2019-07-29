@@ -3,7 +3,7 @@ import { mapInputsForPost } from "../Utils/helpers";
 const BASE_URL = "https://localhost:44335/api/auction";
 
 export function getAuctions(page, pageSize) {
-  var url = new URL("https://localhost:44335/api/auction");
+  var url = new URL("https://localhost:44335/api/auction/all");
   var params = { page, pageSize };
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 

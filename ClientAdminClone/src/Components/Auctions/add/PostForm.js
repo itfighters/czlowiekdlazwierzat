@@ -15,7 +15,6 @@ class PostForm extends Component {
 
     const { form, isUpdate } = this.props;
     if (isUpdate) this.state = { form: { ...form } };
-    console.log(this.props.auction);
     this.state = {
       categories: [],
       duringUpload: false,
@@ -29,16 +28,16 @@ class PostForm extends Component {
         image: null,
         description: "",
         multichoiceCategories: [],
-        dotpayLink: "",
-        paypalLink: "",
         siepomagaLink: "",
         checkboxKonto: true,
         dateStart: this.getCurrentDate(),
         dateEnd: "",
-        // adressStart: "",
-        // adressEnd: "",
         phone: "",
-        files: null
+        files: null,
+        featured: false,
+        publish: false,
+        dotpay: false,
+        paypall: false
       };
     }
   }
@@ -53,16 +52,16 @@ class PostForm extends Component {
     this.setState(({ form }) => ({ form: { ...form, [name]: value } }));
   };
 
+  toggleChackBox = (e, { name, checked }) => {
+    this.setState(({ form }) => ({ form: { ...form, [name]: checked } }));
+  };
+
   formSubmitted = e => {
     e.preventDefault();
-
     const { form } = this.state;
-
-    this.props
-      .onSubmit(form)
-      .then(() => this.setState({ duringUpload: false, uploadStatus: true }))
-      .catch(() => this.setState({ duringUpload: false, uploadStatus: false }));
+    this.props.onSubmit(form);
   };
+
   options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
   uploadImage = e => {
@@ -79,18 +78,17 @@ class PostForm extends Component {
   render() {
     const {
       title,
+      featured,
       image,
       description,
       multichoiceCategories,
-      dotpayLink,
-      paypalLink,
       siepomagaLink,
       checkboxKonto,
       dateStart,
       dateEnd,
-      // adressStart,
-      // adressEnd,
-      phone
+      publish,
+      dotpay,
+      paypall
     } = this.state.form;
 
     const { duringUpload } = this.state;
@@ -153,34 +151,27 @@ class PostForm extends Component {
         />
         <Form.Field
           control={Input}
-          label="Dotpay"
-          placeholder="Link do dotpay"
-          name="dotpayLink"
-          value={dotpayLink}
-          onChange={this.onChange}
-        />
-        <Form.Field
-          control={Input}
-          label="Paypal"
-          placeholder="Link do paypal"
-          name="paypalLink"
-          value={paypalLink}
-          onChange={this.onChange}
-        />
-        <Form.Field
-          control={Input}
-          label="siepomaga"
+          label="Link do siepomaga"
           placeholder="Link do siepomaga"
           name="siepomagaLink"
           value={siepomagaLink}
           onChange={this.onChange}
         />
         <Form.Field
+          toggle
           control={Checkbox}
-          label="Konto"
-          name="checkboxKonto"
-          checked={checkboxKonto}
-          onChange={this.onChange}
+          label="Dotpay"
+          name="dotpay"
+          checked={dotpay}
+          onChange={this.toggleChackBox}
+        />{" "}
+        <Form.Field
+          toggle
+          control={Checkbox}
+          label="Paypall"
+          name="paypall"
+          checked={paypall}
+          onChange={this.toggleChackBox}
         />
         <Form.Group widths="equal">
           <Form.Field
@@ -190,6 +181,7 @@ class PostForm extends Component {
             name="dateStart"
             value={dateStart}
             type="date"
+            min={this.getCurrentDate()}
             onChange={this.onChange}
           />
           <Form.Field
@@ -199,34 +191,33 @@ class PostForm extends Component {
             name="dateEnd"
             value={dateEnd}
             type="date"
+            min={dateStart}
             onChange={this.onChange}
           />
         </Form.Group>
-        {/* <Form.Group widths="equal">
-          <Form.Field
-            control={Input}
-            label="Adres początkowy"
-            placeholder="Adres początkowy"
-            name="adressStart"
-            value={adressStart}
-            onChange={this.onChange}
-          />
-          <Form.Field
-            control={Input}
-            label="Adres końcowy"
-            placeholder="Adres końcowy"
-            name="adressEnd"
-            value={adressEnd}
-            onChange={this.onChange}
-          />
-        </Form.Group> */}
         <Form.Field
-          control={Input}
-          label="Telefon"
-          placeholder="Wprowadź numer telefonu"
-          name="phone"
-          value={phone}
-          onChange={this.onChange}
+          toggle
+          control={Checkbox}
+          label="Widoczne konto"
+          name="checkboxKonto"
+          checked={checkboxKonto}
+          onChange={this.toggleChackBox}
+        />
+        <Form.Field
+          toggle
+          control={Checkbox}
+          label="Widoczne publicznie"
+          name="publish"
+          checked={publish}
+          onChange={this.toggleChackBox}
+        />
+        <Form.Field
+          toggle
+          control={Checkbox}
+          name="featured"
+          label="Wyróżniona zbiórka"
+          checked={featured}
+          onChange={this.toggleChackBox}
         />
         <Button type="submit" color="green" size="big" disabled={duringUpload}>
           Wyślij{" "}

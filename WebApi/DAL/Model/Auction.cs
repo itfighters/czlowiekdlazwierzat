@@ -50,5 +50,9 @@ namespace DAL.Model
         public  bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public bool Publish { get; set; }
+        public bool Dotpay { get; set; }
+        public bool Paypall { get; set; }
     }
 }

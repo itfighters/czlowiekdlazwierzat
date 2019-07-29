@@ -17,9 +17,9 @@ namespace DAL.Repositories.Concrete
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Auction>> GetAuctions(int? page, int? pageSize, int[] category)
+        public async Task<IEnumerable<Auction>> GetAuctions(int? page, int? pageSize, int[] category, bool all)
         {
-            var query = BaseAuctionsQuery();
+            var query = BaseAuctionsQuery(all);
             if (category != null && category.Length > 0)
                 query = query.Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any());
 
@@ -64,8 +64,8 @@ namespace DAL.Repositories.Concrete
             }
         }
 
-        private IQueryable<Auction> BaseAuctionsQuery() => dbContext.Auctions
+        private IQueryable<Auction> BaseAuctionsQuery(bool all = false) => dbContext.Auctions
                 .Include(x => x.Categories)
-                .Where(x => !x.IsDeleted);
+                .Where(x => !x.IsDeleted && (all || x.Publish));
     }
 }

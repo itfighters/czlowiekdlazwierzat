@@ -23,5 +23,9 @@ namespace CQRS.QueryData
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
         public string ContactNumber { get; set; }
+
+        public bool Publish { get; set; }
+        public bool Dotpay { get; set; }
+        public bool Paypall { get; set; }
     }
 }
