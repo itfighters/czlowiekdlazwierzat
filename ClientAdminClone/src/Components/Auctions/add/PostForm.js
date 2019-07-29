@@ -8,6 +8,7 @@ import {
   Form,
   Dropdown
 } from "semantic-ui-react";
+import { toast } from "react-toastify";
 
 class PostForm extends Component {
   constructor(props) {
@@ -65,7 +66,16 @@ class PostForm extends Component {
   options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
   uploadImage = e => {
+    var maxImageMB = 10;
+    let maxImageSize = 1024 * 1024 * maxImageMB;
     var files = e.target.files;
+    console.log(files[0]);
+    if (files[0].size > maxImageSize) {
+      toast.error(
+        `Zdjęcie jest za duże, maksymalny rozmiar zdjęcia to ${maxImageMB} MB`
+      );
+      return;
+    }
     var reader = new FileReader();
     reader.onloadend = () => {
       this.setState(({ form }) => ({
