@@ -183,7 +183,7 @@
       .category-checkboxes {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: flex-start;
 
         .checkbox-container {
           flex-basis: 31%;
