@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190727115236_move-image-into-table")]
-    partial class moveimageintotable
+    [Migration("20190731121137_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,7 +121,7 @@ namespace DAL.Migrations
                         new { Id = 3, IsDeleted = false, Name = "POTRZEBNY TRANSPORT" },
                         new { Id = 4, IsDeleted = false, Name = "POTRZEBNI LUDZIE" },
                         new { Id = 5, IsDeleted = false, Name = "POMOC RZECZOWA" },
-                        new { Id = 6, IsDeleted = false, Name = "PILNIE POTRZEBNY DOM/DOM TYMCZASOWY" }
+                        new { Id = 6, IsDeleted = false, Name = "POTRZEBNY DOM" }
                     );
                 });
 

@@ -7,10 +7,12 @@ import EditDetails from "./Categories/EditDetails";
 import AddCategory from "./Categories/Add";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Header } from "./Header";
 
 export function Admin() {
   return (
     <Router>
+      <Header />
       <Route exact path="/admin" component={List} />
       <Route path="/admin/list" component={List} />
       <Route path="/admin/add" component={Add} />

@@ -4,18 +4,15 @@ import { Admin } from './Admin';
 import Login from './Login';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import '../Styles/App.css';
-import { Header } from './Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
-function App()
-{
+function App() {
   return (
     <Router>
       <ToastContainer />
-      <Header />
       <div>
         <Route path="/login" component={Login} />
         <Route path="/" exact component={Login} />
