@@ -66,6 +66,7 @@ namespace DAL.Repositories.Concrete
 
         private IQueryable<Auction> BaseAuctionsQuery(bool all = false) => dbContext.Auctions
                 .Include(x => x.Categories)
+                .Include(x => x.Image)
                 .Where(x => !x.IsDeleted && (all || x.Publish));
     }
 }

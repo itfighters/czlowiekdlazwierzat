@@ -180,10 +180,11 @@
 
     .content {
       flex-grow: 6;
+
       .category-checkboxes {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: flex-start;
 
         .checkbox-container {
           flex-basis: 31%;
@@ -191,6 +192,36 @@
             flex-grow: 1;
             flex-basis: 51%;
           }
+        }
+      }
+    }
+
+    .content-notifications {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .contact-container {
+        margin: 5px 5px;
+        height: 250px;
+        background-color: $dark-gray;
+        flex-basis: 31%;
+        @media only screen and (max-width: 767px) {
+          flex-grow: 1;
+          flex-basis: 51%;
+        }
+
+        .title {
+          color: white;
+          font-size: $fs-small;
+        }
+
+        form,
+        section {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 5px;
         }
       }
     }

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
-import
-{
+import {
   subscribe,
   confirmPhoneNumber,
   subscriptionType,
@@ -16,10 +15,8 @@ import Popup from "../../components/popup";
 import { ContentTypes, Terms, Confirm } from "../../components/popup/content";
 import Checkbox from "../../components/checkbox/checkbox";
 
-export default class SignUp extends Component
-{
-  constructor(props)
-  {
+export default class SignUp extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       checked: [],
@@ -37,22 +34,18 @@ export default class SignUp extends Component
     };
   }
 
-  componentDidMount()
-  {
-    GetAllCategories().then(allCategories =>
-    {
+  componentDidMount() {
+    GetAllCategories().then(allCategories => {
       this.setState({ categories: allCategories });
     });
     document.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentWillUnmount()
-  {
+  componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyDown = e =>
-  {
+  handleKeyDown = e => {
     if (e.keyCode === 27) {
       this.setState({
         visiblePopup: false
@@ -60,24 +53,20 @@ export default class SignUp extends Component
     }
   };
 
-  showInConsole = event =>
-  {
+  showInConsole = event => {
     console.log(this.state);
     event.preventDefault();
   };
 
-  acceptedChangeMail = () =>
-  {
+  acceptedChangeMail = () => {
     this.setState({ acceptedMail: !this.state.acceptedMail });
   };
 
-  acceptedChangeSms = () =>
-  {
+  acceptedChangeSms = () => {
     this.setState({ acceptedSms: !this.state.acceptedSms });
   };
 
-  handleChange = event =>
-  {
+  handleChange = event => {
     var categoryId = Number.parseInt(event.target.value);
     var checkedArray = this.state.checked;
     if (checkedArray.includes(categoryId)) {
@@ -89,11 +78,9 @@ export default class SignUp extends Component
     this.setState({ checked: checkedArray });
   };
 
-  toggleAll = e =>
-  {
+  toggleAll = e => {
     if (e.target.checked) {
-      var categoriesList = this.state.categories.map(item =>
-      {
+      var categoriesList = this.state.categories.map(item => {
         return item.id;
       });
       this.setState({ checked: categoriesList });
@@ -102,41 +89,34 @@ export default class SignUp extends Component
     }
   };
 
-  updateMail = e =>
-  {
+  updateMail = e => {
     this.setState({ email: e.target.value });
   };
-  updateTel = e =>
-  {
+  updateTel = e => {
     this.setState({ tel: e.target.value });
   };
 
-  updateUnsubscribeTel = e =>
-  {
+  updateUnsubscribeTel = e => {
     this.setState({ unsubscribeTel: e.target.value });
   };
 
-  updateunsubscribeEmail = e =>
-  {
+  updateunsubscribeEmail = e => {
     this.setState({ unsubscribeEmail: e.target.value });
   };
 
-  showPopup = type =>
-  {
+  showPopup = type => {
     this.setState({
       visiblePopup: type
     });
   };
 
-  closePopup = () =>
-  {
+  closePopup = () => {
     this.setState({
       visiblePopup: false
     });
   };
 
-  showToast = (text, state) =>
-  {
+  showToast = (text, state) => {
     this.setState({
       visibleToast: true,
       toastText: text,
@@ -144,8 +124,7 @@ export default class SignUp extends Component
     });
   };
 
-  onCloseToast = () =>
-  {
+  onCloseToast = () => {
     this.setState({
       visibleToast: false,
       toastText: "",
@@ -153,20 +132,17 @@ export default class SignUp extends Component
     });
   };
 
-  confirmNumber = number =>
-  {
+  confirmNumber = number => {
     var tel = this.state.tel;
     confirmPhoneNumber(number, tel)
-      .then(resp =>
-      {
+      .then(resp => {
         this.closePopup();
         this.showToast("Zapisałeś się!", "success");
       })
       .catch(this.handleError);
   };
 
-  submitMail = e =>
-  {
+  submitMail = e => {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
@@ -179,8 +155,7 @@ export default class SignUp extends Component
     var mail = this.state.email;
 
     subscribe(mail, subscriptionType.Email, categories)
-      .then(resp =>
-      {
+      .then(resp => {
         this.showToast(
           "Na Twojego emaila został wysłany link do potwierdzenia adresu",
           "success"
@@ -189,8 +164,7 @@ export default class SignUp extends Component
       .catch(this.handleError);
   };
 
-  submitTel = e =>
-  {
+  submitTel = e => {
     e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
@@ -203,8 +177,7 @@ export default class SignUp extends Component
     var tel = this.state.tel;
 
     subscribe(tel, subscriptionType.Sms, categories)
-      .then(resp =>
-      {
+      .then(resp => {
         this.setState({
           visiblePopup: ContentTypes.Confirm
         });
@@ -212,38 +185,32 @@ export default class SignUp extends Component
       .catch(this.handleError);
   };
 
-  handleError = err =>
-  {
+  handleError = err => {
     console.error(err);
     this.showToast(`Wystąpił błąd: ${err.Message || err}`, "error");
   };
 
-  unsubscribeTel = e =>
-  {
+  unsubscribeTel = e => {
     e.preventDefault();
     var tel = this.state.unsubscribeTel;
     unsubscribe(tel)
-      .then(() =>
-      {
+      .then(() => {
         this.showToast("Zostałeś wypisany z powiadomień", "success");
       })
       .catch(this.handleError);
   };
 
-  unsubscribeEmail = e =>
-  {
+  unsubscribeEmail = e => {
     e.preventDefault();
     var mail = this.state.unsubscribeEmail;
     unsubscribe(mail)
-      .then(() =>
-      {
+      .then(() => {
         this.showToast("Zostałeś wypisany z powiadomień", "success");
       })
       .catch(this.handleError);
   };
 
-  pushNotification = async e =>
-  {
+  pushNotification = async e => {
     var categories = this.state.checked;
     if (categories.length === 0) {
       this.showToast(
@@ -254,15 +221,13 @@ export default class SignUp extends Component
     }
     var token = await this.askForPermissioToReceiveNotifications();
     subscribe(token, subscriptionType.Push, categories)
-      .then(() =>
-      {
+      .then(() => {
         this.showToast("Zostałeś zapisany na powiadomienia", "success");
       })
       .catch(this.handleError);
   };
 
-  askForPermissioToReceiveNotifications = async () =>
-  {
+  askForPermissioToReceiveNotifications = async () => {
     try {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
@@ -275,14 +240,12 @@ export default class SignUp extends Component
     }
   };
 
-  render()
-  {
+  render() {
     if (this.state.categories.length === 0) {
       return <Loader />;
     }
 
-    var categoriesList = this.state.categories.map(item =>
-    {
+    var categoriesList = this.state.categories.map(item => {
       return (
         <Checkbox
           key={"category-key-" + item.id}
@@ -336,29 +299,12 @@ export default class SignUp extends Component
             <h1>KROK 2 </h1>
             <p>Wybierz w jaki sposób chcesz odbierać powiadomienia</p>
           </div>
-          <div className="content">
-            <form className="category-checkboxes">
-              <Checkbox
-                text={'ZAZNACZ WSZYSTKO'}
-                onChange={this.toggleAll}></Checkbox>
-              {categoriesList}
-            </form>
-          </div>
-        </section>
-        <section className="step-two">
-          <div className="step-two-description">
-            <section>
-              <h1>KROK 2</h1>
-              <p>wybierz w jaki sposób chcesz odbierać powiadomienia</p>
-            </section>
-            <div></div>
-          </div>
-          <div className="flex">
-            <div className="email-container">
+          <div className="content content-notifications">
+            <div className="contact-container">
               <form onSubmit={this.submitMail}>
-                <h6>
+                <p className="title">
                   Podaj nam swój adres email, aby otrzymywać powiadomienia mailowe{" "}
-                </h6>
+                </p>
                 <input
                   type="email"
                   placeholder="mail"
@@ -367,30 +313,27 @@ export default class SignUp extends Component
                   required
                 />
                 <label>
-                  <input
-                    type="checkbox"
-                    defaultChecked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail}
-                    required
-                  />
-                  Akceptuj
+                  <Checkbox
+                    text={"Akceptuj regulamin"}
+                    checked={this.state.acceptedMail}
+                    onChange={this.acceptedChangeMail} />
+
                 </label>
-                <span
-                  className="terms"
+                <p
                   onClick={() => this.showPopup(ContentTypes.Terms)}
                 >
                   {" "}
                   regulamin
-                </span>
+            </p>
                 <br />
                 <button type="submit">Wyślij</button>
               </form>
             </div>
-            <div className="sms-container">
+            <div className="contact-container">
               <form onSubmit={this.submitTel}>
-                <h6>
+                <p className="title">
                   Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms{" "}
-                </h6>
+                </p>
                 <input
                   type="tel"
                   placeholder="telefon"
@@ -401,28 +344,24 @@ export default class SignUp extends Component
                   required
                 />
                 <label>
-                  <input
-                    type="checkbox"
-                    defaultChecked={this.state.acceptedSms}
-                    onChange={this.acceptedChangeSms}
-                    required
-                  />
-                  Akceptuj
+                  <Checkbox
+                    text={"Akceptuj regulamin"}
+                    checked={this.state.acceptedSms}
+                    onChange={this.acceptedChangeSms} />
                 </label>
-                <span
-                  className="terms"
+                <p
                   onClick={() => this.showPopup(ContentTypes.Terms)}
                 >
                   {" "}
                   regulamin
-                </span>
+            </p>
                 <br />
                 <button type="submit">Wyślij</button>
               </form>
             </div>
-            <div className="notifications-container">
+            <div className="contact-container">
               <section>
-                <h6>Zapisz się na push notification</h6>
+                <p className="title">Zapisz się na push notification</p>
                 <button onClick={this.pushNotification}>Zapisz się!</button>
               </section>
             </div>
