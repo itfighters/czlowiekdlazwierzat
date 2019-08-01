@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .checkbox-container {
   display: block;
@@ -12,6 +12,11 @@
   -ms-user-select: none;
   user-select: none;
 
+  label {
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+
   input {
     position: absolute;
     opacity: 0;
@@ -22,11 +27,12 @@
 
   .checkmark {
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 0;
     height: 20px;
     width: 20px;
     background-color: #eee;
+    outline: 1px solid #009688;
   }
 
   .checkmark:after {

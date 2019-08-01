@@ -8,7 +8,7 @@ export default class Checkbox extends Component
 
         return (
             <label class="checkbox-container">
-                {text}
+                <label>{text}</label>
                 <input
                     type="checkbox"
                     value={id}
