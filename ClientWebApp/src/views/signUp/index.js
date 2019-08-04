@@ -8,12 +8,12 @@ import {
   unsubscribe
 } from "../../services/substriction.services";
 import { GetAllCategories } from "../../services/categoryService";
-import Toast from "../../components/toast";
 
 import Loader from "../../components/loader";
 import Popup from "../../components/popup";
 import { ContentTypes, Terms, Confirm } from "../../components/popup/content";
 import Checkbox from "../../components/checkbox/checkbox";
+import { toast } from "react-toastify";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -27,10 +27,7 @@ export default class SignUp extends Component {
       unsubscribeTel: "",
       unsubscribeEmail: "",
       visiblePopup: false,
-      categories: [],
-      visibleToast: false,
-      toastText: "",
-      toastClass: ""
+      categories: []
     };
   }
 
@@ -117,19 +114,7 @@ export default class SignUp extends Component {
   };
 
   showToast = (text, state) => {
-    this.setState({
-      visibleToast: true,
-      toastText: text,
-      toastClass: state
-    });
-  };
-
-  onCloseToast = () => {
-    this.setState({
-      visibleToast: false,
-      toastText: "",
-      toastClass: ""
-    });
+    toast(text, { type: state });
   };
 
   confirmNumber = number => {
@@ -262,21 +247,25 @@ export default class SignUp extends Component {
         <section className="sign-to">
           <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
           <div className="notofications-description">
-            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
+            <div className="description-part">
+              {" "}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum.
+              aliquip ex ea commodo consequat.Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
-            <div className="description-part"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
+            <div className="description-part">
+              {" "}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
               ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum.
+              aliquip ex ea commodo consequat.Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </div>
         </section>
@@ -290,8 +279,9 @@ export default class SignUp extends Component {
           <div className="content">
             <form className="category-checkboxes">
               <Checkbox
-                text={'ZAZNACZ WSZYSTKO'}
-                onChange={this.toggleAll}></Checkbox>
+                text={"ZAZNACZ WSZYSTKO"}
+                onChange={this.toggleAll}
+              ></Checkbox>
               {categoriesList}
             </form>
           </div>
@@ -307,7 +297,8 @@ export default class SignUp extends Component {
             <div className="contact-container">
               <form onSubmit={this.submitMail}>
                 <p className="title">
-                  Podaj nam swój adres email, aby otrzymywać powiadomienia mailowe{" "}
+                  Podaj nam swój adres email, aby otrzymywać powiadomienia
+                  mailowe{" "}
                 </p>
                 <input
                   type="email"
@@ -320,17 +311,20 @@ export default class SignUp extends Component {
                   <Checkbox
                     text={"Akceptuj "}
                     checked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail} />
+                    onChange={this.acceptedChangeMail}
+                    required
+                  />
                   <span
                     className="terms"
                     onClick={() => this.showPopup(ContentTypes.Terms)}
                   >
                     regulamin
-        </span>
+                  </span>
                 </div>
                 <button
                   className="btn btn-primary btn-center-aligned"
-                  type="submit">
+                  type="submit"
+                >
                   <span>Zapisz się</span>
                 </button>
               </form>
@@ -338,7 +332,8 @@ export default class SignUp extends Component {
             <div className="contact-container">
               <form onSubmit={this.submitTel}>
                 <p className="title">
-                  Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms{" "}
+                  Podaj nam swój numer telefonu, aby otrzymywać powiadomienia
+                  sms{" "}
                 </p>
                 <input
                   type="tel"
@@ -352,18 +347,21 @@ export default class SignUp extends Component {
                 <div className="accept-line">
                   <Checkbox
                     text={"Akceptuj "}
-                    checked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail} />
+                    checked={this.state.acceptedSms}
+                    onChange={this.acceptedChangeSms}
+                    required
+                  />
                   <span
                     className="terms"
                     onClick={() => this.showPopup(ContentTypes.Terms)}
                   >
                     regulamin
-          </span>
+                  </span>
                 </div>
                 <button
                   className="btn btn-primary btn-center-aligned"
-                  type="submit">
+                  type="submit"
+                >
                   <span>Zapisz się</span>
                 </button>
               </form>
@@ -373,7 +371,8 @@ export default class SignUp extends Component {
                 <p className="title">Zapisz się na push notification</p>
                 <button
                   className="btn btn-primary btn-center-aligned"
-                  type="submit">
+                  type="submit"
+                >
                   <span>Zapisz się</span>
                 </button>
               </section>
@@ -384,7 +383,10 @@ export default class SignUp extends Component {
           <div className="header">
             <div className="align-left">
               <h1>Rezygnacja </h1>
-              <p>Aby zrezygnować z powiadomień e-mail lub SMS podaj swój adres e-mail lub numer telefonu</p>
+              <p>
+                Aby zrezygnować z powiadomień e-mail lub SMS podaj swój adres
+                e-mail lub numer telefonu
+              </p>
             </div>
           </div>
           <div className="content">
@@ -392,7 +394,8 @@ export default class SignUp extends Component {
               <div className="contact-container">
                 <form onSubmit={this.unsubscribeEmail}>
                   <p className="title">
-                    Podaj nam swój adres email, aby zrezygnować z powiadomień email{" "}
+                    Podaj nam swój adres email, aby zrezygnować z powiadomień
+                    email{" "}
                   </p>
                   <input
                     type="email"
@@ -403,7 +406,8 @@ export default class SignUp extends Component {
                   />
                   <button
                     className="btn btn-primary btn-center-aligned"
-                    type="submit">
+                    type="submit"
+                  >
                     <span>Wypisz się</span>
                   </button>
                 </form>
@@ -411,7 +415,8 @@ export default class SignUp extends Component {
               <div className="contact-container">
                 <form onSubmit={this.unsubscribeTel}>
                   <p className="title">
-                    Podaj nam swój numer telefonu, aby otrzymywać powiadomienia sms{" "}
+                    Podaj nam swój numer telefonu, aby otrzymywać powiadomienia
+                    sms{" "}
                   </p>
                   <input
                     type="tel"
@@ -424,7 +429,8 @@ export default class SignUp extends Component {
                   />
                   <button
                     className="btn btn-primary btn-center-aligned"
-                    type="submit">
+                    type="submit"
+                  >
                     <span>Wypisz się</span>
                   </button>
                 </form>
@@ -434,7 +440,8 @@ export default class SignUp extends Component {
                   <p className="title">Wypisz się z notyfikacji 'push'</p>
                   <button
                     className="btn btn-primary btn-center-aligned"
-                    type="submit">
+                    type="submit"
+                  >
                     <span>Wypisz się</span>
                   </button>
                 </section>
@@ -442,19 +449,13 @@ export default class SignUp extends Component {
             </div>
           </div>
         </section>
-        
+
         <Popup visible={this.state.visiblePopup} close={this.closePopup}>
           {this.state.visiblePopup === ContentTypes.Confirm && (
             <Confirm submit={this.confirmNumber} />
           )}
           {this.state.visiblePopup === ContentTypes.Terms && <Terms />}
         </Popup>
-        <Toast
-          visible={this.state.visibleToast}
-          state={this.state.toastClass}
-          text={this.state.toastText}
-          onClose={this.onCloseToast}
-        />
       </article>
     );
   }

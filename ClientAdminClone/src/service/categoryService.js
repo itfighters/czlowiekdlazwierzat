@@ -1,8 +1,6 @@
 import { authTokenKey } from "../Utils/auth";
-const BASE_URL = "https://localhost:44335/api/category";
-
-export const PlaceholderImg =
-  "http://www.workingthedoors.co.uk/wp-content/themes/petsitter/images/job-placeholder.gif";
+import { API_URL } from "../config";
+const BASE_URL = API_URL + "category";
 
 export function GetCategories() {
   return fetch(`${BASE_URL}`).then(response => {

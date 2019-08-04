@@ -45,7 +45,6 @@ class TilesList extends Component {
       return <TilesListFetchError />;
     }
 
-   
     let tilesList;
 
     if (selectedCategoryId) {

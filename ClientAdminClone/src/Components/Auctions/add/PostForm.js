@@ -9,6 +9,8 @@ import {
   Dropdown
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
+import SemanticDatepicker from "react-semantic-ui-datepickers";
+import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
 class PostForm extends Component {
   constructor(props) {
@@ -32,11 +34,11 @@ class PostForm extends Component {
         siepomagaLink: "",
         checkboxKonto: true,
         dateStart: this.getCurrentDate(),
-        dateEnd: "",
+        dateEnd: this.getDefaultEndDate(),
         phone: "",
         files: null,
         featured: false,
-        publish: false,
+        publish: true,
         dotpay: false,
         paypall: false
       };
@@ -44,9 +46,14 @@ class PostForm extends Component {
   }
 
   getCurrentDate() {
+    return new Date();
+  }
+
+  getDefaultEndDate() {
     var date = new Date();
-    var currentDate = date.toISOString().slice(0, 10);
-    return currentDate;
+    date.setFullYear(date.getFullYear() + 1);
+
+    return date;
   }
 
   onChange = (e, { name, value }) => {
@@ -184,25 +191,32 @@ class PostForm extends Component {
           onChange={this.toggleChackBox}
         />
         <Form.Group widths="equal">
-          <Form.Field
-            control={Input}
+          <SemanticDatepicker
             label="Data początkowa"
             placeholder="Data początkowa"
             name="dateStart"
-            value={dateStart}
-            type="date"
-            min={this.getCurrentDate()}
-            onChange={this.onChange}
+            selected={dateStart}
+            onDateChange={value => {
+              this.onChange(undefined, {
+                name: "dateStart",
+                value: value
+              });
+            }}
+            required
           />
-          <Form.Field
-            control={Input}
+          <SemanticDatepicker
             label="Data końcowa"
             placeholder="Data końcowa"
             name="dateEnd"
-            value={dateEnd}
-            type="date"
-            min={dateStart}
-            onChange={this.onChange}
+            selected={dateEnd}
+            minDate={dateStart}
+            onDateChange={value => {
+              this.onChange(undefined, {
+                name: "dateEnd",
+                value
+              });
+            }}
+            required
           />
         </Form.Group>
         <Form.Field

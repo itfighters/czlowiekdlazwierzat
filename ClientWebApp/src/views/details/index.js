@@ -2,6 +2,7 @@ import React from "react";
 import { GetDetails } from "../../services/auctionService";
 import { GetAllCategories } from "../../services/categoryService";
 import Loader from "../../components/loader";
+import { PlaceholderImg } from "../../config";
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -18,7 +19,6 @@ export default class Details extends React.Component {
       .then(response => {
         let details = response[0];
         let categories = response[1];
-        // let [details, categories] = response;
         details.categories = details.categories.map(category => {
           return categories.find(x => x.id === category);
         });
@@ -50,7 +50,7 @@ export default class Details extends React.Component {
       }
       return (
         <div key={"category-" + item.id} className="button-tile-item">
-          <img src={item.src || "/assets/leczenie.svg"} alt="leczenie" />
+          <img src={item.image || PlaceholderImg} alt="leczenie" />
           <span className="txt">
             <div>{item.name}</div>
           </span>
@@ -72,48 +72,55 @@ export default class Details extends React.Component {
           </div>
           <div className="buttons-tile">{auctionCategories}</div>
         </section>
-        <section>
-          <div className="donate-title">
-            <h1>POMÓŻ</h1>
-          </div>
-          <div className="donate">
-            <div className="donate-buttons">
-              {this.state.auction.siepomagaLink && (
-                <a
-                  href={this.state.auction.siepomagaLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="btn btn-rounded siepomaga" />
-                </a>
-              )}
-              {this.state.auction.dotpayLink && (
-                <a
-                  href={this.state.auction.dotpayLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="btn btn-rounded dotpay" />
-                </a>
-              )}
-              {this.state.auction.paypalLink && (
-                <a
-                  href={this.state.auction.paypalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="btn btn-rounded paypal" />
-                </a>
+        {(this.state.auction.siepomagaLink ||
+          this.state.auction.paypalLink ||
+          this.state.auction.account ||
+          this.state.auction.dotpayLink) && (
+          <section>
+            <div className="donate-title">
+              <h1>POMÓŻ</h1>
+            </div>
+            <div className="donate">
+              <div className="donate-buttons">
+                {this.state.auction.siepomagaLink && (
+                  <a
+                    href={this.state.auction.siepomagaLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="btn btn-rounded siepomaga" />
+                  </a>
+                )}
+                {this.state.auction.dotpayLink && (
+                  <a
+                    href={this.state.auction.dotpayLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="btn btn-rounded dotpay" />
+                  </a>
+                )}
+                {this.state.auction.paypalLink && (
+                  <a
+                    href={this.state.auction.paypalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="btn btn-rounded paypal" />
+                  </a>
+                )}
+              </div>
+              {this.state.auction.account && (
+                <div className="donate-info">
+                  <span>
+                    Fundacja Człowiek dla Zwierząt Bank Spółdzielczy w
+                    Słomnikach <div>78 86140001 0010 0147 5971 0001</div>
+                  </span>
+                </div>
               )}
             </div>
-            <div className="donate-info">
-              <span>
-                Fundacja Człowiek dla Zwierząt Bank Spółdzielczy w Słomnikach{" "}
-                <div>78 86140001 0010 0147 5971 0001</div>
-              </span>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
       </article>
     );
   }

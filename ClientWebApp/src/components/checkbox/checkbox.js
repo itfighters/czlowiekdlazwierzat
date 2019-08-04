@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import '../../styles/comps/checkbox.scss';
-export default class Checkbox extends Component
-{
-    render()
-    {
-        var { text, checked, onChange, id } = this.props;
+import "../../styles/comps/checkbox.scss";
+export default class Checkbox extends Component {
+  render() {
+    var { text, checked, onChange, id, ...rest } = this.props;
 
-        return (
-            <label class="checkbox-container">
-                <label>{text}</label>
-                <input
-                    type="checkbox"
-                    value={id}
-                    checked={checked}
-                    onChange={onChange} ></input>
-                <span class="checkmark"></span>
-            </label>
-        );
-    }
+    return (
+      <label class="checkbox-container">
+        <input
+          type="checkbox"
+          value={id}
+          checked={checked}
+          onChange={onChange}
+          {...rest}
+        ></input>
+        <label>{text}</label>
+        <span class="checkmark"></span>
+      </label>
+    );
+  }
 }

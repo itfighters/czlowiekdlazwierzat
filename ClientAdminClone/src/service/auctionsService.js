@@ -1,9 +1,10 @@
 import { authTokenKey } from "../Utils/auth";
 import { mapInputsForPost } from "../Utils/helpers";
-const BASE_URL = "https://localhost:44335/api/auction";
+import { API_URL } from "../config";
+const BASE_URL = API_URL + "auction";
 
 export function getAuctions(page, pageSize) {
-  var url = new URL("https://localhost:44335/api/auction/all");
+  var url = new URL(BASE_URL + "/all");
   var params = { page, pageSize };
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
@@ -17,7 +18,7 @@ export function getAuctions(page, pageSize) {
 }
 
 export function deleteAuction(id) {
-  var url = new URL("https://localhost:44335/api/auction");
+  var url = new URL(BASE_URL);
   url.searchParams.append("id", id);
   return fetch(url, {
     method: "delete",
