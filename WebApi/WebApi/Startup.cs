@@ -37,7 +37,7 @@ namespace WebApi
             servicesHelper.ConfigureLogger();
 
             services.AddSpaStaticFiles(configuration =>
-            { configuration.RootPath = "WebApps"; });
+            { configuration.RootPath = "WebAppsBuild"; });
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -92,7 +92,7 @@ namespace WebApi
             {
                 publicApp.UseSpa(spa =>
                 {
-                    spa.Options.SourcePath = "WebApps/admin";
+                    spa.Options.SourcePath = "WebAppsBuild/admin";
                     spa.Options.DefaultPage = "/admin/index.html";
                 });
             });
@@ -101,7 +101,7 @@ namespace WebApi
             {
                 publicApp.UseSpa(spa =>
                 {
-                    spa.Options.SourcePath = "WebApps";
+                    spa.Options.SourcePath = "WebAppsBuild";
                 });
             });
 
