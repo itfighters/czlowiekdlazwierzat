@@ -1,20 +1,28 @@
+@import '../variables.scss';
 .btn {
-    height: 40px;
-    background: $primary-color;    
-    display: flex;
-    align-items: center;
-    &-primary {
-        padding: 10px;
-        color: white;
-        a {
-            color: white;
-        }
+  font-size: $fs-small;
+  height: 40px;
+  background: $primary-color;
+  display: flex;
+  align-items: center;
+  &-primary {
+    border-radius: 3px;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    a {
+      color: white;
     }
-    &-secondary {
+  }
 
-    }
-    &-rounded {
-        border-radius: 30px;
-        padding: 0 30px;
-    }
+  &-center-aligned {
+      display: flex;
+      justify-content: center;
+  }
+
+  &-rounded {
+    border-radius: 30px;
+    padding: 0 30px;
+  }
 }

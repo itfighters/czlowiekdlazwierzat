@@ -24,7 +24,10 @@ namespace CQRS.Mapper
             SiepomagaLink = a.SiepomagaLink,
             Image = a.Image?.Source,
             Featured = a.Featured,
-            PaypalLink = a.PaypalLink
+            PaypalLink = a.PaypalLink,
+            Publish = a.Publish,
+            Dotpay = a.Dotpay,
+            Paypall = a.Paypall
         };
 
         public static Func<BaseAuctionCommand, Auction, Auction> FromAuctionCommandToAuction = (command, auction) =>
@@ -46,7 +49,9 @@ namespace CQRS.Mapper
              result.AddressFrom = command.AddressFrom;
              result.Image = new Image() {Source = command.Image};
              result.DotpayLink = command.DotpayLink;
-
+             result.Publish = command.Publish;
+             result.Dotpay = command.Dotpay;
+             result.Paypall = command.Paypall;
              return result;
          };
 

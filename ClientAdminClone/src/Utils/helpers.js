@@ -14,8 +14,8 @@ export const mapInputsForPost = ({
     addressFrom: adressStart,
     addressTo: adressEnd,
     contactNumber: phone,
-    dateFrom: dateStart,
-    dateTo: dateEnd,
+    dateFrom: dateStart.toString().slice(0, 24),
+    dateTo: dateEnd.toString().slice(0, 24),
     ...remaining
   };
 };
@@ -47,6 +47,5 @@ function convertDate(dateStr) {
     return "";
   }
   var date = new Date(dateStr);
-  var currentDate = date.toISOString().slice(0, 10);
-  return currentDate;
+  return date;
 }

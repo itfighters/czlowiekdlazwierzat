@@ -1,13 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Admin } from './Admin';
-import Login from './Login';
-import { ProtectedRoutes } from './ProtectedRoutes';
-import '../Styles/App.css';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Admin } from "./Admin";
+import Login from "./Login";
+import { ProtectedRoutes } from "./ProtectedRoutes";
+import "../Styles/App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

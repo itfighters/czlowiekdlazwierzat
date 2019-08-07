@@ -7,7 +7,6 @@ import loginService from '../service/loginService';
 import { authTokenKey, isAuthenticated } from '../Utils/auth';
 import { toast } from 'react-toastify';
 
-
 class Login extends React.Component {
     constructor(props) {
         super(props);

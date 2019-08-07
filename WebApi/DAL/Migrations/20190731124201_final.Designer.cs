@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190731121137_final")]
+    [Migration("20190731124201_final")]
     partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(500);
 
+                    b.Property<bool>("Dotpay");
+
                     b.Property<string>("DotpayLink")
                         .HasMaxLength(500);
 
@@ -59,6 +61,10 @@ namespace DAL.Migrations
 
                     b.Property<string>("PaypalLink")
                         .HasMaxLength(500);
+
+                    b.Property<bool>("Paypall");
+
+                    b.Property<bool>("Publish");
 
                     b.Property<string>("SiepomagaLink")
                         .HasMaxLength(500);

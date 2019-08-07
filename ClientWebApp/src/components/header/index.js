@@ -22,18 +22,7 @@ const Header = ({ history }) => {
             <>
               <li className="back-button">
                 <NavLink to="/tiles">
-                  <img
-                    alt="ikona nagłówka"
-                    src="/assets/arrow-back.svg"
-                  />
-                </NavLink>
-              </li>
-              <li className="home-button">
-                <NavLink to="/">
-                  <img
-                    alt="ikona nagłówka"
-                    src="/assets/home.png"
-                  />
+                  <img alt="ikona nagłówka" src="/assets/arrow-back.svg" />
                 </NavLink>
               </li>
             </>
@@ -42,7 +31,7 @@ const Header = ({ history }) => {
             <NavLink to="/tiles">Lista zbiórek</NavLink>
           </li>
           <li>
-              <NavLink className="btn btn-primary" to="/signup">
+            <NavLink className="btn btn-primary" to="/signup">
               Powiadomienia
             </NavLink>
           </li>

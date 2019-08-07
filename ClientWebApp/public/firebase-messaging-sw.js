@@ -52,4 +52,9 @@ self.addEventListener("notificationclick", function(event) {
         }
       })
   );
+
+  function openNewWindow() {
+    var pageUrl = `/${event.notificationData.tag}`;
+    return clients.openWindow(pageUrl);
+  }
 });

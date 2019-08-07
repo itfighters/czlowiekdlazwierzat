@@ -46,6 +46,8 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(500);
 
+                    b.Property<bool>("Dotpay");
+
                     b.Property<string>("DotpayLink")
                         .HasMaxLength(500);
 
@@ -57,6 +59,10 @@ namespace DAL.Migrations
 
                     b.Property<string>("PaypalLink")
                         .HasMaxLength(500);
+
+                    b.Property<bool>("Paypall");
+
+                    b.Property<bool>("Publish");
 
                     b.Property<string>("SiepomagaLink")
                         .HasMaxLength(500);

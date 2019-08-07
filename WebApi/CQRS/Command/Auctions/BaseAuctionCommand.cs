@@ -19,5 +19,9 @@ namespace CQRS.Command.Auctions
         public string ContactNumber { get; set; }
         public string PaypalLink { get; set; }
         public bool Featured { get; set; }
+
+        public bool Publish { get; set; }
+        public bool Dotpay { get; set; }
+        public bool Paypall { get; set; }
     }
 }

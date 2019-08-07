@@ -25,6 +25,10 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ListResponse<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
 
+        [HttpGet("all")]
+        public async Task<ListResponse<AuctionQueryData>> GetAll([FromQuery] GetAllAuctionsListQuery query) => await mediator.Send(query);
+
+
         [AllowAnonymous]
         [HttpGet("details")]
         public async Task<AuctionQueryData> Get([FromQuery] GetAuctionDetailsQuery query) => await mediator.Send(query);

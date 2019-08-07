@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  GetCategories,
-  RemoveCategory,
-  PlaceholderImg
-} from "../../service/categoryService";
+import { GetCategories, RemoveCategory } from "../../service/categoryService";
+import { PlaceholderImg } from "../../config";
 import { toast } from "react-toastify";
 import { Table, Icon, Image, Dimmer, Loader, Confirm } from "semantic-ui-react";
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, Input, Image } from "semantic-ui-react";
-import { PlaceholderImg } from "../../service/categoryService";
+import { PlaceholderImg } from "../../config";
 
 export default class CategoryForm extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PostForm from "./PostForm";
-import { Grid, Header } from "semantic-ui-react";
+import { Grid, Header, Dimmer, Loader } from "semantic-ui-react";
 import {
   creatAuction,
   getDetails,
@@ -13,10 +13,11 @@ class AddForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { auction: null, categories: [] };
+    this.state = { auction: null, categories: [], loading: false };
   }
 
   onSumbit = form => {
+    this.setState({ loading: true });
     if (!form.id) {
       return creatAuction(form)
         .then(response => {
@@ -24,6 +25,7 @@ class AddForm extends Component {
             throw new Error(response.status);
           }
           toast.success("Zbiórka została dodana");
+          this.props.history.push("/admin");
         })
         .catch(err => {
           toast.error("Dodawanie nie powiodło się, spróbuj ponownie później");
@@ -35,6 +37,7 @@ class AddForm extends Component {
             throw new Error(response.status);
           }
           toast.success("Zbiórka została zaktualizowana");
+          this.props.history.push("/admin");
         })
         .catch(err => {
           toast.error(
@@ -66,9 +69,14 @@ class AddForm extends Component {
   render() {
     if (
       (this.props.auctionId && !this.state.auction) ||
-      this.state.categories.length === 0
+      this.state.categories.length === 0 ||
+      this.state.loading
     ) {
-      return "loading...";
+      return (
+        <Dimmer active>
+          <Loader>Loading</Loader>
+        </Dimmer>
+      );
     }
 
     return (
