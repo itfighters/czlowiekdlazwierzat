@@ -21,7 +21,7 @@ const Confirm = ({ submit }) => {
         title="5 cyfrowy kod"
         required
       />
-      <input type="submit" />
+      <input className="btn btn-primary btn-center-aligned" type="submit" />
     </form>
   );
 
