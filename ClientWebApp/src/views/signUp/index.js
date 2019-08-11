@@ -196,6 +196,7 @@ export default class SignUp extends Component {
   };
 
   pushNotification = async e => {
+    e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
       this.showToast(
@@ -205,6 +206,10 @@ export default class SignUp extends Component {
       return;
     }
     var token = await this.askForPermissioToReceiveNotifications();
+    if (token == undefined) {
+      this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
+      return;
+    }
     subscribe(token, subscriptionType.Push, categories)
       .then(() => {
         this.showToast("Zostałeś zapisany na powiadomienia", "success");
@@ -368,13 +373,15 @@ export default class SignUp extends Component {
             </div>
             <div className="contact-container">
               <section>
-                <p className="title">Zapisz się na push notification</p>
-                <button
-                  className="btn btn-primary btn-center-aligned"
-                  type="submit"
-                >
-                  <span>Zapisz się</span>
-                </button>
+                <form onSubmit={this.pushNotification}>
+                  <p className="title">Zapisz się na push notification</p>
+                  <button
+                    className="btn btn-primary btn-center-aligned"
+                    type="submit"
+                  >
+                    <span>Zapisz się</span>
+                  </button>
+                </form>
               </section>
             </div>
           </div>
