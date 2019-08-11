@@ -195,6 +195,31 @@ export default class SignUp extends Component {
       .catch(this.handleError);
   };
 
+  unsubscribePush = e => {
+    e.preventDefault();
+    const messaging = firebase.messaging();
+    messaging
+      .getToken()
+      .then(token => {
+        if (token === null) {
+          this.showToast("Nie jesteś zapisany na powiadomienia push", "info");
+          return;
+        }
+        messaging.deleteToken(token).then(() => {
+          unsubscribe(token)
+            .then(() => {
+              this.showToast("Zostałeś wypisany z powiadomień", "success");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
   pushNotification = async e => {
     e.preventDefault();
     var categories = this.state.checked;
@@ -206,15 +231,13 @@ export default class SignUp extends Component {
       return;
     }
     var token = await this.askForPermissioToReceiveNotifications();
-    if (token == undefined) {
-      this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
-      return;
+    if (token !== undefined) {
+      subscribe(token, subscriptionType.Push, categories)
+        .then(() => {
+          this.showToast("Zostałeś zapisany na powiadomienia", "success");
+        })
+        .catch(this.handleError);
     }
-    subscribe(token, subscriptionType.Push, categories)
-      .then(() => {
-        this.showToast("Zostałeś zapisany na powiadomienia", "success");
-      })
-      .catch(this.handleError);
   };
 
   askForPermissioToReceiveNotifications = async () => {
@@ -222,11 +245,12 @@ export default class SignUp extends Component {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
-      console.log("token:", token);
-
+      if (token === undefined) {
+        return;
+      }
       return token;
     } catch (error) {
-      console.error(error);
+      this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
     }
   };
 
@@ -443,15 +467,17 @@ export default class SignUp extends Component {
                 </form>
               </div>
               <div className="contact-container">
-                <section>
-                  <p className="title">Wypisz się z notyfikacji 'push'</p>
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Wypisz się</span>
-                  </button>
-                </section>
+                <form onSubmit={this.unsubscribePush}>
+                  <section>
+                    <p className="title">Wypisz się z notyfikacji 'push'</p>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Wypisz się</span>
+                    </button>
+                  </section>
+                </form>
               </div>
             </div>
           </div>
