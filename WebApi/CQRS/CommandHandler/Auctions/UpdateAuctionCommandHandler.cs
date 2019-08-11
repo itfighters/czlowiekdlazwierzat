@@ -3,6 +3,7 @@ using CQRS.Mapper;
 using DAL;
 using DAL.Exceptions;
 using DAL.Model;
+using DAL.Services.Abstract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,21 +16,25 @@ namespace CQRS.CommandHandler
     public class UpdaterequestCommandHandler : AsyncRequestHandler<UpdateAuctionCommand>
     {
         private readonly DatabaseContext dbContext;
+        private readonly IImageUploadService imageUploadService;
 
-        public UpdaterequestCommandHandler(DatabaseContext dbContext)
+        public UpdaterequestCommandHandler(DatabaseContext dbContext, IImageUploadService imageUploadService)
         {
             this.dbContext = dbContext;
+            this.imageUploadService = imageUploadService;
         }
         protected override async Task Handle(UpdateAuctionCommand request, CancellationToken cancellationToken)
         {
             var auctionToUpdate = dbContext.Auctions
-                .Include(x => x.Categories).Include(x=>x.Image)
+                .Include(x => x.Categories)
                 .FirstOrDefault(a => a.Id == request.Id);
 
             if (auctionToUpdate == null)
                 throw new BusinessLogicException($"Auction {request.Id} doesn't exist");
 
             auctionToUpdate = AuctionMapper.FromAuctionCommandToAuction(request, auctionToUpdate);
+
+            auctionToUpdate.Image = await imageUploadService.UploadImage(request.Cover);
 
             auctionToUpdate.Title = request.Title;
             auctionToUpdate.Description = request.Description;
@@ -43,14 +48,6 @@ namespace CQRS.CommandHandler
             auctionToUpdate.AddressFrom = request.AddressTo;
             auctionToUpdate.ContactNumber = request.ContactNumber;
 
-            if (auctionToUpdate.Image == null && !String.IsNullOrWhiteSpace(request.Image))
-            {
-                auctionToUpdate.Image = new Image() { Source = request.Image };
-            }
-            else if (auctionToUpdate.Image != null)
-            {
-                auctionToUpdate.Image.Source = request.Image;
-            }
 
             await dbContext.SaveChangesAsync();
         }

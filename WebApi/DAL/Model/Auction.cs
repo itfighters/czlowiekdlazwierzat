@@ -19,8 +19,7 @@ namespace DAL.Model
         [MaxLength(500)]
         public string Description { get; set; }
 
-        public int? ImageId { get; set; }
-        public Image Image { get; set; }
+        public string Image { get; set; }
 
         public IList<AuctionCategory> Categories { get; set; }
 
@@ -44,7 +43,6 @@ namespace DAL.Model
         public string AddressFrom { get; set; }
         [MaxLength(500)]
         public  string AddressTo { get; set; }
-        [Required]
         public  string ContactNumber { get; set; }
 
         public  bool IsDeleted { get; set; }

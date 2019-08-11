@@ -9,14 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuctionController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public AuctionController( IMediator mediator)
+        public AuctionController(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -38,10 +37,10 @@ namespace WebApi.Controllers
         public async Task<IEnumerable<AuctionQueryData>> GetFeatured([FromQuery] GetFeaturedAuctionsQuery query) => await mediator.Send(query);
 
         [HttpPost]
-        public async Task AddAuction([FromBody] AddAuctionCommand command) => await mediator.Send(command);
+        public async Task AddAuction([FromForm] AddAuctionCommand command) => await mediator.Send(command);
 
         [HttpPut]
-        public async Task Put([FromBody] UpdateAuctionCommand command) => await mediator.Send(command);
+        public async Task Put([FromForm] UpdateAuctionCommand command) => await mediator.Send(command);
 
         [HttpDelete]
         public async Task Delete([FromQuery] DeleteAuctionCommand command) =>  await mediator.Send(command);

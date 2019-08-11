@@ -9,17 +9,24 @@
   <ItemGroup>
     <Compile Remove="ClientAdminClone\**" />
     <Compile Remove="ClientWebApp\**" />
+    <Compile Remove="wwwroot\admin\**" />
+    <Compile Remove="wwwroot\public\**" />
     <Content Remove="ClientAdminClone\**" />
     <Content Remove="ClientWebApp\**" />
+    <Content Remove="wwwroot\admin\**" />
+    <Content Remove="wwwroot\public\**" />
     <EmbeddedResource Remove="ClientAdminClone\**" />
     <EmbeddedResource Remove="ClientWebApp\**" />
+    <EmbeddedResource Remove="wwwroot\admin\**" />
+    <EmbeddedResource Remove="wwwroot\public\**" />
     <None Remove="ClientAdminClone\**" />
     <None Remove="ClientWebApp\**" />
+    <None Remove="wwwroot\admin\**" />
+    <None Remove="wwwroot\public\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\admin\" />
-    <Folder Include="wwwroot\public\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>

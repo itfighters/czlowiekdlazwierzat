@@ -3,7 +3,8 @@ import { mapInputsForPost } from "../Utils/helpers";
 import { API_URL } from "../config";
 const BASE_URL = API_URL + "auction";
 
-export function getAuctions(page, pageSize) {
+export function getAuctions(page, pageSize)
+{
   var url = new URL(BASE_URL + "/all");
   var params = { page, pageSize };
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
@@ -17,7 +18,8 @@ export function getAuctions(page, pageSize) {
   });
 }
 
-export function deleteAuction(id) {
+export function deleteAuction(id)
+{
   var url = new URL(BASE_URL);
   url.searchParams.append("id", id);
   return fetch(url, {
@@ -29,31 +31,54 @@ export function deleteAuction(id) {
   });
 }
 
-export function creatAuction(form) {
+export function creatAuction(form)
+{
   var url = new URL(BASE_URL);
+  var formData = new FormData();
+
+  for (var name in form) {
+    formData.append(name, form[name]);
+  }
+
+  // if (form.MultichoiceCategories) {
+  //   for (let i = 0; i < form.categories.length; i++) {
+  //     formData.append(`Categories[${i}]`, form.categories[i]);
+  //   }
+  // }
+
   return fetch(url, {
     method: "post",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(mapInputsForPost(form))
+    body: formData
   });
 }
 
-export function editAuction(form) {
+export function editAuction(form)
+{
   var url = new URL(BASE_URL);
+  var formData = new FormData();
+
+  for (var name in form) {
+    formData.append(name, form[name]);
+  }
+
+  // for (let i = 0; i < form.categories.length; i++) {
+  //   formData.append(`Categories[${i}]${form.categories[i]}`);
+  // }
+
   return fetch(url, {
     method: "put",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(mapInputsForPost(form))
+    body: formData
   });
 }
 
-export function getDetails(id) {
+export function getDetails(id)
+{
   var url = new URL(BASE_URL);
   return fetch(url + "/details?Id=" + id).then(response => response.json());
 }

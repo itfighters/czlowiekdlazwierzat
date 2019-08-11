@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {
+import
+{
   TextArea,
   Input,
   Checkbox,
@@ -11,9 +12,12 @@ import {
 import { toast } from "react-toastify";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
+import { IMAGES_URL } from "../../../config";
 
-class PostForm extends Component {
-  constructor(props) {
+class PostForm extends Component
+{
+  constructor(props)
+  {
     super(props);
 
     const { form, isUpdate } = this.props;
@@ -45,26 +49,31 @@ class PostForm extends Component {
     }
   }
 
-  getCurrentDate() {
+  getCurrentDate()
+  {
     return new Date();
   }
 
-  getDefaultEndDate() {
+  getDefaultEndDate()
+  {
     var date = new Date();
     date.setFullYear(date.getFullYear() + 1);
 
     return date;
   }
 
-  onChange = (e, { name, value }) => {
+  onChange = (e, { name, value }) =>
+  {
     this.setState(({ form }) => ({ form: { ...form, [name]: value } }));
   };
 
-  toggleChackBox = (e, { name, checked }) => {
+  toggleChackBox = (e, { name, checked }) =>
+  {
     this.setState(({ form }) => ({ form: { ...form, [name]: checked } }));
   };
 
-  formSubmitted = e => {
+  formSubmitted = e =>
+  {
     e.preventDefault();
     const { form } = this.state;
     this.props.onSubmit(form);
@@ -72,7 +81,8 @@ class PostForm extends Component {
 
   options = [{ key: "klucz", text: "nazwa", value: "wartosc" }];
 
-  uploadImage = e => {
+  uploadImage = e =>
+  {
     var maxImageMB = 10;
     let maxImageSize = 1024 * 1024 * maxImageMB;
     var files = e.target.files;
@@ -84,15 +94,17 @@ class PostForm extends Component {
       return;
     }
     var reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onloadend = () =>
+    {
       this.setState(({ form }) => ({
-        form: { ...form, image: reader.result }
+        form: { ...form, image: reader.result, cover: files[0] }
       }));
     };
     reader.readAsDataURL(files[0]);
   };
 
-  render() {
+  render()
+  {
     const {
       title,
       featured,
@@ -134,7 +146,7 @@ class PostForm extends Component {
         {image && (
           <Form.Field>
             <Image
-              src={image}
+              src={`${IMAGES_URL}/` + image}
               size="small"
               alt="wybrane zdjecie"
               wrapped
@@ -196,7 +208,8 @@ class PostForm extends Component {
             placeholder="Data początkowa"
             name="dateStart"
             selected={dateStart}
-            onDateChange={value => {
+            onDateChange={value =>
+            {
               this.onChange(undefined, {
                 name: "dateStart",
                 value: value
@@ -210,7 +223,8 @@ class PostForm extends Component {
             name="dateEnd"
             selected={dateEnd}
             minDate={dateStart}
-            onDateChange={value => {
+            onDateChange={value =>
+            {
               this.onChange(undefined, {
                 name: "dateEnd",
                 value

@@ -78,6 +78,7 @@ namespace WebApi
             app.UseAuthentication();
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
             app.UseMvc();
 
             app.UseSwagger();
@@ -85,7 +86,6 @@ namespace WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.Map("/admin", publicApp =>

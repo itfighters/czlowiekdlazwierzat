@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CQRS.Command.Auctions
 {
@@ -7,8 +9,14 @@ namespace CQRS.Command.Auctions
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
-        public IEnumerable<int> Categories { get; set; }
+        public IEnumerable<int> Categories
+        {
+            get
+            {
+                return MultichoiceCategories?.Split(",").Select(x => int.Parse(x));
+            }
+        }
+        public string MultichoiceCategories { get; set; }
         public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }
@@ -19,6 +27,7 @@ namespace CQRS.Command.Auctions
         public string ContactNumber { get; set; }
         public string PaypalLink { get; set; }
         public bool Featured { get; set; }
+        public IFormFile Cover { get; set; }
 
         public bool Publish { get; set; }
         public bool Dotpay { get; set; }
