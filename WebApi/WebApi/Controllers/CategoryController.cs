@@ -29,10 +29,10 @@ namespace WebApi.Controllers
         public async Task Delete([FromQuery] DeleteCategoryCommand command) => await mediator.Send(command);
 
         [HttpPost]
-        public async Task Add([FromBody] AddCategoryCommand command) => await mediator.Send(command);
+        public async Task Add([FromForm] AddCategoryCommand command) => await mediator.Send(command);
 
         [HttpPut]
-        public async Task Update([FromBody] UpdateCategoryCommand command) => await mediator.Send(command);
+        public async Task Update([FromForm] UpdateCategoryCommand command) => await mediator.Send(command);
     }
 
 }

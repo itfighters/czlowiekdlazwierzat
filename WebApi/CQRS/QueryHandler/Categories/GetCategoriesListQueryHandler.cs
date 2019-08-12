@@ -24,7 +24,7 @@ namespace CQRS.QueryHandler.Categories
             .Select(x=>new CategoryQueryData {
                 Id = x.Id,
                 Name = x.Name,
-                Image = x.Image.Source
+                Image = x.Image
             })
             .ToListAsync();
     }

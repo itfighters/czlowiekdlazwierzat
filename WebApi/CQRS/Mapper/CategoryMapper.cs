@@ -13,19 +13,17 @@ namespace CQRS.Mapper
         {
             Id = a.Id,
             Name = a.Name,
-            Image = a.Image?.Source
+            CurrentImage = a.Image
         };
 
         public static Func<AddCategoryCommand, Category> FromAddCategoryToCategory = (c) => new Category()
         {
-            Name = c.Name,
-            Image = new Image() { Source = c.Image }
+            Name = c.Name
         };
 
         public static Func<UpdateCategoryCommand, Category> FromUpdateCategoryToCategory = (c) => new Category()
         {
-            Name = c.Name,
-            Image = new Image() { Source = c.Image }
+            Name = c.Name
         };
     }
 }

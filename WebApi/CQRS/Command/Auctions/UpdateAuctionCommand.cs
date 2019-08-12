@@ -15,7 +15,7 @@ namespace CQRS.Command.Auctions
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Title).NotEmpty().Length(1, 100);
             RuleFor(x => x.Description).NotEmpty().Length(1, 500);
-            RuleFor(x => x.Categories).NotEmpty();
+            RuleFor(x => x.MultichoiceCategories).NotEmpty();
         }
     }
 }

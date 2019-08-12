@@ -31,25 +31,39 @@ export function deleteAuction(id) {
 
 export function creatAuction(form) {
   var url = new URL(BASE_URL);
+  var formData = new FormData();
+
+  for (var name in form) {
+    formData.append(name, form[name]);
+  }
+
   return fetch(url, {
     method: "post",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(mapInputsForPost(form))
+    body: formData
   });
 }
 
 export function editAuction(form) {
   var url = new URL(BASE_URL);
+  var formData = new FormData();
+
+  for (var name in form) {
+    formData.append(name, form[name]);
+  }
+
+  // for (let i = 0; i < form.categories.length; i++) {
+  //   formData.append(`Categories[${i}]${form.categories[i]}`);
+  // }
+
   return fetch(url, {
     method: "put",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(mapInputsForPost(form))
+    body: formData
   });
 }
 

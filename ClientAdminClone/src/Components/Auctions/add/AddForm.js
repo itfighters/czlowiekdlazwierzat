@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PostForm from "./PostForm";
 import { Grid, Header, Dimmer, Loader } from "semantic-ui-react";
-import {
+import
+{
   creatAuction,
   getDetails,
   editAuction
@@ -9,37 +10,45 @@ import {
 import { toast } from "react-toastify";
 import { GetCategories } from "../../../service/categoryService";
 import { mapInputsFromPost } from "../../../Utils/helpers";
-class AddForm extends Component {
-  constructor(props) {
+class AddForm extends Component
+{
+  constructor(props)
+  {
     super(props);
 
     this.state = { auction: null, categories: [], loading: false };
   }
 
-  onSumbit = form => {
+  onSumbit = form =>
+  {
     this.setState({ loading: true });
     if (!form.id) {
       return creatAuction(form)
-        .then(response => {
+        .then(response =>
+        {
           if (response.status !== 200) {
             throw new Error(response.status);
           }
           toast.success("Zbiórka została dodana");
           this.props.history.push("/admin");
         })
-        .catch(err => {
+        .catch(err =>
+        {
           toast.error("Dodawanie nie powiodło się, spróbuj ponownie później");
+          this.setState({ loading: false });
         });
     } else {
       return editAuction(form)
-        .then(response => {
+        .then(response =>
+        {
           if (response.status !== 200) {
             throw new Error(response.status);
           }
           toast.success("Zbiórka została zaktualizowana");
           this.props.history.push("/admin");
         })
-        .catch(err => {
+        .catch(err =>
+        {
           toast.error(
             "Aktualizacja nie powiodła się, spróbuj ponownie później"
           );
@@ -47,7 +56,8 @@ class AddForm extends Component {
     }
   };
 
-  async componentDidMount() {
+  async componentDidMount()
+  {
     let { auctionId } = this.props;
     if (auctionId) {
       var details = await getDetails(auctionId);
@@ -66,7 +76,8 @@ class AddForm extends Component {
     );
   }
 
-  render() {
+  render()
+  {
     if (
       (this.props.auctionId && !this.state.auction) ||
       this.state.categories.length === 0 ||

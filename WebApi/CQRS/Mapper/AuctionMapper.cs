@@ -22,7 +22,7 @@ namespace CQRS.Mapper
             DateTo = a.DateTo,
             DotpayLink = a.DotpayLink,
             SiepomagaLink = a.SiepomagaLink,
-            Image = a.Image?.Source,
+            CurrentImage = a.Image,
             Featured = a.Featured,
             PaypalLink = a.PaypalLink,
             Publish = a.Publish,
@@ -47,7 +47,6 @@ namespace CQRS.Mapper
              result.DateFrom = command.DateFrom ?? DateTime.Now;
              result.ContactNumber = command.ContactNumber;
              result.AddressFrom = command.AddressFrom;
-             result.Image = new Image() {Source = command.Image};
              result.DotpayLink = command.DotpayLink;
              result.Publish = command.Publish;
              result.Dotpay = command.Dotpay;

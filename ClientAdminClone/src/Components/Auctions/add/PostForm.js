@@ -11,6 +11,7 @@ import {
 import { toast } from "react-toastify";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
+import { IMAGES_URL } from "../../../config";
 
 class PostForm extends Component {
   constructor(props) {
@@ -40,7 +41,8 @@ class PostForm extends Component {
         featured: false,
         publish: true,
         dotpay: false,
-        paypall: false
+        paypall: false,
+        currentImage: null
       };
     }
   }
@@ -86,7 +88,7 @@ class PostForm extends Component {
     var reader = new FileReader();
     reader.onloadend = () => {
       this.setState(({ form }) => ({
-        form: { ...form, image: reader.result }
+        form: { ...form, image: reader.result, cover: files[0] }
       }));
     };
     reader.readAsDataURL(files[0]);
@@ -105,11 +107,21 @@ class PostForm extends Component {
       dateEnd,
       publish,
       dotpay,
-      paypall
+      paypall,
+      currentImage
     } = this.state.form;
 
     const { duringUpload } = this.state;
     const { categories } = this.props;
+
+    const imageSource = () => {
+      if (currentImage && !image) {
+        return `${IMAGES_URL}/` + currentImage;
+      }
+      else {
+        return image;
+      }
+    }
 
     return (
       <Form onSubmit={this.formSubmitted} style={{ marginBottom: "50px" }}>
@@ -131,10 +143,10 @@ class PostForm extends Component {
           accept="image/*"
           onChange={this.uploadImage}
         />
-        {image && (
+        {(image || currentImage) && (
           <Form.Field>
             <Image
-              src={image}
+              src={imageSource()}
               size="small"
               alt="wybrane zdjecie"
               wrapped

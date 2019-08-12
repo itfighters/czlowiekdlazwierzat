@@ -2,7 +2,7 @@ import React from "react";
 import { GetDetails } from "../../services/auctionService";
 import { GetAllCategories } from "../../services/categoryService";
 import Loader from "../../components/loader";
-import { PlaceholderImg } from "../../config";
+import { PlaceholderImg, IMAGES_URL } from "../../config";
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -48,9 +48,11 @@ export default class Details extends React.Component {
       if (!item || !item.id) {
         return null;
       }
+      const image = item.image ? `${IMAGES_URL}/`+item.image : null;
+    
       return (
         <div key={"category-" + item.id} className="button-tile-item">
-          <img src={item.image || PlaceholderImg} alt="leczenie" />
+          <img src={image || PlaceholderImg} alt="leczenie" />
           <span className="txt">
             <div>{item.name}</div>
           </span>
@@ -63,7 +65,7 @@ export default class Details extends React.Component {
         <section className="tile-details">
           <div className="wrap-tile">
             <div className="img">
-              <img src={this.state.auction.image} alt="zdj zbiórki" />
+              <img src={`${IMAGES_URL}/`+this.state.auction.currentImage} alt="zdj zbiórki" />
             </div>
             <div className="description">
               <h2>{this.state.auction.title}</h2>

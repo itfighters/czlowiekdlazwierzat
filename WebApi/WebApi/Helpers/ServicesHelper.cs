@@ -86,6 +86,7 @@ namespace WebApi.Helpers
             services.AddScoped<IAuctionEmailNotification, AuctionEmailNotification>();
             services.AddScoped<IAuctionPushNotification, AuctionPushNotification>();
             services.AddScoped<INotificationHelper, NotificationHelper>();
+            services.AddScoped<IImageUploadService, ImageUploadService>();
         }
 
       

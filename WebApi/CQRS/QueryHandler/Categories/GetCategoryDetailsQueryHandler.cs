@@ -21,11 +21,11 @@ namespace CQRS.QueryHandler.Categories
         {
             this.dbContext = dbContext;
         }
-
+        
         public async Task<CategoryDetailsQueryData> Handle(GetCategoryDetailsQuery request, CancellationToken cancellationToken)
         {
 
-            var category = await dbContext.Categories.Include(x=>x.Image)
+            var category = await dbContext.Categories
                 .FirstOrDefaultAsync(cat => cat.Id == request.Id);
 
             return CategoryMapper.FromCategoryToCategoryDetailsQueryData(category);
