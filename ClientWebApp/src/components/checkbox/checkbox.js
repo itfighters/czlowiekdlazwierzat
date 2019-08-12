@@ -5,7 +5,7 @@ export default class Checkbox extends Component {
     var { text, checked, onChange, id, ...rest } = this.props;
 
     return (
-      <label class="checkbox-container">
+      <label className="checkbox-container">
         <input
           type="checkbox"
           value={id}
@@ -14,7 +14,7 @@ export default class Checkbox extends Component {
           {...rest}
         ></input>
         <label>{text}</label>
-        <span class="checkmark"></span>
+        <span className="checkmark"></span>
       </label>
     );
   }

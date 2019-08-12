@@ -17,7 +17,7 @@ export function subscribe(value, type, categories) {
     })
   }).then(response => {
     if (response.status !== 200) {
-      throw new Error(response.status);
+      return Promise.reject(response.status);
     }
     return Promise.resolve(response);
   });
@@ -35,7 +35,7 @@ export function confirmPhoneNumber(code, tel) {
     })
   }).then(response => {
     if (response.status !== 200) {
-      throw new Error(response.status);
+      return Promise.reject(response.status);
     }
     return Promise.resolve(response);
   });
@@ -52,7 +52,7 @@ export function unsubscribe(tel) {
     })
   }).then(response => {
     if (response.status !== 200) {
-      throw new Error(response.status);
+      return Promise.reject(response.status);
     }
     return Promise.resolve(response);
   });

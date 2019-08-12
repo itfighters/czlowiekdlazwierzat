@@ -195,7 +195,33 @@ export default class SignUp extends Component {
       .catch(this.handleError);
   };
 
+  unsubscribePush = e => {
+    e.preventDefault();
+    const messaging = firebase.messaging();
+    messaging
+      .getToken()
+      .then(token => {
+        if (token === null) {
+          this.showToast("Nie jesteś zapisany na powiadomienia push", "info");
+          return;
+        }
+        messaging.deleteToken(token).then(() => {
+          unsubscribe(token)
+            .then(() => {
+              this.showToast("Zostałeś wypisany z powiadomień", "success");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
   pushNotification = async e => {
+    e.preventDefault();
     var categories = this.state.checked;
     if (categories.length === 0) {
       this.showToast(
@@ -205,11 +231,13 @@ export default class SignUp extends Component {
       return;
     }
     var token = await this.askForPermissioToReceiveNotifications();
-    subscribe(token, subscriptionType.Push, categories)
-      .then(() => {
-        this.showToast("Zostałeś zapisany na powiadomienia", "success");
-      })
-      .catch(this.handleError);
+    if (token !== undefined) {
+      subscribe(token, subscriptionType.Push, categories)
+        .then(() => {
+          this.showToast("Zostałeś zapisany na powiadomienia", "success");
+        })
+        .catch(this.handleError);
+    }
   };
 
   askForPermissioToReceiveNotifications = async () => {
@@ -217,11 +245,12 @@ export default class SignUp extends Component {
       const messaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken();
-      console.log("token:", token);
-
+      if (token === undefined) {
+        return;
+      }
       return token;
     } catch (error) {
-      console.error(error);
+      this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
     }
   };
 
@@ -243,177 +272,95 @@ export default class SignUp extends Component {
     });
 
     return (
-      <article className="signup-page">
-        <section className="sign-to">
-          <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
-          <div className="notofications-description">
-            <div className="description-part">
-              {" "}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat.Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <>
+        <article className="signup-page">
+          <section className="sign-to">
+            <h1>ZAPISZ SIĘ NA POWIADOMIENIA</h1>
+            <div className="notofications-description">
+              <div className="description-part">
+                Pomagać można na wiele sposobów, a każde wsparcie przekazane
+                zwierzakom przebywającym w naszym fundacyjnym przytulisku jest
+                bezcenne i bardzo potrzebne. Żeby ułatwić wszystkim sympatykom
+                łętkowickich bezdomniaków pomaganie i dostarczać aktaulne
+                infrormacje o potrzebach zwierzaków przygotowaliśmy kilka opcji
+                wygodnych powiadomień. W pierwszym kroku trzeba wybrać wszystkie
+                te kategorie pomocy, które nas interesują.
+              </div>
+              <div className="description-part">
+                {" "}
+                Następnie wystarczy zdecydować czy chcemy dostawać maile, smsy
+                czy powiadomienia typu push na smatfon z systemem Android.
+                Wszystkie powiadomienia są oczywiście bezpłatne. Przy wybranej
+                opcji należy podać odpowiednio adres e-mail lub numer telefonu,
+                albo zainstalować aplikację do powiadomień (tylko dla systemu
+                Android). Dzięki temu nie ominie nas już żadna prośba o wsparcie
+                płynąca z Łętkowic. Z powiadomień można się też łatwo wypisać
+                poprzez formularz na dole strony.
+              </div>
             </div>
-            <div className="description-part">
-              {" "}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat.Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </section>
+          <section className="notification-section">
+            <div className="header">
+              <div className="align-left">
+                <h1>KROK 1 </h1>
+                <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
+              </div>
             </div>
-          </div>
-        </section>
-        <section className="notification-section">
-          <div className="header">
-            <div className="align-left">
-              <h1>KROK 1 </h1>
-              <p>Wybierz kategorie powiadomień jakie chcesz otrzymywać</p>
-            </div>
-          </div>
-          <div className="content">
-            <form className="category-checkboxes">
-              <Checkbox
-                text={"ZAZNACZ WSZYSTKO"}
-                onChange={this.toggleAll}
-              ></Checkbox>
-              {categoriesList}
-            </form>
-          </div>
-        </section>
-        <section className="notification-section">
-          <div className="header">
-            <div className="align-left">
-              <h1>KROK 2 </h1>
-              <p>Wybierz w jaki sposób chcesz odbierać powiadomienia</p>
-            </div>
-          </div>
-          <div className="content content-notifications">
-            <div className="contact-container">
-              <form onSubmit={this.submitMail}>
-                <p className="title">
-                  Podaj nam swój adres email, aby otrzymywać powiadomienia
-                  mailowe{" "}
-                </p>
-                <input
-                  type="email"
-                  placeholder="mail"
-                  onChange={this.updateMail}
-                  value={this.state.email}
-                  required
-                />
-                <div className="accept-line">
-                  <Checkbox
-                    text={"Akceptuj "}
-                    checked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail}
-                    required
-                  />
-                  <span
-                    className="terms"
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  >
-                    regulamin
-                  </span>
-                </div>
-                <button
-                  className="btn btn-primary btn-center-aligned"
-                  type="submit"
-                >
-                  <span>Zapisz się</span>
-                </button>
+            <div className="content">
+              <form className="category-checkboxes">
+                <Checkbox
+                  text={"ZAZNACZ WSZYSTKO"}
+                  onChange={this.toggleAll}
+                ></Checkbox>
+                {categoriesList}
               </form>
             </div>
-            <div className="contact-container">
-              <form onSubmit={this.submitTel}>
-                <p className="title">
-                  Podaj nam swój numer telefonu, aby otrzymywać powiadomienia
-                  sms{" "}
-                </p>
-                <input
-                  type="tel"
-                  placeholder="telefon"
-                  title="format: 123456789"
-                  pattern="[0-9]{9}"
-                  onChange={this.updateTel}
-                  value={this.state.tel}
-                  required
-                />
-                <div className="accept-line">
-                  <Checkbox
-                    text={"Akceptuj "}
-                    checked={this.state.acceptedSms}
-                    onChange={this.acceptedChangeSms}
-                    required
-                  />
-                  <span
-                    className="terms"
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  >
-                    regulamin
-                  </span>
-                </div>
-                <button
-                  className="btn btn-primary btn-center-aligned"
-                  type="submit"
-                >
-                  <span>Zapisz się</span>
-                </button>
-              </form>
+          </section>
+          <section className="notification-section">
+            <div className="header">
+              <div className="align-left">
+                <h1>KROK 2 </h1>
+                <p>Wybierz w jaki sposób chcesz odbierać powiadomienia</p>
+              </div>
             </div>
-            <div className="contact-container">
-              <section>
-                <p className="title">Zapisz się na push notification</p>
-                <button
-                  className="btn btn-primary btn-center-aligned"
-                  type="submit"
-                >
-                  <span>Zapisz się</span>
-                </button>
-              </section>
-            </div>
-          </div>
-        </section>
-        <section className="notification-section">
-          <div className="header">
-            <div className="align-left">
-              <h1>Rezygnacja </h1>
-              <p>
-                Aby zrezygnować z powiadomień e-mail lub SMS podaj swój adres
-                e-mail lub numer telefonu
-              </p>
-            </div>
-          </div>
-          <div className="content">
-            <div className="content content-notifications resignations">
+            <div className="content content-notifications">
               <div className="contact-container">
-                <form onSubmit={this.unsubscribeEmail}>
+                <form onSubmit={this.submitMail}>
                   <p className="title">
-                    Podaj nam swój adres email, aby zrezygnować z powiadomień
-                    email{" "}
+                    Podaj nam swój adres email, aby otrzymywać powiadomienia
+                    mailowe{" "}
                   </p>
                   <input
                     type="email"
                     placeholder="mail"
-                    onChange={this.updateunsubscribeEmail}
-                    value={this.state.unsubscribeEmail}
+                    onChange={this.updateMail}
+                    value={this.state.email}
                     required
                   />
+                  <div className="accept-line">
+                    <Checkbox
+                      text={"Akceptuj "}
+                      checked={this.state.acceptedMail}
+                      onChange={this.acceptedChangeMail}
+                      required
+                    />
+                    <span
+                      className="terms"
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    >
+                      regulamin
+                    </span>
+                  </div>
                   <button
                     className="btn btn-primary btn-center-aligned"
                     type="submit"
                   >
-                    <span>Wypisz się</span>
+                    <span>Zapisz się</span>
                   </button>
                 </form>
               </div>
               <div className="contact-container">
-                <form onSubmit={this.unsubscribeTel}>
+                <form onSubmit={this.submitTel}>
                   <p className="title">
                     Podaj nam swój numer telefonu, aby otrzymywać powiadomienia
                     sms{" "}
@@ -423,40 +370,127 @@ export default class SignUp extends Component {
                     placeholder="telefon"
                     title="format: 123456789"
                     pattern="[0-9]{9}"
-                    onChange={this.updateUnsubscribeTel}
-                    value={this.state.unsubscribeTel}
+                    onChange={this.updateTel}
+                    value={this.state.tel}
                     required
                   />
+                  <div className="accept-line">
+                    <Checkbox
+                      text={"Akceptuj "}
+                      checked={this.state.acceptedSms}
+                      onChange={this.acceptedChangeSms}
+                      required
+                    />
+                    <span
+                      className="terms"
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    >
+                      regulamin
+                    </span>
+                  </div>
                   <button
                     className="btn btn-primary btn-center-aligned"
                     type="submit"
                   >
-                    <span>Wypisz się</span>
+                    <span>Zapisz się</span>
                   </button>
                 </form>
               </div>
               <div className="contact-container">
                 <section>
-                  <p className="title">Wypisz się z notyfikacji 'push'</p>
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Wypisz się</span>
-                  </button>
+                  <form onSubmit={this.pushNotification}>
+                    <p className="title">Zapisz się na push notification</p>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Zapisz się</span>
+                    </button>
+                  </form>
                 </section>
               </div>
             </div>
-          </div>
-        </section>
-
+          </section>
+          <section className="notification-section">
+            <div className="header">
+              <div className="align-left">
+                <h1>Rezygnacja </h1>
+                <p>
+                  Aby zrezygnować z powiadomień e-mail lub SMS podaj swój adres
+                  e-mail lub numer telefonu
+                </p>
+              </div>
+            </div>
+            <div className="content">
+              <div className="content content-notifications resignations">
+                <div className="contact-container">
+                  <form onSubmit={this.unsubscribeEmail}>
+                    <p className="title">
+                      Podaj nam swój adres email, aby zrezygnować z powiadomień
+                      email{" "}
+                    </p>
+                    <input
+                      type="email"
+                      placeholder="mail"
+                      onChange={this.updateunsubscribeEmail}
+                      value={this.state.unsubscribeEmail}
+                      required
+                    />
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Wypisz się</span>
+                    </button>
+                  </form>
+                </div>
+                <div className="contact-container">
+                  <form onSubmit={this.unsubscribeTel}>
+                    <p className="title">
+                      Podaj nam swój numer telefonu, aby otrzymywać
+                      powiadomienia sms{" "}
+                    </p>
+                    <input
+                      type="tel"
+                      placeholder="telefon"
+                      title="format: 123456789"
+                      pattern="[0-9]{9}"
+                      onChange={this.updateUnsubscribeTel}
+                      value={this.state.unsubscribeTel}
+                      required
+                    />
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Wypisz się</span>
+                    </button>
+                  </form>
+                </div>
+                <div className="contact-container">
+                  <form onSubmit={this.unsubscribePush}>
+                    <section>
+                      <p className="title">Wypisz się z notyfikacji 'push'</p>
+                      <button
+                        className="btn btn-primary btn-center-aligned"
+                        type="submit"
+                      >
+                        <span>Wypisz się</span>
+                      </button>
+                    </section>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </article>
         <Popup visible={this.state.visiblePopup} close={this.closePopup}>
           {this.state.visiblePopup === ContentTypes.Confirm && (
             <Confirm submit={this.confirmNumber} />
           )}
           {this.state.visiblePopup === ContentTypes.Terms && <Terms />}
         </Popup>
-      </article>
+      </>
     );
   }
 }

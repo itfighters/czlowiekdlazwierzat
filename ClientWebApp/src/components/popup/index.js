@@ -11,13 +11,16 @@ export default class Popup extends Component {
     }
 
     return (
-      <div className="popup-container">
-        <div className="popup">
-          <Header close={this.props.close} />
-          {this.props.children}
-          <Footer />
+      <>
+        <div className="fade modal-backdrop show"></div>
+        <div className="popup-container">
+          <div className="popup">
+            <Header close={this.props.close} />
+            <div className="body">{this.props.children}</div>
+            <Footer />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

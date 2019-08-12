@@ -2,8 +2,10 @@ import React from "react";
 
 const Header = ({ close }) => {
   return (
-    <div>
-      Header komponentus<button onClick={close}>x</button>
+    <div className="popup-header">
+      <span className="btn-close" onClick={close}>
+        x
+      </span>
     </div>
   );
 };
