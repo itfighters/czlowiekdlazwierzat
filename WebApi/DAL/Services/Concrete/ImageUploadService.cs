@@ -16,7 +16,7 @@ namespace DAL.Services.Concrete
             {
                 var fileGuid = Guid.NewGuid();
                 var fileName = Path.GetFileName($"{fileGuid}.{getFileFormat(file.ContentType)}");
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","images", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);

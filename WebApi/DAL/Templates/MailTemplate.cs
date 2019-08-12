@@ -11,7 +11,7 @@ namespace DAL.Templates
         public static string NotificationTemplate(string title, string message)
         {
             using (var fileReader =
-                new StreamReader(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Templates\\Resources\\notification.html")))
+                new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "Templates","Resources","notification.html")))
             {
                 var templateContent = fileReader.ReadToEnd();
                 templateContent = templateContent.Replace("$PLACEHOLDER_TITLE", title);
