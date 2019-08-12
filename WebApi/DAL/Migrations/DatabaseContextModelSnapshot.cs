@@ -102,7 +102,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ImageId");
+                    b.Property<string>("Image");
 
                     b.Property<bool>("IsDeleted");
 
@@ -111,8 +111,6 @@ namespace DAL.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
 
                     b.ToTable("Categories");
 
@@ -237,13 +235,6 @@ namespace DAL.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DAL.Model.Category", b =>
-                {
-                    b.HasOne("DAL.Model.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("DAL.Model.Notification", b =>

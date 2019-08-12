@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { GetCategories, RemoveCategory } from "../../service/categoryService";
-import { PlaceholderImg } from "../../config";
+import { PlaceholderImg, IMAGES_URL } from "../../config";
 import { toast } from "react-toastify";
 import { Table, Icon, Image, Dimmer, Loader, Confirm } from "semantic-ui-react";
 
@@ -70,7 +70,7 @@ export default class List extends Component {
       <Table.Row key={`category-${category.id}`}>
         <Table.Cell>{category.name}</Table.Cell>
         <Table.Cell>
-          <Image src={category.image || PlaceholderImg} size="small" />
+          <Image src={category.image ? `${IMAGES_URL}/${category.image}` : PlaceholderImg} size="small" />
         </Table.Cell>
         <Table.Cell>
           <Link to={`category/${category.id}`}>

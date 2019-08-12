@@ -9,6 +9,7 @@ using CQRS.Mapper;
 using DAL;
 using DAL.Exceptions;
 using DAL.Model;
+using DAL.Services.Abstract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,15 +18,17 @@ namespace CQRS.CommandHandler.Categories
     class UpdateCategoryCommandHandler : AsyncRequestHandler<UpdateCategoryCommand>
     {
         private readonly DatabaseContext dbContext;
+        private readonly IImageUploadService imageUploadService;
 
-        public UpdateCategoryCommandHandler(DatabaseContext dbContext)
+        public UpdateCategoryCommandHandler(DatabaseContext dbContext, IImageUploadService imageUploadService)
         {
             this.dbContext = dbContext;
+            this.imageUploadService = imageUploadService;
         }
 
         protected override async Task Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var categoryToUpdate = dbContext.Categories.Include(x => x.Image)
+            var categoryToUpdate = dbContext.Categories
                 .FirstOrDefault(a => a.Id == request.Id);
 
             if (categoryToUpdate == null)
@@ -33,14 +36,11 @@ namespace CQRS.CommandHandler.Categories
 
             categoryToUpdate.Name = request.Name;
 
-            if (categoryToUpdate.Image == null && !String.IsNullOrWhiteSpace(request.Image))
+            if(request.Cover != null)
             {
-                categoryToUpdate.Image = new Image() { Source = request.Image };
+                categoryToUpdate.Image = await imageUploadService.UploadImage(request.Cover);
             }
-            else if (categoryToUpdate.Image != null)
-            {
-                categoryToUpdate.Image.Source = request.Image;
-            }
+
 
             await dbContext.SaveChangesAsync();
         }

@@ -22,7 +22,7 @@ namespace CQRS.Mapper
             DateTo = a.DateTo,
             DotpayLink = a.DotpayLink,
             SiepomagaLink = a.SiepomagaLink,
-            Image = a.Image,
+            CurrentImage = a.Image,
             Featured = a.Featured,
             PaypalLink = a.PaypalLink,
             Publish = a.Publish,

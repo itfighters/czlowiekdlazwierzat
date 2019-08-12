@@ -34,7 +34,10 @@ namespace CQRS.CommandHandler
 
             auctionToUpdate = AuctionMapper.FromAuctionCommandToAuction(request, auctionToUpdate);
 
-            auctionToUpdate.Image = await imageUploadService.UploadImage(request.Cover);
+            if (request.Cover != null)
+            {
+                auctionToUpdate.Image = await imageUploadService.UploadImage(request.Cover);
+            }
 
             auctionToUpdate.Title = request.Title;
             auctionToUpdate.Description = request.Description;

@@ -33,13 +33,19 @@ export function RemoveCategory(id) {
 
 export function AddCategory(category) {
   var url = new URL(BASE_URL);
+
+  var formData = new FormData();
+
+  for (var name in category) {
+    formData.append(name, category[name]);
+  }
+
   return fetch(url, {
     method: "post",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(category)
+    body: formData
   }).then(response => {
     if (response.status !== 200) {
       throw new Error(response.status);
@@ -50,13 +56,17 @@ export function AddCategory(category) {
 
 export function EditCategory(category) {
   var url = new URL(BASE_URL);
+  var formData = new FormData();
+
+  for (var name in category) {
+    formData.append(name, category[name]);
+  }
   return fetch(url, {
     method: "put",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem(authTokenKey)}`
     },
-    body: JSON.stringify(category)
+    body: formData
   }).then(response => {
     if (response.status !== 200) {
       throw new Error(response.status);
