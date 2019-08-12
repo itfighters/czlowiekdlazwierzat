@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { PlaceholderImg } from "../../config";
+import { PlaceholderImg, IMAGES_URL } from "../../config";
 
 export default class TilesListDetails extends Component {
   render() {
     let tile = this.props.tile;
     let link = "/details/" + tile.id;
-    let imageSrc = tile.image ? tile.image : PlaceholderImg;
-
+    let imageSrc = tile.currentImage ? `${IMAGES_URL}/`+tile.currentImage : PlaceholderImg;
     return (
       <Link to={link} className="collect-tile">
         <div>

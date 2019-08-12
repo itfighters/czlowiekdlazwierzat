@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PlaceholderImg } from "../../config";
+import { PlaceholderImg, IMAGES_URL } from "../../config";
 
 export default class TileCategory extends Component {
   onCategoryClick = category => {
@@ -9,7 +9,7 @@ export default class TileCategory extends Component {
 
   render() {
     const { category, isSelected } = this.props;
-    let imageSrc = category.image ? category.image : PlaceholderImg;
+    let imageSrc = category.image ? `${IMAGES_URL}/`+category.image : PlaceholderImg;
 
     return (
       <div
