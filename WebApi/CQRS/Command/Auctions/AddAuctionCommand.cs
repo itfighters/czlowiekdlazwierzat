@@ -12,8 +12,8 @@ namespace CQRS.Command.Auctions
     {
         public AddAuctionCommandValidator()
         {
-            RuleFor(x => x.Title).NotEmpty().Length(1, 100);
-            RuleFor(x => x.Description).NotEmpty().Length(1, 500);
+            RuleFor(x => x.Title).NotEmpty().Length(1, 300);
+            RuleFor(x => x.Description).NotEmpty().Length(1, 1500);
             RuleFor(x => x.Categories).NotEmpty();
         }
     }
