@@ -12,23 +12,19 @@ namespace DAL.Model
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(300)]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(500)]
+        [MaxLength(1500)]
         public string Description { get; set; }
 
         public string Image { get; set; }
 
         public IList<AuctionCategory> Categories { get; set; }
 
-        [MaxLength(500)]
         public string DotpayLink { get; set; }
-        [MaxLength(500)]
         public string SiepomagaLink { get; set; }
-
-        [MaxLength(500)]
         public string PaypalLink { get; set; }
 
 
@@ -39,9 +35,7 @@ namespace DAL.Model
         public  DateTime DateFrom { get; set; }
 
         public DateTime DateTo { get; set; }
-        [MaxLength(500)]
         public string AddressFrom { get; set; }
-        [MaxLength(500)]
         public  string AddressTo { get; set; }
         public  string ContactNumber { get; set; }
 

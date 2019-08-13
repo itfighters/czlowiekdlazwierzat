@@ -130,6 +130,7 @@ class PostForm extends Component {
           name="title"
           label="Tytuł"
           placeholder="Tytuł"
+          maxlength="300"
           value={title}
           onChange={this.onChange}
           required
@@ -159,6 +160,7 @@ class PostForm extends Component {
         <Form.Field
           control={TextArea}
           label="Opis"
+          maxlength={1500}
           placeholder="Opis"
           name="description"
           value={description}
