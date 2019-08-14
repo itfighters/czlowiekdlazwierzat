@@ -12,11 +12,11 @@
       @media (min-width: 576px) {
         flex-direction: column;
       }
-  
+
       @media (min-width: 768px) {
         flex-direction: row;
       }
-      
+
       .img {
         flex-grow: 3;
         flex-basis: 40%;
@@ -37,15 +37,27 @@
         padding: 10px;
         flex-grow: 4;
         flex-shrink: 3;
+
+        .short-description,
+        .full-description {
+          font-size: $fs-small;
+          color: $gray;
+          letter-spacing: 0.5px;
+        }
+
+        .short-description {
+
+          font-weight: 600;
+          margin: 15px 0 35px 0;
+        }
+
         h2 {
           font-size: $fs-section-header;
           text-transform: uppercase;
           font-weight: 600;
         }
 
-        p {
-          margin: 10px 0;
-        }
+       
       }
     }
     .buttons-tile {
