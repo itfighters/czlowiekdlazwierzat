@@ -3,16 +3,19 @@
 .top-footer {
   padding: 0 $side-padding;
   align-items: center;
+  display: flex;
   h2 {
     font-weight: bold;
     font-size: $fs-extra-large;
     color: $gray;
     letter-spacing: 5px;
+    flex-grow: 1;
   }
   .partners {
-    margin: 25px 0;
+    margin-bottom: 20px;
+    flex-grow: 4;
     position: relative;
-    padding: 0 0 0 100px;
+    padding: 0 0 0 50px;
     a {
       padding: 0 15px;
       img {
@@ -64,6 +67,7 @@
 
 @media screen and (max-width: 1023px) {
   .top-footer {
+    display: block;
     h2 {
       display: none;
     }

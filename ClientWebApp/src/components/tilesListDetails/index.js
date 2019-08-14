@@ -12,7 +12,7 @@ export default class TilesListDetails extends Component {
         <div>
           <img src={imageSrc} alt="zdjecie-potrzeby" />
           <h2 className="title">{tile.title}</h2>
-          <h4 className="description">{tile.description}</h4>
+          <p className="description">{tile.description}</p>
         </div>
       </Link>
     );

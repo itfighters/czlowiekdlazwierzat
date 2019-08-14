@@ -14,7 +14,7 @@ export default class CollectionTile extends Component {
           <div>
             <img src={imageSrc} alt="obrazek zbiórki" />
             <h2 className="title">{tile.title}</h2>
-            <h4 className="description">{tile.description}</h4>
+            <p className="description">{tile.description.substring(0,100)+'...'}</p>
           </div>
         </Link>
       </div>
