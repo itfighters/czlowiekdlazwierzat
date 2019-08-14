@@ -15,15 +15,14 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .icon {
@@ -44,12 +43,65 @@ h1 {
 
 .home-page {
   padding: 60px $side-padding 0 $side-padding;
+  h1,
+  h2 {
+    font-weight: bold;
+    font-size: $fs-extra-large;
+    color: $gray;
+    letter-spacing: 3px;
+  }
+
+  p,
+  span {
+    font-size: $fs-small;
+    color: $gray;
+    letter-spacing: 1px;
+  }
 }
 
+h1,
+h2 {
+  font-weight: bold;
+  font-size: $fs-extra-large;
+  color: $gray;
+  letter-spacing: 3px;
+}
 
-.empty-content
-{
-  font-size:$fs-medium;
+h3 {
+  font-weight: bold;
+  font-size: $fs-medium;
+  color: $gray;
+  letter-spacing: 5px;
+}
+
+.empty-content {
+  font-size: $fs-medium;
   text-align: center;
   height: 200px;
+}
+
+.about-container {
+  margin: 20px 10px;
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    @media (min-width: 576px) {
+      padding: 0 10px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 0 25%;
+    }
+
+    @media (min-width: 992px) {
+      padding: 0 25%;
+    }
+
+    @media (min-width: 1200px) {
+      padding: 0 25%;
+    }
+  }
 }

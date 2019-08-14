@@ -24,7 +24,7 @@ export default class About extends Component {
             </p>
           </div>
           <div>
-            <p>NIP</p>
+            <p>NIP 6821770446 </p>
           </div>
           <div className="facebook-icon">
             <a

@@ -3,6 +3,7 @@
 .collections-list {
   display: flex;
   flex-wrap: wrap;
+  margin: 10px 20px;
   .collect-tile {
     width: 32%;
     background-color: #f6f5f5;
@@ -37,14 +38,12 @@
       text-transform: uppercase;
       font-weight: 600;
       word-break: break-word;
-      color: black;
     }
     .description {
       font-size: $fs-small;
       margin-bottom: 7px;
       margin-left: 3%;
       word-break: break-word;
-      color: black;
     }
 
     .button-row {

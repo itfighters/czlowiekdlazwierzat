@@ -28,7 +28,7 @@ const Header = ({ history }) => {
             </>
           )}
           <li>
-            <NavLink to="/tiles">Lista zbiórek</NavLink>
+            <NavLink className="btn btn-primary" to="/tiles">Lista potrzeb</NavLink>
           </li>
           <li>
             <NavLink className="btn btn-primary" to="/signup">

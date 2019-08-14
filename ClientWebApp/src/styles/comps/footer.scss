@@ -28,7 +28,10 @@
   background: $secondary-color;
   border-bottom-right-radius: 240px;
   padding: 85px $side-padding 0 $side-padding;
-  color: white;
+  p,
+  span {
+    color: white;
+  }
   .contact-container {
     height: 96px;
     display: flex;

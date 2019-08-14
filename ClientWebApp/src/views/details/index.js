@@ -68,7 +68,7 @@ export default class Details extends React.Component {
               <img src={`${IMAGES_URL}/`+this.state.auction.currentImage} alt="zdj zbiórki" />
             </div>
             <div className="description">
-              <h2>{this.state.auction.title}</h2>
+              <h3>{this.state.auction.title}</h3>
               <p>{this.state.auction.description}</p>
             </div>
           </div>
