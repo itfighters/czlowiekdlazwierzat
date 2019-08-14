@@ -54,10 +54,6 @@ export function editAuction(form) {
     formData.append(name, form[name]);
   }
 
-  // for (let i = 0; i < form.categories.length; i++) {
-  //   formData.append(`Categories[${i}]${form.categories[i]}`);
-  // }
-
   return fetch(url, {
     method: "put",
     headers: {

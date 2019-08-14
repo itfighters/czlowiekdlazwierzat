@@ -15,7 +15,7 @@ namespace DAL.Model
         [MaxLength(300)]
         public string Title { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(300)]
         public string ShortDescription { get; set; }
 
         [Required]

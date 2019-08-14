@@ -40,6 +40,7 @@ namespace CQRS.CommandHandler
             }
 
             auctionToUpdate.Title = request.Title;
+            auctionToUpdate.ShortDescription = request.ShortDescription;
             auctionToUpdate.Description = request.Description;
             auctionToUpdate.DotpayLink = request.DotpayLink;
             auctionToUpdate.SiepomagaLink = request.SiepomagaLink;

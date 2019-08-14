@@ -12,6 +12,7 @@ namespace CQRS.Mapper
         {
             Id = a.Id,
             Title = a.Title,
+            ShortDescription = a.ShortDescription,
             Description = a.Description,
             Account = a.Account,
             AddressFrom = a.AddressFrom,
@@ -35,6 +36,7 @@ namespace CQRS.Mapper
              var result = auction ?? new Auction();
 
              result.Title = command.Title;
+             result.ShortDescription = command.ShortDescription;
              result.Description = command.Description;
              result.Categories = command.Categories?.Select(x => new AuctionCategory() { CategoryId = x }).ToList();
              result.Account = command.Account;

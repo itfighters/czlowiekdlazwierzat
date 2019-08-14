@@ -29,6 +29,7 @@ class PostForm extends Component {
     } else {
       this.state.form = {
         title: "",
+        shortDescription: "",
         image: null,
         description: "",
         multichoiceCategories: [],
@@ -97,6 +98,7 @@ class PostForm extends Component {
   render() {
     const {
       title,
+      shortDescription,
       featured,
       image,
       description,
@@ -130,10 +132,19 @@ class PostForm extends Component {
           name="title"
           label="Tytuł"
           placeholder="Tytuł"
-          maxlength="300"
-          value={title}
+          maxLength="300"
+          value={title ? title : ''}
           onChange={this.onChange}
           required
+        />
+        <Form.Field
+          control={Input}
+          name="shortDescription"
+          label="Krótki opis"
+          placeholder="Krótki opis"
+          maxLength="300"
+          value={shortDescription}
+          onChange={this.onChange}
         />
         <Form.Field
           label="Wybierz zdjęcie"
@@ -160,7 +171,7 @@ class PostForm extends Component {
         <Form.Field
           control={TextArea}
           label="Opis"
-          maxlength={1500}
+          maxLength={1500}
           placeholder="Opis"
           name="description"
           value={description}
@@ -185,7 +196,7 @@ class PostForm extends Component {
           label="Link do siepomaga"
           placeholder="Link do siepomaga"
           name="siepomagaLink"
-          value={siepomagaLink}
+          value={siepomagaLink ? siepomagaLink : ''}
           onChange={this.onChange}
         />
         <Form.Field
