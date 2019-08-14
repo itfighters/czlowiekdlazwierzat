@@ -7,7 +7,8 @@ export default function Home() {
     <div className="home-page">
       <h1>Potrzeby</h1>
       <HomeTilesList />
-      <About/>
+      <About />
+
     </div>
   );
 }

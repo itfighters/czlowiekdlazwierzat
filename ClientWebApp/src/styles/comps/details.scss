@@ -6,12 +6,19 @@
     padding: 0 $side-padding;
     .wrap-tile {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-direction: column;
+
+      @media (min-width: 576px) {
+        flex-direction: column;
+      }
+  
+      @media (min-width: 768px) {
+        flex-direction: row;
+      }
       
       .img {
         flex-grow: 3;
-        flex-basis: 30%;
         @media only screen and (max-width: 550px) {
           flex-basis: 100%;
         }
@@ -24,11 +31,11 @@
         }
       }
       .description {
-        flex-grow: 4;
         line-height: 1.1;
         word-break: break-word;
         padding: 10px;
-
+        flex-grow: 4;
+        flex-shrink: 3;
         h2 {
           font-size: $fs-section-header;
           text-transform: uppercase;

@@ -93,15 +93,19 @@ h3 {
     }
 
     @media (min-width: 768px) {
-      padding: 0 25%;
+      padding: 0 15%;
     }
 
     @media (min-width: 992px) {
-      padding: 0 25%;
+      padding: 0 15%;
     }
 
     @media (min-width: 1200px) {
-      padding: 0 25%;
+      padding: 0 15%;
     }
   }
+}
+
+footer{
+  margin-top: 10px;
 }
