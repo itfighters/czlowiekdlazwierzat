@@ -12,7 +12,7 @@ export default class TilesListDetails extends Component {
         <div>
           <img src={imageSrc} alt="zdjecie-potrzeby" />
           <h2 className="title">{tile.title}</h2>
-          <p className="description">{tile.description}</p>
+          <p className="description">{tile.shortDescription || tile.description.substring(0,300)+'...'}</p>
         </div>
       </Link>
     );
