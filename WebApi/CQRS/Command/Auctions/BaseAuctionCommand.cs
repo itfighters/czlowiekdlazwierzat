@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace CQRS.Command.Auctions
         public string MultichoiceCategories { get; set; }
         public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
+
+        [BindProperty(Name = "checkboxKonto")]
         public bool Account { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }

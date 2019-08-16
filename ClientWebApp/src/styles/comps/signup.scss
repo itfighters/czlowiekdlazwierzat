@@ -1,7 +1,7 @@
 @import "../variables.scss";
 
 .signup-page {
-  padding: 0 $side-padding;
+  padding: 0 25px;
   .sign-to {
     h1 {
       margin-top: 58px;
@@ -13,6 +13,9 @@
       display: flex;
       flex-wrap: wrap;
       .description-part {
+        font-size: $fs-small;
+        color: $gray;
+        letter-spacing: 0.5px;
         flex-grow: 1;
         flex-basis: 50%;
         @media only screen and (max-width: 767px) {
@@ -218,10 +221,13 @@
           flex-basis: 100%;
         }
 
-        .title {
+        .title,
+        .info {
           color: white;
           font-size: $fs-small;
         }
+
+        
 
         form,
         section {
@@ -268,9 +274,8 @@
       }
     }
 
-    .resignations
-    {
-      .contact-container{
+    .resignations {
+      .contact-container {
         height: 200px;
       }
     }

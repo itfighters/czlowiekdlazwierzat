@@ -431,10 +431,9 @@ export default class SignUp extends Component {
                 </form>
               </div>
               <div className="contact-container">
-                <section>
                   <form onSubmit={this.pushNotification}>
-                    <p className="title">Zapisz się na push notification</p>
 
+                    <p className="info">Zapisz się, jeśli twoje urządzenie wspiera notyfikację mobilne</p>
                     <AcceptComponent
                       checked={this.state.acceptedPush}
                       onChange={this.acceptedChangePush}
@@ -448,7 +447,6 @@ export default class SignUp extends Component {
                       <span>Zapisz się</span>
                     </button>
                   </form>
-                </section>
               </div>
             </div>
           </section>
@@ -488,8 +486,7 @@ export default class SignUp extends Component {
                 <div className="contact-container">
                   <form onSubmit={this.unsubscribeTel}>
                     <p className="title">
-                      Podaj nam swój numer telefonu, aby otrzymywać
-                      powiadomienia sms{" "}
+                      Podaj nam swój numer telefonu, aby zrezygnować z powiadomień SMS{" "}
                     </p>
                     <input
                       type="tel"
@@ -510,15 +507,14 @@ export default class SignUp extends Component {
                 </div>
                 <div className="contact-container">
                   <form onSubmit={this.unsubscribePush}>
-                    <section>
-                      <p className="title">Wypisz się z notyfikacji 'push'</p>
+                      <p className="title">Wypisz się z notyfikacji mobilnych</p>
+                      <p className="info">Wypisz się, jeśli nie odpowiada Ci ta forma powiadomień</p>
                       <button
                         className="btn btn-primary btn-center-aligned"
                         type="submit"
                       >
                         <span>Wypisz się</span>
                       </button>
-                    </section>
                   </form>
                 </div>
               </div>
