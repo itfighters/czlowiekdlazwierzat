@@ -33,26 +33,9 @@ self.addEventListener("notificationclick", function(event) {
   console.log("notificationclick", event);
   event.notification.close();
 
-  event.waitUntil(
-    clients
-      .matchAll({
-        type: "window"
-      })
-      .then(windowClients => {
-        for (var i = 0; i < windowClients.length; i++) {
-          var client = windowClients[i];
-          if (client.url.indexOf(baseUrl) !== -1 && "focus" in client) {
-            var messageToClient = { auctionId: event.notification.tag };
-            client.postMessage(messageToClient);
-            return client.focus();
-          }
-        }
-
-        if (clients.openWindow) {
-          openNewWindow();
-        }
-      })
-  );
+  if (clients.openWindow) {
+    openNewWindow();
+  }
 
   function openNewWindow() {
     var pageUrl = `${baseUrl}/${event.notificationData.tag}`;
