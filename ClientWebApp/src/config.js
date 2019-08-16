@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:3000/api/";
+export const API_URL = "http://pomagalnia.pl/api/";
 export const IMAGES_URL = "https://pomagalnia.pl/images";
 
 export const PlaceholderImg =
