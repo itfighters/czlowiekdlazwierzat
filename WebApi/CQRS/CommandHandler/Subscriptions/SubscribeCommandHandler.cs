@@ -29,7 +29,17 @@ namespace CQRS.CommandHandler.Subscriptions
         protected override async Task Handle(SubscribeCommand request, CancellationToken cancellationToken)
         {
             if (dbContext.Subscriptions.Any(x => x.Contact == request.Value && x.Subscribed && x.Confirmed))
-                throw new BusinessLogicException($"{request.Value} already subscribed");
+            {
+                if (request.SubscriptionType == SubscriptionType.Push)
+                {
+                    throw new BusinessLogicException($"Jesteś już zapisany na push powiadomienia");
+                }
+                else
+                {
+                    throw new BusinessLogicException($"{request.Value} jest już zapisany na powiadomienia");
+                }
+
+            }
 
             var pendingConfirmation =
                 dbContext.Subscriptions.FirstOrDefault(x =>

@@ -15,12 +15,7 @@ export function subscribe(value, type, categories) {
       subscriptionType: type,
       categories: categories
     })
-  }).then(response => {
-    if (response.status !== 200) {
-      return Promise.reject(response.status);
-    }
-    return Promise.resolve(response);
-  });
+  }).then(handleResponse);
 }
 
 export function confirmPhoneNumber(code, tel) {
@@ -33,12 +28,7 @@ export function confirmPhoneNumber(code, tel) {
       token: code,
       contact: tel
     })
-  }).then(response => {
-    if (response.status !== 200) {
-      return Promise.reject(response.status);
-    }
-    return Promise.resolve(response);
-  });
+  }).then(handleResponse);
 }
 
 export function unsubscribe(tel) {
@@ -50,10 +40,14 @@ export function unsubscribe(tel) {
     body: JSON.stringify({
       contact: tel
     })
-  }).then(response => {
-    if (response.status !== 200) {
-      return Promise.reject(response.status);
-    }
-    return Promise.resolve(response);
-  });
+  }).then(handleResponse);
+}
+
+function handleResponse(response) {
+  if (response.status !== 200) {
+    return response.json().then(msg => {
+      return Promise.reject(msg);
+    });
+  }
+  return Promise.resolve(response);
 }

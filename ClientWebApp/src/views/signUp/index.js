@@ -171,8 +171,14 @@ export default class SignUp extends Component {
   };
 
   handleError = err => {
+    if (err && Array.isArray(err.Value)) {
+      err.Value.forEach(msg => {
+        this.showToast(`Wystąpił błąd: ${msg}`, "error");
+      });
+    } else {
+      this.showToast(`Wystąpił błąd: ${err.Message || err}`, "error");
+    }
     console.error(err);
-    this.showToast(`Wystąpił błąd: ${err.Message || err}`, "error");
   };
 
   unsubscribeTel = e => {
