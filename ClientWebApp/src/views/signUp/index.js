@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
+import ReCAPTCHA from "react-google-recaptcha";
+
 import {
   subscribe,
   confirmPhoneNumber,
@@ -14,6 +16,8 @@ import Popup from "../../components/popup";
 import { ContentTypes, Terms, Confirm } from "../../components/popup/content";
 import Checkbox from "../../components/checkbox/checkbox";
 import { toast } from "react-toastify";
+import AcceptComponent from "../../components/accept-component";
+import { sitekey } from "../../config";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -22,12 +26,15 @@ export default class SignUp extends Component {
       checked: [],
       acceptedMail: false,
       acceptedSms: false,
+      acceptedPush: false,
       email: "",
       tel: "",
       unsubscribeTel: "",
       unsubscribeEmail: "",
       visiblePopup: false,
-      categories: []
+      categories: [],
+      captchaMail: null,
+      captchaSms: null
     };
   }
 
@@ -61,6 +68,10 @@ export default class SignUp extends Component {
 
   acceptedChangeSms = () => {
     this.setState({ acceptedSms: !this.state.acceptedSms });
+  };
+
+  acceptedChangePush = () => {
+    this.setState({ acceptedPush: !this.state.acceptedPush });
   };
 
   handleChange = event => {
@@ -137,6 +148,15 @@ export default class SignUp extends Component {
       );
       return;
     }
+
+    if (!this.state.captchaMail) {
+      this.showToast(
+        "Proszę zaznacz nie jestem robotem w sekcji email",
+        "warning"
+      );
+      return;
+    }
+
     var mail = this.state.email;
 
     subscribe(mail, subscriptionType.Email, categories)
@@ -159,6 +179,15 @@ export default class SignUp extends Component {
       );
       return;
     }
+
+    if (!this.state.captchaSms) {
+      this.showToast(
+        "Proszę zaznacz nie jestem robotem w sekcji telefon",
+        "warning"
+      );
+      return;
+    }
+
     var tel = this.state.tel;
 
     subscribe(tel, subscriptionType.Sms, categories)
@@ -216,9 +245,7 @@ export default class SignUp extends Component {
             .then(() => {
               this.showToast("Zostałeś wypisany z powiadomień", "success");
             })
-            .catch(err => {
-              console.log(err);
-            });
+            .catch(this.handleError);
         });
       })
       .catch(err => {
@@ -344,20 +371,20 @@ export default class SignUp extends Component {
                     value={this.state.email}
                     required
                   />
-                  <div className="accept-line">
-                    <Checkbox
-                      text={"Akceptuj "}
-                      checked={this.state.acceptedMail}
-                      onChange={this.acceptedChangeMail}
-                      required
-                    />
-                    <span
-                      className="terms"
-                      onClick={() => this.showPopup(ContentTypes.Terms)}
-                    >
-                      regulamin
-                    </span>
-                  </div>
+
+                  <ReCAPTCHA
+                    sitekey={sitekey}
+                    onChange={value => this.setState({ captchaMail: value })}
+                    onExpired={value => this.setState({ captchaMail: null })}
+                    theme="dark"
+                  />
+
+                  <AcceptComponent
+                    checked={this.state.acceptedMail}
+                    onChange={this.acceptedChangeMail}
+                    onClick={() => this.showPopup(ContentTypes.Terms)}
+                  />
+
                   <button
                     className="btn btn-primary btn-center-aligned"
                     type="submit"
@@ -381,20 +408,20 @@ export default class SignUp extends Component {
                     value={this.state.tel}
                     required
                   />
-                  <div className="accept-line">
-                    <Checkbox
-                      text={"Akceptuj "}
-                      checked={this.state.acceptedSms}
-                      onChange={this.acceptedChangeSms}
-                      required
-                    />
-                    <span
-                      className="terms"
-                      onClick={() => this.showPopup(ContentTypes.Terms)}
-                    >
-                      regulamin
-                    </span>
-                  </div>
+
+                  <ReCAPTCHA
+                    sitekey={sitekey}
+                    theme="dark"
+                    onChange={value => this.setState({ captchaSms: value })}
+                    onExpired={value => this.setState({ captchaSms: null })}
+                  />
+
+                  <AcceptComponent
+                    checked={this.state.acceptedSms}
+                    onChange={this.acceptedChangeSms}
+                    onClick={() => this.showPopup(ContentTypes.Terms)}
+                  />
+
                   <button
                     className="btn btn-primary btn-center-aligned"
                     type="submit"
@@ -407,6 +434,13 @@ export default class SignUp extends Component {
                 <section>
                   <form onSubmit={this.pushNotification}>
                     <p className="title">Zapisz się na push notification</p>
+
+                    <AcceptComponent
+                      checked={this.state.acceptedPush}
+                      onChange={this.acceptedChangePush}
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    />
+
                     <button
                       className="btn btn-primary btn-center-aligned"
                       type="submit"
