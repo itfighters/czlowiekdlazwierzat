@@ -15,14 +15,15 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 .icon {
@@ -86,7 +87,7 @@ h3 {
 .about-container {
   padding: 100px 10px;
   text-align: center;
- 
+
   h1 {
     margin-bottom: 10px;
   }
@@ -110,6 +111,11 @@ h3 {
   }
 }
 
-footer{
+footer {
   margin-top: 10px;
+}
+
+.slick-arrow.slick-next,
+.slick-arrow.slick-prev {
+  display: none !important;
 }
