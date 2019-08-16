@@ -6,3 +6,7 @@ export const initializeFirebase = () => {
     messagingSenderId: "228431140721"
   });
 };
+
+navigator.serviceWorker.addEventListener("message", event => {
+  console.log("message", event);
+});
