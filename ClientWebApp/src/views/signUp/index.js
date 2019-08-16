@@ -256,7 +256,8 @@ export default class SignUp extends Component {
       }
       return token;
     } catch (error) {
-      this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
+      this.showToast(JSON.stringify(error), "warning");
+      // this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
     }
   };
 
