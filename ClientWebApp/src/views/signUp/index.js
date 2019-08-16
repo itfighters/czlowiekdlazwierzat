@@ -285,7 +285,7 @@ export default class SignUp extends Component {
     } catch (error) {
       if (error.code === "messaging/unsupported-browser") {
         this.showToast(
-          "Twoja przeglądarka nie wspier push powiadomień",
+          "Twoja przeglądarka nie wspiera push powiadomień",
           "warning"
         );
       } else {
