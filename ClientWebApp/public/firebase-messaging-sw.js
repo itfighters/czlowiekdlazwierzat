@@ -54,7 +54,7 @@ self.addEventListener("notificationclick", function(event) {
   );
 
   function openNewWindow() {
-    var pageUrl = `/${event.notificationData.tag}`;
+    var pageUrl = `https://pomagalnia.pl/${event.notificationData.tag}`;
     return clients.openWindow(pageUrl);
   }
 });
