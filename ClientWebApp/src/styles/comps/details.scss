@@ -3,7 +3,7 @@
 .article-details {
   margin-top: 50px;
   .tile-details {
-    padding: 0 $side-padding;
+    padding: 0 25px;
     .wrap-tile {
       display: flex;
       justify-content: center;
@@ -62,16 +62,22 @@
     }
     .buttons-tile {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       margin-top: 50px;
       border-bottom: 1px solid $secondary-color;
       padding-bottom: 60px;
+      @media (min-width: 576px) {
+        justify-content: flex-end;
+      }
       .button-tile-item {
-        width: 90px;
+        text-align: center;
         margin: 0 5px;
         img {
-          width: 100%;
-          height: 90px;
+          border-radius: 50px;
+          object-fit: cover;
+          
+          width: 75px;
+          height: 75px;
         }
         .txt {
           text-transform: uppercase;

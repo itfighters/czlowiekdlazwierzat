@@ -43,9 +43,7 @@ h1 {
 }
 
 .home-page {
-  background-image: url(/assets/paw-print-foot-print.svg);
-  background-repeat: no-repeat;
-  background-position: left bottom -50px;
+ 
   padding: 60px $side-padding 0 $side-padding;
   h1,
   h2 {
@@ -119,4 +117,11 @@ footer {
 .slick-arrow.slick-next,
 .slick-arrow.slick-prev {
   display: none !important;
+}
+
+
+.tiles-container{
+  background-image: url(/assets/paw-print-foot-print.svg);
+  background-repeat: no-repeat;
+  background-position: right bottom;
 }

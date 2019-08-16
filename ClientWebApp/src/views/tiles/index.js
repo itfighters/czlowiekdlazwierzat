@@ -18,7 +18,7 @@ export default class Tiles extends Component {
   render() {
     const { selectedCategoryId } = this.state;
     return (
-      <div>
+      <div className="tiles-container">
         <TilesCategories
           setCategory={this.setCategory}
           selectedCategoryId={selectedCategoryId}
