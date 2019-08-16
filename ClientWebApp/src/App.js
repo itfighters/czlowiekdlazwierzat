@@ -29,6 +29,7 @@ export default class App extends React.Component {
         <Router>
           <Header />
           <Route exact path="/" component={Home} />
+          <Route path="/confirm" component={Home} />
           <Route path="/notyfikacje" component={Notifications} />
           <Route path="/potrzeba/:id" component={Details} />
           <Route path="/subskrypcje" component={SignUp} />
