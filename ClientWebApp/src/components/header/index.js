@@ -8,7 +8,7 @@ const Header = ({ history }) => {
   );
 
   history.listen(location => {
-    updateVisibilityButtons(location.pathname.indexOf("details") !== -1);
+    updateVisibilityButtons(location.pathname.indexOf("potrzeba") !== -1);
   });
 
   return (
@@ -21,17 +21,17 @@ const Header = ({ history }) => {
           {showButtons && (
             <>
               <li className="back-button">
-                <NavLink to="/tiles">
+                <NavLink to="/potrzeby">
                   <img alt="ikona nagłówka" src="/assets/arrow-back.svg" />
                 </NavLink>
               </li>
             </>
           )}
           <li>
-            <NavLink className="btn btn-primary" to="/tiles">Lista potrzeb</NavLink>
+            <NavLink className="btn btn-primary" to="/potrzeby">Lista potrzeb</NavLink>
           </li>
           <li>
-            <NavLink className="btn btn-primary" to="/signup">
+            <NavLink className="btn btn-primary" to="/subskrypcje">
               Powiadomienia
             </NavLink>
           </li>

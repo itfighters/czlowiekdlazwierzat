@@ -29,10 +29,10 @@ export default class App extends React.Component {
         <Router>
           <Header />
           <Route exact path="/" component={Home} />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/details/:id" component={Details} />
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/tiles" component={Tiles} />
+          <Route path="/notyfikacje" component={Notifications} />
+          <Route path="/potrzeba/:id" component={Details} />
+          <Route path="/subskrypcje" component={SignUp} />
+          <Route path="/potrzeby" component={Tiles} />
         </Router>
         <Footer />
         <ToastContainer />

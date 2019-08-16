@@ -5,7 +5,7 @@ import { PlaceholderImg, IMAGES_URL } from "../../config";
 export default class CollectionTile extends Component {
   render() {
     let tile = this.props.tile;
-    let link = "/details/" + tile.id;
+    let link = "/potrzeba/" + tile.id;
     let imageSrc = tile.currentImage ? `${IMAGES_URL}/`+tile.currentImage : PlaceholderImg;
 
     return (
