@@ -12,21 +12,31 @@ import Tiles from "./views/tiles";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-function App() {
-  return (
-    <div>
-      <Router>
-        <Header />
-        <Route exact path="/" component={Home} />
-        <Route path="/notifications" component={Notifications} />
-        <Route path="/details/:id" component={Details} />
-        <Route path="/signUp" component={SignUp} />
-        <Route path="/tiles" component={Tiles} />
-      </Router>
-      <Footer />
-      <ToastContainer />
-    </div>
-  );
-}
+export default class App extends React.Component {
+  state = { hasError: false };
 
-export default App;
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div>Oups...! Wystąpił problem...</div>;
+    }
+
+    return (
+      <div>
+        <Router>
+          <Header />
+          <Route exact path="/" component={Home} />
+          <Route path="/notifications" component={Notifications} />
+          <Route path="/details/:id" component={Details} />
+          <Route path="/signUp" component={SignUp} />
+          <Route path="/tiles" component={Tiles} />
+        </Router>
+        <Footer />
+        <ToastContainer />
+      </div>
+    );
+  }
+}
