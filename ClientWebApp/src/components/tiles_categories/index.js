@@ -21,7 +21,9 @@ class TilesCategories extends Component {
   componentDidMount() {
     GetAllCategories()
       .then(response => {
-        let categories = response;
+        let categories = [{
+          name:"WSZYSTKIE KATEGORIE"
+        },...response];
         this.setState({
           categoryData: categories,
           error: false,

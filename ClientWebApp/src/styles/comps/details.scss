@@ -34,7 +34,7 @@
       .description {
         line-height: 1.1;
         word-break: break-word;
-        padding: 10px;
+        padding: 0 35px 0 35px;
         flex-grow: 4;
         flex-shrink: 3;
 
@@ -121,10 +121,6 @@
       }
       .dotpay {
         background: $primary-color url(/assets/dotpay.png) no-repeat center;
-        background-size: 60%;
-      }
-      .paypal {
-        background: $primary-color url(/assets/paypal.png) no-repeat center;
         background-size: 60%;
       }
     }
