@@ -15,15 +15,14 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .icon {
@@ -43,10 +42,8 @@ h1 {
 }
 
 .home-page {
- 
   padding: 60px $side-padding 0 $side-padding;
-  h1,
-  h2 {
+  h1 {
     font-weight: bold;
     font-size: $fs-extra-large;
     color: $gray;
@@ -119,9 +116,12 @@ footer {
   display: none !important;
 }
 
-
-.tiles-container{
+.tiles-container {
   background-image: url(/assets/paw-print-foot-print.svg);
   background-repeat: no-repeat;
   background-position: right bottom;
+}
+
+p {
+  line-height: 20px;
 }

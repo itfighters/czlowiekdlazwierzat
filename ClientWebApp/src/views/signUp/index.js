@@ -453,8 +453,7 @@ export default class SignUp extends Component {
                 <div className="contact-container">
                   <form onSubmit={this.unsubscribeTel}>
                     <p className="title">
-                      Podaj nam swój numer telefonu, aby otrzymywać
-                      powiadomienia sms{" "}
+                      Podaj nam swój numer telefonu, aby zrezygnować z powiadomień SMS{" "}
                     </p>
                     <input
                       type="tel"
