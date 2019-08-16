@@ -9,6 +9,7 @@ namespace Infrastructure
         public string ServiceShortUrl { get; set; }
         public int SleepPeriod { get; set; }
         public int PackageSize { get; set; }
+        public string ServiceFullUrl { get; set; }
         //public SmsNotificationsConfig SmsNotificationsConfig { get; set; }
     }
 

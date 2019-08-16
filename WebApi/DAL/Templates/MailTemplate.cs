@@ -10,14 +10,14 @@ namespace DAL.Templates
 {
     public static class MailTemplate
     {
-        public static string SubscriptionTemplate(string token)
+        public static string SubscriptionTemplate(string confirmationUrl)
         {
             using (var fileReader =
                 new StreamReader(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Templates","Resources", "Notification", "notification.html")))
             {
                 var templateContent = fileReader.ReadToEnd();
                 templateContent = templateContent.Replace("$PLACEHOLDER_TITLE", "Potwierdzenie zapisu na powiadomienia");
-                templateContent = templateContent.Replace("$PLACEHOLDER_DESC", $"W celu zapisania się na powiadomienia mailowe wpisz token {token}.");
+                templateContent = templateContent.Replace("$PLACEHOLDER_DESC", $"W celu zapisania się na powiadomienia mailowe wpisz wejdź pod adres: <a href='{confirmationUrl}'>{confirmationUrl}</a>.");
                 return templateContent;
             }
         }

@@ -6,7 +6,9 @@ using NotificationJobsLibrary.Services.Abstract;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NotificationJobsLibrary.Models;
 
 namespace CQRS.EventHandler
@@ -16,12 +18,14 @@ namespace CQRS.EventHandler
         private readonly ISMSService smsService;
         private readonly IEmailService emailService;
         private readonly ILogger<SubscribtionChangedEventHandler> logger;
+        private readonly IOptions<JobsConfig> jobsOptions;
 
-        public SubscribtionChangedEventHandler(ISMSService smsService, IEmailService emailService, ILogger<SubscribtionChangedEventHandler> logger)
+        public SubscribtionChangedEventHandler(ISMSService smsService, IOptions<JobsConfig> jobsOptions, IEmailService emailService, ILogger<SubscribtionChangedEventHandler> logger)
         {
             this.smsService = smsService;
             this.emailService = emailService;
             this.logger = logger;
+            this.jobsOptions = jobsOptions;
         }
 
         public async Task Handle(SubscribtionChangedEvent notification, CancellationToken cancellationToken)
@@ -29,7 +33,9 @@ namespace CQRS.EventHandler
             var result = new SendNotificationResult();
             if (notification.SubscriptionType == SubscriptionType.Email)
             {
-                var message = MailTemplate.SubscriptionTemplate(notification.Token);
+                var link =
+                    $"{jobsOptions.Value.ServiceFullUrl}/confirm?token={notification.Token}&mail={notification.Contact}";
+                var message = MailTemplate.SubscriptionTemplate(link);
                 result = await emailService.SendMessage(notification.Contact, "Potwierdzenie zapisu na powiadomienia", message);
             }
             else if (notification.SubscriptionType == SubscriptionType.Sms)
