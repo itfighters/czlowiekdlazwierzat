@@ -283,8 +283,14 @@ export default class SignUp extends Component {
       }
       return token;
     } catch (error) {
-      this.showToast(JSON.stringify(error), "warning");
-      // this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
+      if (error.code == "messaging/unsupported-browser") {
+        this.showToast(
+          "Twoja przeglądarka nie wspier push powiadomień",
+          "warning"
+        );
+      } else {
+        this.showToast("Nie wyraziłeś zgodę na powiadomienia", "warning");
+      }
     }
   };
 
