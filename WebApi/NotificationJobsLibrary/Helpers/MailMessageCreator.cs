@@ -20,13 +20,13 @@ namespace NotificationJobsLibrary
             };
 
             LinkedResource logo = new LinkedResource(Path.Combine(imagesPath, "logo.png"));
-            logo.ContentId = "logoId";
+            logo.ContentId = "logo";
             logo.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
-            LinkedResource thumbnail = new LinkedResource(Path.Combine(imagesPath, "thumbnail.png"));
+            LinkedResource thumbnail = new LinkedResource(Path.Combine(imagesPath, "placeholder.png"));
             thumbnail.ContentId = "thumbnail";
             thumbnail.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
-            LinkedResource background = new LinkedResource(Path.Combine(imagesPath, "background.png"));
-            background.ContentId = "background";
+            LinkedResource background = new LinkedResource(Path.Combine(imagesPath, "footer.png"));
+            background.ContentId = "footer";
             background.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
 
             AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");

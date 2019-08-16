@@ -29,7 +29,7 @@ namespace CQRS.EventHandler
             var result = new SendNotificationResult();
             if (notification.SubscriptionType == SubscriptionType.Email)
             {
-                var message = MailTemplate.NotificationTemplate("Zbiórka dla Reksia", "LOREM");
+                var message = MailTemplate.SubscriptionTemplate(notification.Token);
                 result = await emailService.SendMessage(notification.Contact, "Potwierdzenie zapisu na powiadomienia", message);
             }
             else if (notification.SubscriptionType == SubscriptionType.Sms)
