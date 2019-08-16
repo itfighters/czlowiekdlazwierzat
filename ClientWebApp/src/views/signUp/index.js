@@ -3,7 +3,8 @@ import * as firebase from "firebase/app";
 import "firebase/messaging";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import {
+import
+{
   subscribe,
   confirmPhoneNumber,
   subscriptionType,
@@ -80,11 +81,13 @@ export default class SignUp extends Component
     this.setState({ acceptedSms: !this.state.acceptedSms });
   };
 
-  acceptedChangePush = () => {
+  acceptedChangePush = () =>
+  {
     this.setState({ acceptedPush: !this.state.acceptedPush });
   };
 
-  handleChange = event => {
+  handleChange = event =>
+  {
     var categoryId = Number.parseInt(event.target.value);
     var checkedArray = this.state.checked;
     if (checkedArray.includes(categoryId)) {
@@ -425,19 +428,20 @@ export default class SignUp extends Component
                     onExpired={value => this.setState({ captchaMail: null })}
                     theme="dark"
                   />
+                  <div className="confirm-row">
+                    <AcceptComponent
+                      checked={this.state.acceptedMail}
+                      onChange={this.acceptedChangeMail}
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    />
 
-                  <AcceptComponent
-                    checked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail}
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  />
-
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Zapisz się</span>
-                  </button>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Zapisz się</span>
+                    </button>
+                  </div>
                 </form>
               </div>
               <div className="contact-container">
@@ -481,6 +485,9 @@ export default class SignUp extends Component
 
               <div className="contact-container">
                 <form onSubmit={this.pushNotification}>
+                  <p className="title">
+                    Zapisz się na notyfikację mobilne{" "}
+                  </p>
                   <p className="info">
                     Zapisz się, jeśli twoje urządzenie wspiera notyfikację
                     mobilne
