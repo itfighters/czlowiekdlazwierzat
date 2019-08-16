@@ -30,11 +30,10 @@ namespace CQRS.CommandHandler.Subscriptions
                 .FirstOrDefault(x => x.Contact == request.Contact);
 
             if (subscription == null)
-                throw new Exception("Subscription doesn't exist");
+                throw new Exception("Nie jesteś zapisany do powiadomień");
             else
             {
-                subscription.Subscribed = false;
-                subscription.Confirmed = true;
+                dbContext.Remove(subscription);
                 await dbContext.SaveChangesAsync();
             }
         }
