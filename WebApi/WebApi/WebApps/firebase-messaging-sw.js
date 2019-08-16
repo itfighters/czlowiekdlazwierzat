@@ -9,6 +9,8 @@ const messaging = firebase.messaging();
 const baseUrl = "https://pomagalnia.pl";
 
 messaging.setBackgroundMessageHandler(function(payload) {
+  console.log("setBackgroundMessageHandler", payload);
+
   const notificationData = payload.data;
   const notificationTitle = notificationData.title;
   const auctionId = notificationData.auctionId;
@@ -28,6 +30,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
 });
 
 self.addEventListener("notificationclick", function(event) {
+  console.log("notificationclick", event);
   event.notification.close();
 
   event.waitUntil(
