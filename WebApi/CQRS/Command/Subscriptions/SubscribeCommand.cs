@@ -20,12 +20,12 @@ namespace CQRS.Command.Subscriptions
             RuleFor(x => x.SubscriptionType).NotEmpty().IsInEnum();
 
             RuleFor(x => x.Value).EmailAddress()
-            .When(x => x.SubscriptionType == SubscriptionType.Email);
+            .When(x => x.SubscriptionType == SubscriptionType.Email).WithMessage("Adres email jest niepoprawny");
 
             RuleFor(x => x.Value).NotEmpty().Must(arg =>
             {
                 return IsValidPhone(arg);
-            }).When(x => x.SubscriptionType == SubscriptionType.Sms);
+            }).When(x => x.SubscriptionType == SubscriptionType.Sms).WithMessage("Numer telefonu jest niepoprawny");
         }
 
         private bool IsValidPhone(string phoneNumber)

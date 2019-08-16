@@ -38,7 +38,7 @@ export default class Partners extends Component {
       centerPadding: "200px",
       responsive: [
         {
-          breakpoint: 767,
+          breakpoint: 925,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
