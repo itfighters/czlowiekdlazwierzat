@@ -36,7 +36,6 @@ export default class Partners extends Component {
       slidesToScroll: 1,
       pauseOnHover: true,
       centerPadding: "200px",
-      swipe: false,
       responsive: [
         {
           breakpoint: 767,
@@ -48,8 +47,7 @@ export default class Partners extends Component {
             autoplay: true,
             speed: 2000,
             autoplaySpeed: 3000,
-            pauseOnHover: true,
-            swipe: false
+            pauseOnHover: true
           }
         }
       ]
