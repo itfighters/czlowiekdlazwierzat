@@ -15,13 +15,16 @@ class HomeTilesList extends Component {
   }
 
   componentDidMount() {
+    
+    let featuredCount = this.props.featuredCount || 6;
+
     fetchFeaturedTiles()
       .then(response => {
         let tiles = response
           .sort(function(a, b) {
             return new Date(a.dateTo) - new Date(b.dateTo);
           })
-          .slice(0, 6);
+          .slice(0, featuredCount);
         this.setState({
           tiles: tiles,
           error: false,

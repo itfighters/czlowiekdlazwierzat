@@ -6,6 +6,7 @@ firebase.initializeApp({
   messagingSenderId: "228431140721"
 });
 const messaging = firebase.messaging();
+const baseUrl = "https://pomagalnia.pl";
 
 messaging.setBackgroundMessageHandler(function(payload) {
   const notificationData = payload.data;
@@ -37,10 +38,7 @@ self.addEventListener("notificationclick", function(event) {
       .then(windowClients => {
         for (var i = 0; i < windowClients.length; i++) {
           var client = windowClients[i];
-          if (
-            client.url.indexOf(self.registration.scope) !== -1 &&
-            "focus" in client
-          ) {
+          if (client.url.indexOf(baseUrl) !== -1 && "focus" in client) {
             var messageToClient = { auctionId: event.notification.tag };
             client.postMessage(messageToClient);
             return client.focus();
@@ -54,7 +52,7 @@ self.addEventListener("notificationclick", function(event) {
   );
 
   function openNewWindow() {
-    var pageUrl = `/${event.notificationData.tag}`;
+    var pageUrl = `${baseUrl}/${event.notificationData.tag}`;
     return clients.openWindow(pageUrl);
   }
 });

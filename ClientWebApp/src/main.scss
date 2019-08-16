@@ -43,6 +43,9 @@ h1 {
 
 .home-page {
   padding: 60px $side-padding 0 $side-padding;
+  background-image: url(/assets/paw-print-foot-print.svg);
+  background-repeat: no-repeat;
+  background-position: right bottom;
   h1 {
     font-weight: bold;
     font-size: $fs-extra-large;
