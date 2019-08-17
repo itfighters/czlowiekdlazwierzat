@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUp from "./views/signUp";
 
 import Home from "./views/home";
@@ -29,13 +29,15 @@ export default class App extends React.Component {
       <div>
         <Router>
           <Header />
-          <Route exact path="/" component={Home} />
-          <Route path="/confirm" component={Home} />
-          <Route path="/notyfikacje" component={Notifications} />
-          <Route path="/potrzeba/:id" component={Details} />
-          <Route path="/subskrypcje" component={SignUp} />
-          <Route path="/potrzeby" component={Tiles} />
-          <Route component={NotFound} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/confirm" component={Home} />
+            <Route path="/notyfikacje" component={Notifications} />
+            <Route path="/potrzeba/:id" component={Details} />
+            <Route path="/subskrypcje" component={SignUp} />
+            <Route path="/potrzeby" component={Tiles} />
+            <Route component={NotFound} />
+          </Switch>
         </Router>
         <Footer />
         <ToastContainer />
