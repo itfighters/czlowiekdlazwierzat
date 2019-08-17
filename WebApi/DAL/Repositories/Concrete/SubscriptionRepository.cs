@@ -38,7 +38,7 @@ namespace DAL.Repositories.Concrete
                 .Where(x => 
                 x.SubscriptionType == type
                 && x.Categories.Select(y => y.CategoryId).Intersect(auctionCategories).Any()
-                && (x.Subscribed && x.Confirmed) || (!x.Subscribed && x.Confirmed));
+                && (x.Subscribed && x.Confirmed));
         }
     }
 }

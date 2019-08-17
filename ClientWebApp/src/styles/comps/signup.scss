@@ -207,11 +207,16 @@
         }
       }
     }
+    .confirm-container{
+      display: flex;
+      flex-direction: column;   
+    }
 
     .content-notifications {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+     
       .contact-container {
         margin: 5px 5px;
         height: 250px;
