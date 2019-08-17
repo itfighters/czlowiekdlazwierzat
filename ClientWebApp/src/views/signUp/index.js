@@ -150,13 +150,13 @@ export default class SignUp extends Component {
       return;
     }
 
-    if (!this.state.captchaMail) {
-      this.showToast(
-        "Proszę zaznacz nie jestem robotem w sekcji email",
-        "warning"
-      );
-      return;
-    }
+    // if (!this.state.captchaMail) {
+    //   this.showToast(
+    //     "Proszę zaznacz nie jestem robotem w sekcji email",
+    //     "warning"
+    //   );
+    //   return;
+    // }
 
     var mail = this.state.email;
 
@@ -181,13 +181,13 @@ export default class SignUp extends Component {
       return;
     }
 
-    if (!this.state.captchaSms) {
-      this.showToast(
-        "Proszę zaznacz nie jestem robotem w sekcji telefon",
-        "warning"
-      );
-      return;
-    }
+    // if (!this.state.captchaSms) {
+    //   this.showToast(
+    //     "Proszę zaznacz nie jestem robotem w sekcji telefon",
+    //     "warning"
+    //   );
+    //   return;
+    // }
 
     var tel = this.state.tel;
 
@@ -379,25 +379,25 @@ export default class SignUp extends Component {
                     required
                   />
 
-                  <ReCAPTCHA
+                  {/* <ReCAPTCHA
                     sitekey={sitekey}
                     onChange={value => this.setState({ captchaMail: value })}
                     onExpired={value => this.setState({ captchaMail: null })}
                     theme="dark"
+                  /> */}
+                  <div className="confirm-container">
+                  <AcceptComponent
+                    checked={this.state.acceptedMail}
+                    onChange={this.acceptedChangeMail}
+                    onClick={() => this.showPopup(ContentTypes.Terms)}
                   />
-                  <div className="confirm-row">
-                    <AcceptComponent
-                      checked={this.state.acceptedMail}
-                      onChange={this.acceptedChangeMail}
-                      onClick={() => this.showPopup(ContentTypes.Terms)}
-                    />
 
-                    <button
-                      className="btn btn-primary btn-center-aligned"
-                      type="submit"
-                    >
-                      <span>Zapisz się</span>
-                    </button>
+                  <button
+                    className="btn btn-primary btn-center-aligned"
+                    type="submit"
+                  >
+                    <span>Zapisz się</span>
+                  </button>
                   </div>
                 </form>
               </div>
@@ -417,48 +417,50 @@ export default class SignUp extends Component {
                     required
                   />
 
-                  <ReCAPTCHA
+                  {/* <ReCAPTCHA
                     sitekey={sitekey}
                     theme="dark"
                     onChange={value => this.setState({ captchaSms: value })}
                     onExpired={value => this.setState({ captchaSms: null })}
-                  />
+                  /> */}
 
-                  <AcceptComponent
-                    checked={this.state.acceptedSms}
-                    onChange={this.acceptedChangeSms}
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  />
+                  <div className="confirm-container">
+                    <AcceptComponent
+                      checked={this.state.acceptedSms}
+                      onChange={this.acceptedChangeSms}
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    />
 
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Zapisz się</span>
-                  </button>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Zapisz się</span>
+                    </button>
+                  </div>
+
                 </form>
               </div>
 
               <div className="contact-container">
                 <form onSubmit={this.pushNotification}>
-                  <p className="title">Zapisz się na notyfikację mobilne </p>
-                  <p className="info">
-                    Zapisz się, jeśli twoje urządzenie wspiera notyfikację
-                    mobilne
+                  <p className="title">
+                    Zapisz się na notyfikację mobilne{" "}
                   </p>
+                  <div className="confirm-container">
+                    <AcceptComponent
+                      checked={this.state.acceptedPush}
+                      onChange={this.acceptedChangePush}
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    />
 
-                  <AcceptComponent
-                    checked={this.state.acceptedPush}
-                    onChange={this.acceptedChangePush}
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  />
-
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Zapisz się</span>
-                  </button>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Zapisz się</span>
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
