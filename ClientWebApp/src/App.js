@@ -8,6 +8,7 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import Details from "./views/details";
 import Tiles from "./views/tiles";
+import NotFound from "./views/notFound";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -34,6 +35,7 @@ export default class App extends React.Component {
           <Route path="/potrzeba/:id" component={Details} />
           <Route path="/subskrypcje" component={SignUp} />
           <Route path="/potrzeby" component={Tiles} />
+          <Route component={NotFound} />
         </Router>
         <Footer />
         <ToastContainer />
