@@ -12,7 +12,7 @@ export default class Home extends React.Component {
     const values = queryString.parse(this.props.location.search);
 
     if (values && values.token && values.mail) {
-      confirmPhoneNumber(values.token, values.contact)
+      confirmPhoneNumber(values.token, values.mail)
         .then(resp => {
           toast("Potwierdziłes adres email", { type: "success" });
           this.props.history.replace("/");
