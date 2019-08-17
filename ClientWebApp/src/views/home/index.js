@@ -11,7 +11,7 @@ export default class Home extends React.Component {
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
 
-    if (values && values.token && values.contact) {
+    if (values && values.token && values.mail) {
       confirmPhoneNumber(values.token, values.contact)
         .then(resp => {
           toast("Potwierdziłes adres email", { type: "success" });
