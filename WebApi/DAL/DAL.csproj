@@ -38,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\Resources\button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Resources\footer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
