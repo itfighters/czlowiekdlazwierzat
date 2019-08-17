@@ -26,12 +26,7 @@ namespace NotificationJobsLibrary.Services.Concrete
                 var message = new Message
                 {
                     RegistrationIds = new List<string> { registrationId },
-                    Notification = new Notification
-                    {
-                        Title = "Nowa potrzeba",
-                        Body = "Cześć, fundacja Człowiek dla zwierząt ma nową potrzebę. Kliknij w dymek aby poznać szczegóły.",
-                    },
-                    Data = new { auctionId, title = "Nowa potrzeba" }
+                    Data = new { auctionId, title = "Nowa potrzeba", message = "Cześć, fundacja Człowiek dla zwierząt ma nową potrzebę. Kliknij w dymek aby poznać szczegóły." }
                 };
                 var result = await sender.SendAsync(message);
                 return new SendNotificationResult() {IsSuccessful = result.MessageResponse.Success == 1, LogMessage =

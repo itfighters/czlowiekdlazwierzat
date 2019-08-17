@@ -6,7 +6,7 @@ firebase.initializeApp({
   messagingSenderId: "228431140721"
 });
 const messaging = firebase.messaging();
-const baseUrl = "https://pomagalnia.pl";
+const baseUrl = "https://pomagalnia.pl/potrzeba";
 
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log("setBackgroundMessageHandler", payload);
@@ -38,7 +38,7 @@ self.addEventListener("notificationclick", function(event) {
   }
 
   function openNewWindow() {
-    var pageUrl = `${baseUrl}/${event.notificationData.tag}`;
+    var pageUrl = `${baseUrl}/${event.notification.tag}`;
     return clients.openWindow(pageUrl);
   }
 });
