@@ -25,6 +25,9 @@ namespace NotificationJobsLibrary
             LinkedResource thumbnail = new LinkedResource(Path.Combine(imagesPath, "placeholder.png"));
             thumbnail.ContentId = "thumbnail";
             thumbnail.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
+            LinkedResource button = new LinkedResource(Path.Combine(imagesPath, "button.png"));
+            button.ContentId = "button";
+            button.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
             LinkedResource background = new LinkedResource(Path.Combine(imagesPath, "footer.png"));
             background.ContentId = "footer";
             background.ContentType = new ContentType(MediaTypeNames.Image.Jpeg);
@@ -33,6 +36,8 @@ namespace NotificationJobsLibrary
             htmlView.LinkedResources.Add(logo);
             htmlView.LinkedResources.Add(thumbnail);
             htmlView.LinkedResources.Add(background);
+            htmlView.LinkedResources.Add(button);
+
             mailMessage.AlternateViews.Add(htmlView);
 
             mailMessage.To.Add(to);

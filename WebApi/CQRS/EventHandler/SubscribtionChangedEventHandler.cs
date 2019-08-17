@@ -34,7 +34,7 @@ namespace CQRS.EventHandler
             if (notification.SubscriptionType == SubscriptionType.Email)
             {
                 var link =
-                    $"{jobsOptions.Value.ServiceFullUrl}/confirm?token={notification.Token}&mail={notification.Contact}";
+                    $"{jobsOptions.Value.ServiceFullUrl}confirm?token={notification.Token}&mail={notification.Contact}";
                 var message = MailTemplate.SubscriptionTemplate(link);
                 result = await emailService.SendMessage(notification.Contact, "Potwierdzenie zapisu na powiadomienia", message);
             }
