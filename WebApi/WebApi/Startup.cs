@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using CQRS.Command.Auctions;
 using DAL;
 using FluentValidation.AspNetCore;
@@ -63,15 +64,20 @@ namespace WebApi
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseForwardedHeaders();
+            app.Use(async (context, next) =>
             {
-                app.UseDeveloperExceptionPage();
-                DatabaseHelper.UpdateDatabase(app);
-            }
-            else
-            {
-                app.UseHsts();
-            }
+                if (context.Request.IsHttps || context.Request.Headers["X-Forwarded-Proto"] == Uri.UriSchemeHttps)
+                {
+                    await next();
+                }
+                else
+                {
+                    string queryString = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : string.Empty;
+                    var https = "https://" + context.Request.Host + context.Request.Path + queryString;
+                    context.Response.Redirect(https);
+                }
+            });
 
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors("MyPolicy");
