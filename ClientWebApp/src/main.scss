@@ -130,3 +130,13 @@ footer {
 p {
   line-height: 20px;
 }
+
+
+.main-nav{
+  .navi{
+    padding: 5px;
+    @media (min-width: 576px) {
+      padding: 10px;
+    }
+  }
+}

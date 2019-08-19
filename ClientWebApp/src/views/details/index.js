@@ -91,9 +91,9 @@ export default class Details extends React.Component {
           <div className="buttons-tile">{auctionCategories}</div>
         </section>
         {(this.state.auction.siepomagaLink ||
-          this.state.auction.paypalLink ||
+          this.state.auction.paypall ||
           this.state.auction.account ||
-          this.state.auction.dotpayLink) && (
+          this.state.auction.dotpay) && (
           <section>
             <div className="donate-title">
               <h1>POMÓŻ</h1>
@@ -109,7 +109,7 @@ export default class Details extends React.Component {
                     <i className="btn btn-rounded siepomaga" />
                   </a>
                 )}
-                {this.state.auction.dotpayLink && (
+                {this.state.auction.dotpay && (
                   <a
                     href={buildDotpayLink(this.state.auction)}
                     target="_blank"
@@ -118,7 +118,7 @@ export default class Details extends React.Component {
                     <i className="btn btn-rounded dotpay" />
                   </a>
                 )}
-                {this.state.auction.paypalLink && (
+                {this.state.auction.paypall && (
                   <form
                     action="https://www.paypal.com/cgi-bin/webscr"
                     method="post"

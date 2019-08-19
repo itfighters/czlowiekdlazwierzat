@@ -28,10 +28,10 @@ const Header = ({ history }) => {
             </>
           )}
           <li>
-            <NavLink className="btn btn-primary" to="/potrzeby">Lista potrzeb</NavLink>
+            <NavLink className="btn btn-primary navi" to="/potrzeby">Potrzeby</NavLink>
           </li>
           <li>
-            <NavLink className="btn btn-primary" to="/subskrypcje">
+            <NavLink className="btn btn-primary navi" to="/subskrypcje">
               Powiadomienia
             </NavLink>
           </li>
