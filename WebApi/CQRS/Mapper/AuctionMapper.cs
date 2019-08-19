@@ -21,14 +21,12 @@ namespace CQRS.Mapper
             ContactNumber = a.ContactNumber,
             DateFrom = a.DateFrom,
             DateTo = a.DateTo,
-            DotpayLink = a.DotpayLink,
+            Dotpay = a.Dotpay,
             SiepomagaLink = a.SiepomagaLink,
             CurrentImage = a.Image,
             Featured = a.Featured,
-            PaypalLink = a.PaypalLink,
+            Paypall = a.Paypall,
             Publish = a.Publish,
-            Dotpay = a.Dotpay,
-            Paypall = a.Paypall
         };
 
         public static Func<BaseAuctionCommand, Auction, Auction> FromAuctionCommandToAuction = (command, auction) =>
@@ -42,14 +40,14 @@ namespace CQRS.Mapper
              result.Account = command.Account;
              result.IsDeleted = false;
              result.SiepomagaLink = command.SiepomagaLink;
-             result.PaypalLink = command.PaypalLink;
+             result.Paypall = command.Paypall;
              result.Featured = command.Featured;
              result.DateTo = command.DateTo ?? DateTime.Now.AddYears(1); //TODO: wyjasnic kiedys
              result.AddressTo = command.AddressTo;
              result.DateFrom = command.DateFrom ?? DateTime.Now;
              result.ContactNumber = command.ContactNumber;
              result.AddressFrom = command.AddressFrom;
-             result.DotpayLink = command.DotpayLink;
+             result.Dotpay = command.Dotpay;
              result.Publish = command.Publish;
              result.Dotpay = command.Dotpay;
              result.Paypall = command.Paypall;

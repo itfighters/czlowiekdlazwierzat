@@ -42,9 +42,9 @@ namespace CQRS.CommandHandler
             auctionToUpdate.Title = request.Title;
             auctionToUpdate.ShortDescription = request.ShortDescription;
             auctionToUpdate.Description = request.Description;
-            auctionToUpdate.DotpayLink = request.DotpayLink;
-            auctionToUpdate.SiepomagaLink = request.SiepomagaLink;
-            auctionToUpdate.PaypalLink = request.PaypalLink;
+            auctionToUpdate.Dotpay = request.Dotpay;
+            auctionToUpdate.SiepomagaLink = request.SiepomagaLink == "null" ? null : request.SiepomagaLink;
+            auctionToUpdate.Paypall = request.Paypall;
             auctionToUpdate.Categories = request.Categories?.Select(x => new AuctionCategory() { CategoryId = x }).ToList();
             auctionToUpdate.Account = request.Account;
             auctionToUpdate.DateFrom = request.DateFrom ?? DateTime.Now;

@@ -79,6 +79,8 @@ namespace WebApi
                 }
             });
 
+            DatabaseHelper.UpdateDatabase(app);
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors("MyPolicy");
             app.UseAuthentication();

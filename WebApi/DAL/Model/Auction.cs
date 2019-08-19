@@ -26,10 +26,7 @@ namespace DAL.Model
 
         public IList<AuctionCategory> Categories { get; set; }
 
-        public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
-        public string PaypalLink { get; set; }
-
 
         public bool Account { get; set; }
 

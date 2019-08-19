@@ -13,9 +13,6 @@ namespace CQRS.QueryData
 
         public string CurrentImage { get; set; }
         public IEnumerable<int> Categories { get; set; }
-        public string DotpayLink { get; set; }
-        public string PaypalLink { get; set; }
-
         public bool Featured { get; set; }
         public string SiepomagaLink { get; set; }
         public bool Account { get; set; }

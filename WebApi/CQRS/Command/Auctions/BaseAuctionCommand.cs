@@ -19,7 +19,6 @@ namespace CQRS.Command.Auctions
             }
         }
         public string MultichoiceCategories { get; set; }
-        public string DotpayLink { get; set; }
         public string SiepomagaLink { get; set; }
 
         [BindProperty(Name = "checkboxKonto")]
@@ -29,7 +28,6 @@ namespace CQRS.Command.Auctions
         public string AddressFrom { get; set; }
         public string AddressTo { get; set; }
         public string ContactNumber { get; set; }
-        public string PaypalLink { get; set; }
         public bool Featured { get; set; }
         public IFormFile Cover { get; set; }
 
