@@ -15,7 +15,6 @@ class HomeTilesList extends Component {
   }
 
   componentDidMount() {
-    
     let featuredCount = this.props.featuredCount || 6;
 
     fetchFeaturedTiles()

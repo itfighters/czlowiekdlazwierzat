@@ -62,7 +62,8 @@
 }
 
 .popup-header {
-  position: relative;
+  position: sticky;
+  top: 0px;
 
   .btn-close {
     font-size: 1.5rem;
