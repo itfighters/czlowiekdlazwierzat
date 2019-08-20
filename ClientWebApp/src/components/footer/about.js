@@ -6,7 +6,7 @@ export default class About extends Component {
         <div className="contact-container">
           <div>
             <p className="contact-name">Fundacja</p>
-            <p className="contact-name">Człowiek Dla Zawierząt</p>
+            <p className="contact-name">Człowiek Dla Zwierząt</p>
             <p>Łętkowice Kolonia 59</p>
             <p>32-107 Radziemice</p>
           </div>
