@@ -125,8 +125,11 @@ export default class SignUp extends Component {
     });
   };
 
-  showToast = (text, state) => {
-    toast(text, { type: state });
+  showToast = (text, state, autoClose = 5000) => {
+    if (state == "success") {
+      autoClose = 8000;
+    }
+    toast(text, { type: state, autoClose });
   };
 
   confirmNumber = number => {
@@ -386,18 +389,18 @@ export default class SignUp extends Component {
                     theme="dark"
                   /> */}
                   <div className="confirm-container">
-                  <AcceptComponent
-                    checked={this.state.acceptedMail}
-                    onChange={this.acceptedChangeMail}
-                    onClick={() => this.showPopup(ContentTypes.Terms)}
-                  />
+                    <AcceptComponent
+                      checked={this.state.acceptedMail}
+                      onChange={this.acceptedChangeMail}
+                      onClick={() => this.showPopup(ContentTypes.Terms)}
+                    />
 
-                  <button
-                    className="btn btn-primary btn-center-aligned"
-                    type="submit"
-                  >
-                    <span>Zapisz się</span>
-                  </button>
+                    <button
+                      className="btn btn-primary btn-center-aligned"
+                      type="submit"
+                    >
+                      <span>Zapisz się</span>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -438,14 +441,14 @@ export default class SignUp extends Component {
                       <span>Zapisz się</span>
                     </button>
                   </div>
-
                 </form>
               </div>
 
               <div className="contact-container">
                 <form onSubmit={this.pushNotification}>
                   <p className="title">
-                    Zapisz się na notyfikację mobilne{" "}
+                    Jeśli chcesz otrzymywać powiadomienia bezpośrednio na swoje
+                    urządzeni zapisz się przez poniższy przycisk
                   </p>
                   <div className="confirm-container">
                     <AcceptComponent
@@ -515,9 +518,9 @@ export default class SignUp extends Component {
                 </div>
                 <div className="contact-container">
                   <form onSubmit={this.unsubscribePush}>
-                    <p className="title">Wypisz się z notyfikacji mobilnych</p>
-                    <p className="info">
-                      Wypisz się, jeśli nie odpowiada Ci ta forma powiadomień
+                    <p className="title">
+                      Kliknij w poniższy przycisk, aby zrezygnować z powiadomień
+                      na urządzenie
                     </p>
                     <button
                       className="btn btn-primary btn-center-aligned"

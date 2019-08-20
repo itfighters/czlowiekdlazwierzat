@@ -25,6 +25,7 @@ export default class Details extends React.Component {
         });
 
         this.setState({ auction: details, loading: false });
+        window.scrollTo(0, 0);
       })
       .catch(err => {
         this.setState({

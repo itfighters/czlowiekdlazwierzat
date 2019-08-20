@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUp from "./views/signUp";
 
 import Home from "./views/home";
-import Notifications from "./views/notifications";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import Details from "./views/details";
@@ -32,7 +31,6 @@ export default class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/confirm" component={Home} />
-            <Route path="/notyfikacje" component={Notifications} />
             <Route path="/potrzeba/:id" component={Details} />
             <Route path="/subskrypcje" component={SignUp} />
             <Route path="/potrzeby" component={Tiles} />

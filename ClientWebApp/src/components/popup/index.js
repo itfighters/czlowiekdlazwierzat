@@ -12,7 +12,10 @@ export default class Popup extends Component {
 
     return (
       <>
-        <div className="fade modal-backdrop show"></div>
+        <div
+          onClick={this.props.close}
+          className="fade modal-backdrop show"
+        ></div>
         <div className="popup-container">
           <div className="popup">
             <Header close={this.props.close} />

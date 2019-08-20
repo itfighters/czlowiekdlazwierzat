@@ -11,14 +11,16 @@ export default class TileCategory extends Component {
 
   render() {
     const { category, isSelected } = this.props;
-    let imageSrc = category.image ? `${IMAGES_URL}/`+category.image : CATEGORY_IMG_PLACEHOLDER;
+    let imageSrc = category.image
+      ? `${IMAGES_URL}/` + category.image
+      : CATEGORY_IMG_PLACEHOLDER;
     return (
       <div
         className="tile-category"
         onClick={() => this.onCategoryClick(category)}
       >
         <div className="img-row">
-          <img src={imageSrc} alt="potrzeba-img"  />
+          <img src={imageSrc} alt="potrzeba-img" />
         </div>
 
         <p className={isSelected ? "category-selected" : ""}>{category.name}</p>
