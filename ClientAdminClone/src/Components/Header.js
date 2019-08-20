@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import { authTokenKey } from '../Utils/auth';
-export function Header()
-{
-    function logout()
-    {
+export function Header() {
+    function logout() {
         localStorage.removeItem(authTokenKey);
         window.location.href = '/login';
     }
@@ -13,7 +11,7 @@ export function Header()
         <div className="ui menu menu-container">
             <div className="left">
                 <div className="header item">
-                    Panel administracyjny
+                    Ratujmy zwierzaki
             </div>
                 <a className="item" href="/admin/list">
                     Zbiórki
