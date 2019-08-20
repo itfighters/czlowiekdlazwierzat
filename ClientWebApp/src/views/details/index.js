@@ -122,7 +122,7 @@ export default class Details extends React.Component {
                   <form
                     action="https://www.paypal.com/cgi-bin/webscr"
                     method="post"
-                    target="_top"
+                    target="_blank"
                   >
                     <input type="hidden" name="cmd" value="_donations" />
                     <input
