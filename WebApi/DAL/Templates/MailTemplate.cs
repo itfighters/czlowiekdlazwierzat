@@ -16,8 +16,8 @@ namespace DAL.Templates
                 new StreamReader(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Templates","Resources", "SignIn", "signin.html")))
             {
                 var templateContent = fileReader.ReadToEnd();
-                templateContent = templateContent.Replace("$PLACEHOLDER_TITLE", "Potwierdzenie zapisu na powiadomienia");
-                templateContent = templateContent.Replace("$PLACEHOLDER_DESC", $"W celu zapisania się na powiadomienia mailowe wpisz wejdź pod adres: <a href='{confirmationUrl}'>{confirmationUrl}</a>.");
+                templateContent = templateContent.Replace("$PLACEHOLDER_TITLE", "Dziękujemy, że do nad dołączyłeś!");
+                templateContent = templateContent.Replace("$PLACEHOLDER_DESC", $"Aby potwierdzić zapis i aktywować powiadomienia o potrzebach przytuliska w Łętkowicach kliknij w link: <a href='{confirmationUrl}'>{confirmationUrl}</a>.");
                 templateContent = templateContent.Replace("$PLACEHOLDER_LINK", $"");
 
                 return templateContent;
