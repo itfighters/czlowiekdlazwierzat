@@ -15,8 +15,8 @@ export default class Partners extends Component {
       "avande.png": "https://www.avanade.com",
       "play_sms.png": "https://playsms.org",
       "pan_mi_kupi.png": "https://panmikupi.pl",
-      "kancelaria.png": "https://itfighters.pl",
-      "milomi.png": "https://www.facebook.com/milomi.magda/"
+      "kancelaria.png": "http://dks-kancelaria.pl/witamy/",
+      "milomi.png": "http://milomi.pl"
     };
     var partners = [];
     for (const key in partnersSource) {
