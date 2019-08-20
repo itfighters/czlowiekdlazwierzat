@@ -5,7 +5,7 @@ function AcceptComponent({ checked, onChange, onClick }) {
   return (
     <div className="accept-line">
       <Checkbox
-        text={"Akceptuj "}
+        text={"Akceptuję "}
         checked={checked}
         onChange={onChange}
         required

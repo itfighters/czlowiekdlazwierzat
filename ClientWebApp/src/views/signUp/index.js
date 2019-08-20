@@ -448,7 +448,7 @@ export default class SignUp extends Component {
                 <form onSubmit={this.pushNotification}>
                   <p className="title">
                     Jeśli chcesz otrzymywać powiadomienia bezpośrednio na swoje
-                    urządzeni zapisz się przez poniższy przycisk
+                    urządzenie zapisz się przez poniższy przycisk
                   </p>
                   <div className="confirm-container">
                     <AcceptComponent
