@@ -29,7 +29,7 @@ namespace DAL.Repositories.Concrete
                     .Take(pageSize.Value);
 
             return await query
-                .OrderBy(x => x.Id)
+                .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
         }
 
