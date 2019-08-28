@@ -20,9 +20,6 @@ class HomeTilesList extends Component {
     fetchFeaturedTiles()
       .then(response => {
         let tiles = response
-          .sort(function(a, b) {
-            return new Date(a.dateTo) - new Date(b.dateTo);
-          })
           .slice(0, featuredCount);
         this.setState({
           tiles: tiles,
