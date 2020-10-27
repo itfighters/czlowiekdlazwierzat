@@ -1,0 +1,76 @@
+@import "../variables.scss";
+
+.main-header {
+  padding: 0;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px -3px 14px 3px #c5c5c5;
+
+  @media (min-width: 576px) {
+    padding: 0 $side-padding;
+  }
+
+  @media only screen and (max-width: 1023px) {
+    height: 90px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    height: 62px;
+  }
+
+  .logo-nav {
+    padding-left: 2px;
+    @media (min-width: 576px) {
+      padding-left: 10px;
+    }
+    padding-bottom: 2px;
+    height: 90%;
+    transition: all 0.3s ease-in-out;
+    @media only screen and (max-width: 1023px) {
+      height: 50px;
+    }
+    @media only screen and (max-width: 767px) {
+      height: 42px;
+    }
+    img {
+      height: 100%;
+      display: block;
+    }
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    ul {
+      display: flex;
+      flex-direction: row;
+      font-size: $fs-small;
+      align-items: center;
+      li {
+        margin: 0 5px 0 5px;
+        @media (min-width: 576px) {
+          margin: 0 10px 0 10px;
+        }
+        a {
+          cursor: pointer;
+          border-radius: 3px;
+          @media only screen and (max-width: 767px) {
+            height: 40px;
+            font-size: $fs-small;
+          }
+        }
+      }
+
+      li.back-button,
+      li.home-button {
+        @media only screen and (max-width: 767px) {
+          display: none;
+        }
+      }
+
+      
+    }
+  }
+}

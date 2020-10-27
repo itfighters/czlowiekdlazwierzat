@@ -1,0 +1,51 @@
+@import "../variables.scss";
+.title-category-list,
+.slick-track {
+  margin: 25px 0;
+  .slick-slider {
+    margin: 0 30px;
+  }
+}
+
+.tile-category {
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 0 10px;
+
+  .img-row {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 50px;
+    }
+  }
+
+  
+
+  p {
+    word-break: break-word;
+    text-align: center;
+    color: $light-gray;
+    margin-top: 5px;
+    font-size: $fs-small;
+  }
+
+  .category-selected {
+    color: #009688;
+  }
+
+  hr {
+    height: 4px;
+    visibility: hidden;
+    margin: 5px 0;
+    border: 0;
+  }
+
+  .category-selected + hr {
+    visibility: visible;
+    background: #009688;
+  }
+}

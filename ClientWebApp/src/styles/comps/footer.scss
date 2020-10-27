@@ -1,0 +1,90 @@
+@import "../variables.scss";
+
+.top-footer {
+  padding: 25px;
+  align-items: center;
+  display: flex;
+  h2 {
+    font-weight: bold;
+    font-size: $fs-extra-large;
+    color: $gray;
+    letter-spacing: 5px;
+    flex-grow: 1;
+  }
+  .partners {
+    flex-grow: 4;
+    position: relative;
+    padding: 0 0 0 50px;
+    a {
+      padding: 0 15px;
+      img {
+        height: 90px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.bottom-footer {
+  height: 240px;
+  background: $secondary-color;
+  border-bottom-right-radius: 240px;
+  padding: 25px;
+  p,
+  span {
+    color: white;
+  }
+  .contact-container {
+    height: 96px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    div {
+      line-height: 24px;
+    }
+    .contact-name {
+      font-weight: bold;
+    }
+    .facebook-icon {
+      width: 50px;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    a {
+      color: white;
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .top-footer {
+    display: block;
+    h2 {
+      display: none;
+    }
+    .partners {
+      padding: 0;
+    }
+  }
+
+  .bottom-footer {
+    height: auto;
+    padding: 30px $side-padding 70px $side-padding;
+    border-bottom-right-radius: 170px;
+    .contact-container {
+      flex-direction: column;
+      height: auto;
+      align-items: flex-start;
+      div {
+        padding: 0 0 24px 0;
+      }
+      .facebook-icon {
+        align-self: flex-end;
+      }
+    }
+  }
+}

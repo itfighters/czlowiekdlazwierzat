@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DAL.Repositories.Abstract;
-using DTO.Mapper;
-using DTO.RequestViewModel;
-using DTO.ResponseViewModel;
-using Microsoft.AspNetCore.Http;
+using CQRS.Command.Auctions;
+using CQRS.Query.Auctions;
+using CQRS.QueryData;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -15,47 +13,36 @@ namespace WebApi.Controllers
     [ApiController]
     public class AuctionController : ControllerBase
     {
-        private readonly IAuctionRepository auctionRepository;
+        private readonly IMediator mediator;
 
-        public AuctionController(IAuctionRepository auctionRepository)
+        public AuctionController(IMediator mediator)
         {
-            this.auctionRepository = auctionRepository;
+            this.mediator = mediator;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public ListAuctionResponse Get()
-        {
-            return AuctionMappers.ToListAuctionResponse(auctionRepository.GetAuctions());
-        }
+        public async Task<ListResponse<AuctionQueryData>> Get([FromQuery] GetAuctionsListQuery query) => await mediator.Send(query);
 
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            //todo pobranie szczegółów aukcji
-            return "value";
-        }
+        [HttpGet("all")]
+        public async Task<ListResponse<AuctionQueryData>> GetAll([FromQuery] GetAllAuctionsListQuery query) => await mediator.Send(query);
+
+
+        [AllowAnonymous]
+        [HttpGet("details")]
+        public async Task<AuctionQueryData> Get([FromQuery] GetAuctionDetailsQuery query) => await mediator.Send(query);
+
+        [AllowAnonymous]
+        [HttpGet("featured")]
+        public async Task<IEnumerable<AuctionQueryData>> GetFeatured([FromQuery] GetFeaturedAuctionsQuery query) => await mediator.Send(query);
 
         [HttpPost]
-        public IActionResult Post([FromBody] AddAuctionRequest value)
-        {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            //auctionRepository.AddAuction(AuctionMappers.FromAddAuctionRequest(value));
-            return Ok();
-        }
+        public async Task AddAuction([FromForm] AddAuctionCommand command) => await mediator.Send(command);
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-            //todo aktualizacja aukcji
-        }
+        [HttpPut]
+        public async Task Put([FromForm] UpdateAuctionCommand command) => await mediator.Send(command);
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            //todo ukrywanie aukcji
-        }
+        [HttpDelete]
+        public async Task Delete([FromQuery] DeleteAuctionCommand command) =>  await mediator.Send(command);
     }
 }

@@ -1,0 +1,80 @@
+@import "../variables.scss";
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.4;
+}
+
+.popup-container {
+  margin: 0 10%;
+  top: 10%;
+  position: fixed;
+  width: 80%;
+  z-index: 1050;
+  overflow-y: auto;
+  max-height: 80%;
+}
+
+.popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+
+  input[type="tel"] {
+    background: inherit;
+    border: none;
+    border-bottom: 2px solid #009688;
+    outline: none;
+    line-height: 25px;
+    margin: 10px;
+  }
+
+  input[type="tel"]:focus {
+    border-bottom: 2px solid lightgray;
+  }
+
+  .body {
+    max-width: 90%;
+    padding: 10px;
+    margin: 0 auto;
+
+    font-size: 18px;
+    line-height: 1.5em;
+  }
+
+  .terms-content ol {
+    list-style: initial;
+    list-style-type: decimal;
+  }
+}
+
+.popup-header {
+  position: sticky;
+  top: 0px;
+
+  .btn-close {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #ffc;
+    opacity: 0.5;
+    cursor: pointer;
+    margin: 3px;
+    position: absolute;
+    right: 10px;
+  }
+}

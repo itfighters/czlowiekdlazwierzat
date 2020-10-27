@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DAL.Model;
 using DAL.Repositories.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories.Concrete
 {
@@ -13,15 +16,56 @@ namespace DAL.Repositories.Concrete
         {
             this.dbContext = dbContext;
         }
-        public void AddAuction(Auction auction)
+
+        public async Task<IEnumerable<Auction>> GetAuctions(int? page, int? pageSize, int[] category, bool all)
         {
-            dbContext.Auctions.Add(auction);
-            dbContext.SaveChanges();
+            var query = BaseAuctionsQuery(all);
+            if (category != null && category.Length > 0)
+                query = query.Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any());
+
+            if (page.HasValue && pageSize.HasValue)
+                query = query
+                    .Skip((page.Value - 1) * pageSize.Value)
+                    .Take(pageSize.Value);
+
+            return await query
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
         }
 
-        public IEnumerable<Auction> GetAuctions()
+        public async Task<int> GetAuctionsCount(int[] category)
         {
-            return dbContext.Auctions.ToList();
+            var query = BaseAuctionsQuery();
+            if (category != null && category.Length > 0)
+                query = query.Where(x => x.Categories.Select(y => y.CategoryId).Intersect(category).Any());
+
+            return await query
+                .CountAsync();
         }
+
+        public async Task<IEnumerable<Auction>> GetFeaturedAuctions(int count)
+        {
+            var featuredAuctions = await BaseAuctionsQuery()
+                .Where(x => x.Featured == true)
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+
+            if (featuredAuctions.Count > 0)
+            {
+                return featuredAuctions;
+            }
+            else
+            {
+                return await BaseAuctionsQuery()
+                .OrderByDescending(x => x.CreatedAt)
+                .Take(count)
+                .ToListAsync();
+            }
+        }
+
+        private IQueryable<Auction> BaseAuctionsQuery(bool all = false) => dbContext.Auctions
+                .Include(x => x.Categories)
+                .Where(x => !x.IsDeleted && (all || x.Publish));
     }
 }

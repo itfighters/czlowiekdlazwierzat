@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+using CQRS.Command.Auctions;
 using DAL;
-using DAL.Repositories.Abstract;
-using DAL.Repositories.Concrete;
-using DTO.RequestViewModel;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using NLog.Web;
+using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Helpers;
+using WebApi.Middleware;
 
 namespace WebApi
 {
@@ -23,6 +21,7 @@ namespace WebApi
     {
         public Startup(IConfiguration configuration)
         {
+            NLogBuilder.ConfigureNLog("nlog.config");
             Configuration = configuration;
         }
 
@@ -30,39 +29,90 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var servicesHelper = new ServicesHelper(services, Configuration);
+            servicesHelper.ConfigureSettings();
+            servicesHelper.ConfigureServices();
+            servicesHelper.ConfigureRepositories();
+            servicesHelper.ConfigureAuthServices();
+            servicesHelper.ConfigureUtils();
+            servicesHelper.ConfigureLogger();
+
+            services.AddSpaStaticFiles(configuration =>
+            { configuration.RootPath = "WebAppsBuild"; });
+
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionRequestValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddAuctionCommandValidator>());
+
+            services.AddMediatR(typeof(AddAuctionCommand).GetTypeInfo().Assembly);
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
+            });
+
+
+            servicesHelper.RunBackgroundServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseForwardedHeaders();
+            app.Use(async (context, next) =>
             {
-                app.UseDeveloperExceptionPage();
-                UpdateDatabase(app);
-            }
-            else
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseMvc();
-        }
-
-        private static void UpdateDatabase(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<DatabaseContext>())
+                if (context.Request.IsHttps || context.Request.Headers["X-Forwarded-Proto"] == Uri.UriSchemeHttps)
                 {
-                    context.Database.Migrate();
+                    await next();
                 }
-            }
+                else
+                {
+                    string queryString = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : string.Empty;
+                    var https = "https://" + context.Request.Host + context.Request.Path + queryString;
+                    context.Response.Redirect(https);
+                }
+            });
+
+            DatabaseHelper.UpdateDatabase(app);
+
+            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseCors("MyPolicy");
+            app.UseAuthentication();
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+            app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            app.UseSpaStaticFiles();
+
+            app.Map("/admin", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebAppsBuild/admin";
+                    spa.Options.DefaultPage = "/admin/index.html";
+                });
+            });
+
+            app.Map("", publicApp =>
+            {
+                publicApp.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "WebAppsBuild";
+                });
+            });
+
         }
     }
 }

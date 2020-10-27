@@ -1,0 +1,66 @@
+@import "../variables.scss";
+
+.collections-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 20px;
+  
+  .collect-tile {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 32%;
+    background-color: #f6f5f5;
+    padding: 1%;
+    box-shadow: -1px 3px 9px 0px #b4b4b4;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
+    @media only screen and (max-width: 767px) {
+      width: 46%;
+      margin-left: 2%;
+      margin-right: 2%;
+    }
+
+    @media only screen and (max-width: 550px) {
+      width: 100%;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+    }
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 0;
+      height: 300px;
+    }
+    .title {
+      margin: 7% 0 7% 3%;
+      font-size: $fs-small;
+      text-transform: uppercase;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .description {
+      font-size: $fs-small;
+      margin-bottom: 7px;
+      margin-left: 3%;
+      word-break: break-word;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: flex-end;
+      span {
+        border-radius: 3px;
+      }
+    }
+  }
+  .collect-tile:nth-child(3n-1) {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  a {
+    color: $light-gray;
+  }
+}
